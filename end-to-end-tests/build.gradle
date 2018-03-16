@@ -1,0 +1,7 @@
+dependencies {
+    compile project(":customer-web-api")
+    compile project(":order-web-api")
+
+    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+}
+

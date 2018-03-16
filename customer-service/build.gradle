@@ -1,0 +1,10 @@
+dependencies {
+    compile project(":common-swagger")
+    compile project(":customer-backend")
+    compile project(":customer-web-api")
+
+    compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+}
+
+apply plugin: 'spring-boot'
