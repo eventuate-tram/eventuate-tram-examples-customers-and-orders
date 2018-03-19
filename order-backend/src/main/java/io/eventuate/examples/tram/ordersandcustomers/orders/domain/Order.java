@@ -2,10 +2,8 @@ package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
 
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
-import io.eventuate.tram.events.ResultWithEvents;
 
 import javax.persistence.*;
-import java.util.Collections;
 
 @Entity
 @Table(name="orders")
@@ -29,8 +27,8 @@ public class Order {
     this.state = OrderState.PENDING;
   }
 
-  public static ResultWithEvents<Order> createOrder(OrderDetails orderDetails) {
-    return new ResultWithEvents<Order>(new Order(orderDetails), Collections.emptyList());
+  public static Order createOrder(OrderDetails orderDetails) {
+    return new Order(orderDetails);
   }
 
   public Long getId() {

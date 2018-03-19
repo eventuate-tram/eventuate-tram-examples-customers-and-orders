@@ -8,9 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Configuration
 @Import({CustomerConfiguration.class, CustomerWebConfiguration.class})
-@ComponentScan
 public class CustomersServiceMain {
   public static void main(String[] args) {
     SpringApplication.run(CustomersServiceMain.class, args);

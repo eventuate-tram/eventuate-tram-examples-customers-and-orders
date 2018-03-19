@@ -2,14 +2,14 @@ package io.eventuate.examples.tram.ordersandcustomers.commondomain;
 
 import io.eventuate.tram.events.common.DomainEvent;
 
-public class CustomerCreditReservedDomainEvent implements DomainEvent {
+public class CustomerCreditReservedEvent implements DomainEvent {
 
   private Long orderId;
 
-  public CustomerCreditReservedDomainEvent() {
+  public CustomerCreditReservedEvent() {
   }
 
-  public CustomerCreditReservedDomainEvent(Long orderId) {
+  public CustomerCreditReservedEvent(Long orderId) {
     this.orderId = orderId;
   }
 

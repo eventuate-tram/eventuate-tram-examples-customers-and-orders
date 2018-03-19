@@ -8,11 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Configuration
 @Import({OrderWebConfiguration.class, OrderConfiguration.class})
-@ComponentScan
-public class OrdersServiceMain {
+public class OrderServiceMain {
   public static void main(String[] args) {
-    SpringApplication.run(OrdersServiceMain.class, args);
+    SpringApplication.run(OrderServiceMain.class, args);
   }
 }

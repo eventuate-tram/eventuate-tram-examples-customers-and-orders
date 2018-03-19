@@ -1,9 +1,10 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.service;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservationFailedDomainEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservedDomainEvent;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservationFailedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
+import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,20 @@ public class CustomerEventConsumer {
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder
             .forAggregateType("io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer")
-            .onEvent(CustomerCreditReservedDomainEvent.class, dee-> {
-              CustomerCreditReservedDomainEvent customerCreditReservedDomainEvent = dee.getEvent();
-              Order order = orderRepository.findOne(customerCreditReservedDomainEvent.getOrderId());
-              order.noteCreditReserved();
-            })
-            .onEvent(CustomerCreditReservationFailedDomainEvent.class, dee-> {
-              CustomerCreditReservationFailedDomainEvent customerCreditReservationFailedDomainEvent = dee.getEvent();
-              Order order = orderRepository.findOne(customerCreditReservationFailedDomainEvent.getOrderId());
-              order.noteCreditReservationFailed();
-            })
+            .onEvent(CustomerCreditReservedEvent.class, this::customerCreditReservedEventHandler)
+            .onEvent(CustomerCreditReservationFailedEvent.class, this::customerCreditReservationFailedEventHandler)
             .build();
+  }
+
+  private void customerCreditReservedEventHandler(DomainEventEnvelope<CustomerCreditReservedEvent> domainEventEnvelope) {
+    CustomerCreditReservedEvent customerCreditReservedEvent = domainEventEnvelope.getEvent();
+    Order order = orderRepository.findOne(customerCreditReservedEvent.getOrderId());
+    order.noteCreditReserved();
+  }
+
+  private void customerCreditReservationFailedEventHandler(DomainEventEnvelope<CustomerCreditReservationFailedEvent> domainEventEnvelope) {
+    CustomerCreditReservationFailedEvent customerCreditReservationFailedEvent = domainEventEnvelope.getEvent();
+    Order order = orderRepository.findOne(customerCreditReservationFailedEvent.getOrderId());
+    order.noteCreditReservationFailed();
   }
 }

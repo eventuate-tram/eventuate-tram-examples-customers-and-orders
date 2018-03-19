@@ -2,21 +2,21 @@ package io.eventuate.examples.tram.ordersandcustomers.commondomain;
 
 import io.eventuate.tram.events.common.DomainEvent;
 
-public class OrderCreatedDomainEvent implements DomainEvent {
+public class OrderCreatedEvent implements DomainEvent {
 
   private Long orderId;
 
   private OrderDetails orderDetails;
 
-  public OrderCreatedDomainEvent() {
+  public OrderCreatedEvent() {
   }
 
-  public OrderCreatedDomainEvent(Long orderId, OrderDetails orderDetails) {
+  public OrderCreatedEvent(Long orderId, OrderDetails orderDetails) {
     this.orderId = orderId;
     this.orderDetails = orderDetails;
   }
 
-  public OrderCreatedDomainEvent(OrderDetails orderDetails) {
+  public OrderCreatedEvent(OrderDetails orderDetails) {
     this.orderDetails = orderDetails;
   }
 
