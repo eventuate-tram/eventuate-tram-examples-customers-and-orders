@@ -42,7 +42,8 @@ public class OrderEventConsumer {
               orderCreatedEvent.getOrderDetails().getOrderTotal());
 
       CustomerCreditReservedEvent customerCreditReservedEvent =
-              new CustomerCreditReservedEvent(orderCreatedEvent.getOrderId());
+              new CustomerCreditReservedEvent(orderCreatedEvent.getOrderId(),
+                      orderCreatedEvent.getOrderDetails());
 
       domainEventPublisher.publish(Customer.class,
               customer.getId(),
@@ -51,7 +52,9 @@ public class OrderEventConsumer {
     } catch (CustomerCreditLimitExceededException e) {
 
       CustomerCreditReservationFailedEvent customerCreditReservationFailedEvent =
-              new CustomerCreditReservationFailedEvent(orderCreatedEvent.getOrderId());
+              new CustomerCreditReservationFailedEvent(orderCreatedEvent.getOrderId(),
+                      orderCreatedEvent.getOrderDetails());
+
 
       domainEventPublisher.publish(Customer.class,
               customer.getId(),

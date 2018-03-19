@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":common")
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
+}

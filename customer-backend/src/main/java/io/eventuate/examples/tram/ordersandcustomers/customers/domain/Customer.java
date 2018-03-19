@@ -39,6 +39,14 @@ public class Customer {
     return id;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public Money getCreditLimit() {
+    return creditLimit;
+  }
+
   public void reserveCredit(Long orderId, Money orderTotal) {
     if (availableCredit().isGreaterThanOrEqual(orderTotal)) {
       creditReservations.put(orderId, orderTotal);

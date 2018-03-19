@@ -2,6 +2,7 @@ package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
 
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
 
 import javax.persistence.*;
 
