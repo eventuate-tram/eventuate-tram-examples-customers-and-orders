@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
+import static java.util.Collections.singletonList;
+
 public class OrderService {
 
   @Autowired
@@ -24,7 +26,7 @@ public class OrderService {
     orderRepository.save(order);
     domainEventPublisher.publish(Order.class,
             order.getId(),
-            Collections.singletonList(new OrderCreatedEvent(order.getId(), orderDetails)));
+            singletonList(new OrderCreatedEvent(order.getId(), orderDetails)));
     return order;
   }
 }
