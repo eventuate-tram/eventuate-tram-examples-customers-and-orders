@@ -1,0 +1,21 @@
+# Eventuate Tram Customers and Orders
+
+This application  demonstrates how to maintain data consistency in an Java/JDBC/JPA-base microservice architecture using http://microservices.io/patterns/data/saga.html[sagas].
+It's choreography-based saga version of https://github.com/eventuate-tram/eventuate-tram-sagas-examples-customers-and-orders[Eventuate Tram Sagas Customers and Orders]
+
+The application consists of two services:
+
+* `Order Service` - creates orders
+* `Customer Service` - manages customers
+
+Both services are implemented using Spring Boot, JPA and the https://github.com/eventuate-tram/eventuate-tram-core[Eventuate Tram framework], which provides transactional publish/subscribe.
+
+The `Order Service` uses a choreography-based saga to enforce the customer's credit limit when creating orders.
+
+== Learn more
+
+To learn more about why you need sagas if you are using microservices:
+
+* the http://microservices.io/patterns/data/saga.html[Saga pattern]
+* my http://microservices.io/microservices/news/2017/12/04/qconsf2017-presentation.html[QCONSF presentation]
+* read about sagas in my https://www.manning.com/books/microservice-patterns[Microservice patterns book]
