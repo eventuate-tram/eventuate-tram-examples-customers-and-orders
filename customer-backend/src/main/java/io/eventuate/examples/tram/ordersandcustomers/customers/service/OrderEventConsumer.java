@@ -32,18 +32,18 @@ public class OrderEventConsumer {
 
   private void orderCreatedEventHandler(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope) {
 
+    Long orderId = Long.parseLong(domainEventEnvelope.getAggregateId());
+
     OrderCreatedEvent orderCreatedEvent = domainEventEnvelope.getEvent();
 
     Customer customer = customerRepository
             .findOne(orderCreatedEvent.getOrderDetails().getCustomerId());
 
     try {
-      customer.reserveCredit(orderCreatedEvent.getOrderId(),
-              orderCreatedEvent.getOrderDetails().getOrderTotal());
+      customer.reserveCredit(orderId, orderCreatedEvent.getOrderDetails().getOrderTotal());
 
       CustomerCreditReservedEvent customerCreditReservedEvent =
-              new CustomerCreditReservedEvent(orderCreatedEvent.getOrderId(),
-                      orderCreatedEvent.getOrderDetails());
+              new CustomerCreditReservedEvent(orderId, orderCreatedEvent.getOrderDetails());
 
       domainEventPublisher.publish(Customer.class,
               customer.getId(),
@@ -52,9 +52,7 @@ public class OrderEventConsumer {
     } catch (CustomerCreditLimitExceededException e) {
 
       CustomerCreditReservationFailedEvent customerCreditReservationFailedEvent =
-              new CustomerCreditReservationFailedEvent(orderCreatedEvent.getOrderId(),
-                      orderCreatedEvent.getOrderDetails());
-
+              new CustomerCreditReservationFailedEvent(orderId, orderCreatedEvent.getOrderDetails());
 
       domainEventPublisher.publish(Customer.class,
               customer.getId(),
