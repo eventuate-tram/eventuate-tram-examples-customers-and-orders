@@ -31,12 +31,12 @@ public class OrderHistoryEventConsumer {
   private void orderApprovedEventHandler(DomainEventEnvelope<OrderApprovedEvent> domainEventEnvelope) {
     OrderApprovedEvent orderApprovedEvent = domainEventEnvelope.getEvent();
     orderHistoryViewService.approveOrder(orderApprovedEvent.getOrderDetails().getCustomerId(),
-            orderApprovedEvent.getOrderId());
+            Long.parseLong(domainEventEnvelope.getAggregateId()));
   }
 
   private void orderRejectedEventHandler(DomainEventEnvelope<OrderRejectedEvent> domainEventEnvelope) {
     OrderRejectedEvent orderRejectedEvent = domainEventEnvelope.getEvent();
     orderHistoryViewService.rejectOrder(orderRejectedEvent.getOrderDetails().getCustomerId(),
-            orderRejectedEvent.getOrderId());
+            Long.parseLong(domainEventEnvelope.getAggregateId()));
   }
 }

@@ -33,13 +33,13 @@ public class OrderService {
     Order order = orderRepository.findOne(orderId);
     order.noteCreditReserved();
     domainEventPublisher.publish(Order.class,
-            orderId, singletonList(new OrderApprovedEvent(orderId, order.getOrderDetails())));
+            orderId, singletonList(new OrderApprovedEvent(order.getOrderDetails())));
   }
 
   public void rejectOrder(Long orderId) {
     Order order = orderRepository.findOne(orderId);
     order.noteCreditReservationFailed();
     domainEventPublisher.publish(Order.class,
-            orderId, singletonList(new OrderRejectedEvent(orderId, order.getOrderDetails())));
+            orderId, singletonList(new OrderRejectedEvent(order.getOrderDetails())));
   }
 }
