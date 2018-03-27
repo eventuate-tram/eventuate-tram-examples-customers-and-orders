@@ -1,7 +1,7 @@
 # Eventuate Tram Customers and Orders
 
 This application  demonstrates how to maintain data consistency in an Java/JDBC/JPA-base microservice architecture using http://microservices.io/patterns/data/saga.html[sagas].
-It's choreography-based saga version of https://github.com/eventuate-tram/eventuate-tram-sagas-examples-customers-and-orders[Eventuate Tram Sagas Customers and Orders]
+It's a choreography-based saga version of https://github.com/eventuate-tram/eventuate-tram-sagas-examples-customers-and-orders[Eventuate Tram Sagas Customers and Orders]
 
 The application consists of two services:
 
@@ -45,7 +45,7 @@ Note:
 2. You need to set `DOCKER_HOST_IP` before running Docker Compose.
 This must be an IP address or resolvable hostname.
 It cannot be `localhost`.
-See this guide to setting http://eventuate.io/docs/usingdocker.html[`DOCKER_HOST_IP`] for more information.
+See this http://eventuate.io/docs/usingdocker.html[guide to setting `DOCKER_HOST_IP`] for more information.
 
 == Using the application
 
@@ -58,12 +58,12 @@ You can also use `curl` to interact with the services.
 First, let's create a customer:
 
 ```bash
-$ curl -X POST --header "Content-Type: application/json" -d "{
-  \"creditLimit\": {
-    \"amount\": 5
+$ curl -X POST --header "Content-Type: application/json" -d '{
+  "creditLimit": {
+    "amount": 5
   },
-  \"name\": \"string\"
-}" "http://mydockerhost:8082/customers"
+  "name": "Jane Doe"
+}' http://${DOCKER_HOST_IP}:8082/customers
 
 HTTP/1.1 200
 Content-Type: application/json;charset=UTF-8
@@ -76,12 +76,12 @@ Content-Type: application/json;charset=UTF-8
 Next, create an order:
 
 ```bash
-$ curl -X POST --header "Content-Type: application/json" -d "{
-  \"customerId\": 1,
-  \"orderTotal\": {
-    \"amount\": 4
+$ curl -X POST --header "Content-Type: application/json" -d '{
+  "customerId": 1,
+  "orderTotal": {
+    "amount": 4
   }
-}" "http://mydockerhost:8081/orders"
+}' http://${DOCKER_HOST_IP}:8081/orders
 
 HTTP/1.1 200
 Content-Type: application/json;charset=UTF-8
@@ -95,7 +95,7 @@ Content-Type: application/json;charset=UTF-8
 Finally, check the status of the `Order`:
 
 ```bash
-$ curl -X GET "http://mydockerhost:8081/orders/1"
+$ curl -X GET http://${DOCKER_HOST_IP}:8081/orders/1
 
 HTTP/1.1 200
 Content-Type: application/json;charset=UTF-8
