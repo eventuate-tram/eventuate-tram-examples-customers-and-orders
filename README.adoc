@@ -17,5 +17,99 @@ The `Order Service` uses a choreography-based saga to enforce the customer's cre
 To learn more about why you need sagas if you are using microservices:
 
 * the http://microservices.io/patterns/data/saga.html[Saga pattern]
-* my http://microservices.io/microservices/news/2017/12/04/qconsf2017-presentation.html[QCONSF presentation]
+* my http://microservices.io/microservices/general/2018/03/22/microxchg-sagas.html[microXchg 2018 presentation]
 * read about sagas in my https://www.manning.com/books/microservice-patterns[Microservice patterns book]
+
+== Building and running
+
+Note: you do not need to install Gradle since it will be downloaded automatically.
+You just need to have Java 8 installed.
+
+First, build the application
+
+```
+./gradlew assemble
+```
+
+Next, launch the services using https://docs.docker.com/compose/[Docker Compose]:
+
+```
+export DOCKER_HOST_IP=...
+docker-compose -f docker-compose-mysql.yml build
+docker-compose -f docker-compose-mysql.yml up -d
+```
+
+Note:
+
+1. You can also run the Postgres version using `docker-compose-eventuate-postgres.yml`
+2. You need to set `DOCKER_HOST_IP` before running Docker Compose.
+This must be an IP address or resolvable hostname.
+It cannot be `localhost`.
+See this guide to setting http://eventuate.io/docs/usingdocker.html[`DOCKER_HOST_IP`] for more information.
+
+== Using the application
+
+Once the application has started, you can use the application via the Swagger UI:
+
+* `Order Service` - `http://${DOCKER_HOST_IP}:8081/swagger-ui.html`
+* `Customer Service` - `http://${DOCKER_HOST_IP}:8082/swagger-ui.html`
+
+You can also use `curl` to interact with the services.
+First, let's create a customer:
+
+```bash
+$ curl -X POST --header "Content-Type: application/json" -d "{
+  \"creditLimit\": {
+    \"amount\": 5
+  },
+  \"name\": \"string\"
+}" "http://mydockerhost:8082/customers"
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+
+{
+  "customerId": 1
+}
+```
+
+Next, create an order:
+
+```bash
+$ curl -X POST --header "Content-Type: application/json" -d "{
+  \"customerId\": 1,
+  \"orderTotal\": {
+    \"amount\": 4
+  }
+}" "http://mydockerhost:8081/orders"
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+
+{
+  "orderId": 1
+}
+
+```
+
+Finally, check the status of the `Order`:
+
+```bash
+$ curl -X GET "http://mydockerhost:8081/orders/1"
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+
+{
+  "orderId": 1,
+  "orderState": "APPROVED"
+}
+```
+
+== Got questions?
+
+Don't hesitate to create an issue or see
+
+* https://groups.google.com/d/forum/eventuate-users[Mailing list]
+* https://eventuate-users.slack.com[Slack]. https://eventuateusersslack.herokuapp.com/[Get invite]
+* http://eventuate.io/contact.html[Contact us].
