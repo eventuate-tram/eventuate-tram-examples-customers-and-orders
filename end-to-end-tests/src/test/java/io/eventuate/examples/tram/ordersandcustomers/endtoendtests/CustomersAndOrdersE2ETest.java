@@ -92,7 +92,7 @@ public class CustomersAndOrdersE2ETest{
     OrderState approvedCustomerOrderState = null;
     OrderState rejectedCustomerOrderState = null;
 
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 100; i++) {
       try {
         customerViewResponseEntity = restTemplate.getForEntity(customerHistoryUrl,
                 CustomerView.class);

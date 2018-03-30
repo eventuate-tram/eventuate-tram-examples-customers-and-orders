@@ -82,7 +82,7 @@ orderhistoryservice:
     SPRING_PROFILES_ACTIVE: EventuatePolling
 
 zookeeper:
-  image: eventuateio/eventuateio-local-zookeeper:0.17.0.RELEASE
+  image: eventuateio/eventuateio-local-zookeeper:0.18.0.RELEASE
   ports:
     - 2181:2181
     - 2888:2888
@@ -90,7 +90,7 @@ zookeeper:
 
 
 kafka:
-  image: eventuateio/eventuateio-local-kafka:0.17.0.RELEASE
+  image: eventuateio/eventuateio-local-kafka:0.18.0.RELEASE
   ports:
     - 9092:9092
   links:
@@ -118,7 +118,7 @@ mongodb:
     - "27017:27017"
 
 cdcservice:
-  image: eventuateio/eventuate-tram-cdc-mysql-service:0.6.0.RELEASE
+  image: test-eventuate-tram-cdc-mysql-service
   ports:
     - "8099:8080"
   links:
