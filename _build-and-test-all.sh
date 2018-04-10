@@ -3,7 +3,7 @@
 set -e
 
 
-. ./set-env-${DATABASE?}${MODE?}.sh
+. ./set-env-${DATABASE?}.sh
 
 docker-compose -f docker-compose-${DATABASE?}${MODE?}.yml down -v
 
