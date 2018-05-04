@@ -75,7 +75,7 @@ kafka:
 
 
 mysql:
-  image: eventuateio/eventuate-tram-mysql:0.6.0.RELEASE
+  image: eventuateio/eventuate-tram-mysql:0.7.0.RELEASE
   ports:
     - 3306:3306
   environment:
@@ -92,7 +92,7 @@ mongodb:
     - "27017:27017"
 
 cdcservice:
-  image: test-eventuate-tram-cdc-mysql-service
+  image: eventuateio/eventuate-tram-cdc-mysql-service:0.7.0.RELEASE
   ports:
     - "8099:8080"
   links:

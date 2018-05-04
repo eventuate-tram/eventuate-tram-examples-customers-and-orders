@@ -75,7 +75,7 @@ kafka:
 
 
 postgres:
-  image: eventuateio/eventuate-tram-postgres:0.6.0.RELEASE
+  image: eventuateio/eventuate-tram-postgres:0.7.0.RELEASE
   ports:
     - 5432:5432
   environment:
@@ -91,7 +91,7 @@ mongodb:
     - "27017:27017"
 
 cdcservice:
-  image: test-eventuate-tram-cdc-mysql-service
+  image: eventuateio/eventuate-tram-cdc-mysql-service:0.7.0.RELEASE
   ports:
     - "8099:8080"
   links:
