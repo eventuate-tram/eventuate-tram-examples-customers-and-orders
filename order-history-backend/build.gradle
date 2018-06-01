@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.avast.gradle:docker-compose-gradle-plugin:$dockerComposePluginVersion"
+    }
+}
+
+apply plugin: VerifyMongoDBConfigurationPlugin
+
+apply plugin: 'docker-compose'
+
+dockerCompose.isRequiredBy(test)
+
+dockerCompose {
+    useComposeFiles = ['docker-compose-integration-tests.yml']
+}
+
+dependencies {
+    compile project(":order-history-common")
+
+    compile "io.eventuate.tram.core:eventuate-tram-jdbc-kafka:$eventuateTramVersion"
+
+    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    compile "io.eventuate.client.java:eventuate-client-java-spring:$eventuateClientVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+}

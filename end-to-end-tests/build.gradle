@@ -1,4 +1,5 @@
 dependencies {
+    compile project(":order-history-common")
     compile project(":customer-web-api")
     compile project(":order-web-api")
 

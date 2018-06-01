@@ -1,10 +1,14 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreatedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.tram.events.ResultWithEvents;
 
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.Map;
+
+import static java.util.Collections.singletonList;
 
 @Entity
 @Table(name="Customer")
@@ -35,8 +39,22 @@ public class Customer {
     this.creditReservations = Collections.emptyMap();
   }
 
+  public static ResultWithEvents<Customer> create(String name, Money creditLimit) {
+    Customer customer = new Customer(name, creditLimit);
+    return new ResultWithEvents<>(customer,
+            singletonList(new CustomerCreatedEvent(customer.getName(), customer.getCreditLimit())));
+  }
+
   public Long getId() {
     return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public Money getCreditLimit() {
+    return creditLimit;
   }
 
   public void reserveCredit(Long orderId, Money orderTotal) {
