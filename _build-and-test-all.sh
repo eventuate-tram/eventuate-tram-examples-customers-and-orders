@@ -5,7 +5,7 @@ set -e
 
 . ./set-env-${DATABASE?}.sh
 
-docker-compose -f docker-compose-${DATABASE?}${MODE?}.yml down -v
+docker-compose -f docker-compose-${DATABASE?}${MODE?}.yml down --remove-orphans -v
 
 docker-compose -f docker-compose-${DATABASE?}${MODE?}.yml up -d --build zookeeper ${DATABASE?} kafka
 
@@ -23,4 +23,4 @@ docker-compose -f docker-compose-${DATABASE?}${MODE?}.yml up -d --build
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 
-docker-compose -f docker-compose-${DATABASE?}${MODE?}.yml down -v
+docker-compose -f docker-compose-${DATABASE?}${MODE?}.yml down --remove-orphans -v
