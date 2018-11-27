@@ -1,116 +1,118 @@
-orderservice:
-  build: ./order-service/
-  ports:
-    - "8081:8080"
-  volumes:
-    - ./build/libs:/app
-  links:
-    - postgres
-    - kafka
-    - zookeeper
-    - cdcservice
-  environment:
-    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
-    SPRING_DATASOURCE_USERNAME: eventuate
-    SPRING_DATASOURCE_PASSWORD: eventuate
-    SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-    EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+version: '3'
+services:
+  orderservice:
+    build: ./order-service/
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./build/libs:/app
+    depends_on:
+      - postgres
+      - kafka
+      - zookeeper
+      - cdcservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
+      SPRING_DATASOURCE_USERNAME: eventuate
+      SPRING_DATASOURCE_PASSWORD: eventuate
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
-customerservice:
-  build: ./customer-service/
-  ports:
-    - "8082:8080"
-  volumes:
-    - ./build/libs:/app
-  links:
-    - postgres
-    - kafka
-    - zookeeper
-    - cdcservice
-  environment:
-    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
-    SPRING_DATASOURCE_USERNAME: eventuate
-    SPRING_DATASOURCE_PASSWORD: eventuate
-    SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-    EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+  customerservice:
+    build: ./customer-service/
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./build/libs:/app
+    depends_on:
+      - postgres
+      - kafka
+      - zookeeper
+      - cdcservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
+      SPRING_DATASOURCE_USERNAME: eventuate
+      SPRING_DATASOURCE_PASSWORD: eventuate
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
-orderhistoryservice:
-  build: ./order-history-view-service/
-  ports:
-    - "8083:8080"
-  links:
-    - mongodb
-    - postgres
-    - kafka
-    - zookeeper
-  environment:
-    SPRING_DATA_MONGODB_URI: mongodb://mongodb/clients_and_orders
-    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
-    SPRING_DATASOURCE_USERNAME: eventuate
-    SPRING_DATASOURCE_PASSWORD: eventuate
-    SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-    EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+  orderhistoryservice:
+    build: ./order-history-view-service/
+    ports:
+      - "8083:8080"
+    depends_on:
+      - mongodb
+      - postgres
+      - kafka
+      - zookeeper
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb/clients_and_orders
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
+      SPRING_DATASOURCE_USERNAME: eventuate
+      SPRING_DATASOURCE_PASSWORD: eventuate
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
-zookeeper:
-  image: eventuateio/eventuateio-local-zookeeper:0.21.0.RELEASE
-  ports:
-    - 2181:2181
-    - 2888:2888
-    - 3888:3888
-
-
-kafka:
-  image: eventuateio/eventuateio-local-kafka:0.21.0.RELEASE
-  ports:
-    - 9092:9092
-  links:
-    - zookeeper
-  environment:
-    - ADVERTISED_HOST_NAME=${DOCKER_HOST_IP}
-    - KAFKA_HEAP_OPTS=-Xmx320m -Xms320m
-    - ZOOKEEPER_SERVERS=zookeeper:2181
+  zookeeper:
+    image: eventuateio/eventuateio-local-zookeeper:0.22.1.RELEASE
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
 
 
-postgres:
-  image: eventuateio/eventuate-tram-postgres:0.10.0.RELEASE
-  ports:
-    - 5432:5432
-  environment:
-    POSTGRES_USER: eventuate
-    POSTGRES_PASSWORD: eventuate
+  kafka:
+    image: eventuateio/eventuateio-local-kafka:0.22.1.RELEASE
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    environment:
+      - ADVERTISED_HOST_NAME=${DOCKER_HOST_IP}
+      - KAFKA_HEAP_OPTS=-Xmx320m -Xms320m
+      - ZOOKEEPER_SERVERS=zookeeper:2181
 
 
-mongodb:
-  image: mongo:3.0.4
-  hostname: mongodb
-  command: mongod --smallfiles
-  ports:
-    - "27017:27017"
+  postgres:
+    image: eventuateio/eventuate-tram-postgres:0.11.1.RELEASE
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: eventuate
+      POSTGRES_PASSWORD: eventuate
 
-cdcservice:
-  image: eventuateio/eventuate-tram-cdc-mysql-service:0.10.0.RELEASE
-  ports:
-    - "8099:8080"
-  links:
-    - postgres
-    - kafka
-    - zookeeper
-  environment:
-    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
-    SPRING_DATASOURCE_USERNAME: eventuate
-    SPRING_DATASOURCE_PASSWORD: eventuate
-    SPRING_DATASOURCE_TEST_ON_BORROW: "true"
-    SPRING_DATASOURCE_VALIDATION_QUERY: SELECT 1
-    SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-    EVENTUATELOCAL_CDC_POLLING_INTERVAL_IN_MILLISECONDS: 500
-    EVENTUATELOCAL_CDC_MAX_EVENTS_PER_POLLING: 1000
-    EVENTUATELOCAL_CDC_MAX_ATTEMPTS_FOR_POLLING: 100
-    EVENTUATELOCAL_CDC_POLLING_RETRY_INTERVAL_IN_MILLISECONDS: 500
-    EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
-    EVENTUATELOCAL_CDC_BINLOG_CLIENT_ID: 1234567890
-    EVENTUATELOCAL_CDC_SOURCE_TABLE_NAME: message
-    SPRING_PROFILES_ACTIVE: EventuatePolling
+
+  mongodb:
+    image: mongo:3.0.4
+    hostname: mongodb
+    command: mongod --smallfiles
+    ports:
+      - "27017:27017"
+
+  cdcservice:
+    image: eventuateio/eventuate-tram-cdc-mysql-service:0.11.1.RELEASE
+    ports:
+      - "8099:8080"
+    depends_on:
+      - postgres
+      - kafka
+      - zookeeper
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
+      SPRING_DATASOURCE_USERNAME: eventuate
+      SPRING_DATASOURCE_PASSWORD: eventuate
+      SPRING_DATASOURCE_TEST_ON_BORROW: "true"
+      SPRING_DATASOURCE_VALIDATION_QUERY: SELECT 1
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      EVENTUATELOCAL_CDC_POLLING_INTERVAL_IN_MILLISECONDS: 500
+      EVENTUATELOCAL_CDC_MAX_EVENTS_PER_POLLING: 1000
+      EVENTUATELOCAL_CDC_MAX_ATTEMPTS_FOR_POLLING: 100
+      EVENTUATELOCAL_CDC_POLLING_RETRY_INTERVAL_IN_MILLISECONDS: 500
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+      EVENTUATELOCAL_CDC_BINLOG_CLIENT_ID: 1234567890
+      EVENTUATELOCAL_CDC_SOURCE_TABLE_NAME: message
+      SPRING_PROFILES_ACTIVE: EventuatePolling
