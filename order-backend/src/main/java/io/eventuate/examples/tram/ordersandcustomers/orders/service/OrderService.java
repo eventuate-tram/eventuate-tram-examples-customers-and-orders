@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static java.util.Collections.singletonList;
 
+@Transactional
 public class OrderService {
 
   @Autowired
@@ -20,7 +21,6 @@ public class OrderService {
   @Autowired
   private OrderRepository orderRepository;
 
-  @Transactional
   public Order createOrder(OrderDetails orderDetails) {
     ResultWithEvents<Order> orderWithEvents = Order.createOrder(orderDetails);
     Order order = orderWithEvents.result;
@@ -30,14 +30,18 @@ public class OrderService {
   }
 
   public void approveOrder(Long orderId) {
-    Order order = orderRepository.findOne(orderId);
+    Order order = orderRepository
+            .findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException(String.format("order with id %s not found", orderId)));
     order.noteCreditReserved();
     domainEventPublisher.publish(Order.class,
             orderId, singletonList(new OrderApprovedEvent(order.getOrderDetails())));
   }
 
   public void rejectOrder(Long orderId) {
-    Order order = orderRepository.findOne(orderId);
+    Order order = orderRepository
+            .findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException(String.format("order with id %s not found", orderId)));
     order.noteCreditReservationFailed();
     domainEventPublisher.publish(Order.class,
             orderId, singletonList(new OrderRejectedEvent(order.getOrderDetails())));

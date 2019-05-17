@@ -29,7 +29,7 @@ public class CustomerViewRepositoryIntegrationTest {
     String customerName = "Fred";
 
     customerViewRepository.addCustomer(customerId, customerName, creditLimit);
-    CustomerView customerView = customerViewRepository.findOne(customerId);
+    CustomerView customerView = customerViewRepository.findById(customerId).orElseThrow(IllegalArgumentException::new);
 
     assertEquals(customerId, customerView.getId());
     assertEquals(customerName, customerView.getName());

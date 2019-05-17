@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistoryviewservice.web;
 
 import io.eventuate.examples.tram.ordersandcustomers.commonswagger.CommonSwaggerConfiguration;
-import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

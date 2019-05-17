@@ -22,13 +22,9 @@ public class CustomerOrderHistoryController {
 
   @RequestMapping(value="/customers/{customerId}", method= RequestMethod.GET)
   public ResponseEntity<CustomerView> getCustomer(@PathVariable Long customerId) {
-    CustomerView customer = customerViewRepository.findOne(customerId);
-    System.out.println("Found customer=" + customer + " for " + customerId);
-    if (customer == null)
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    else
-      return new ResponseEntity<>(customer, HttpStatus.OK);
+    return customerViewRepository
+            .findById(customerId)
+            .map(c -> new ResponseEntity<>(c, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
-
-
 }
