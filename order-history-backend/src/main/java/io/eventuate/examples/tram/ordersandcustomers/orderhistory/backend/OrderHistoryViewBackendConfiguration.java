@@ -1,21 +1,21 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
+import io.eventuate.jdbckafka.TramJdbcKafkaConfiguration;
 import io.eventuate.tram.consumer.common.NoopDuplicateMessageDetector;
-import io.eventuate.tram.consumer.kafka.TramConsumerKafkaConfiguration;
 import io.eventuate.tram.events.publisher.TramEventsPublisherConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
-import io.eventuate.tram.messaging.consumer.MessageConsumer;
-import io.eventuate.tram.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
+import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
+import io.eventuate.tram.events.subscriber.TramEventSubscriberConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({OrderHistoryViewMongoConfiguration.class,
-        TramConsumerKafkaConfiguration.class,
         TramEventsPublisherConfiguration.class,
-        TramMessageProducerJdbcConfiguration.class,
-        NoopDuplicateMessageDetector.class})
+        TramJdbcKafkaConfiguration.class,
+        NoopDuplicateMessageDetector.class,
+        TramEventSubscriberConfiguration.class})
 public class OrderHistoryViewBackendConfiguration {
 
   @Bean
@@ -24,11 +24,8 @@ public class OrderHistoryViewBackendConfiguration {
   }
 
   @Bean("orderHistoryDomainEventDispatcher")
-  public DomainEventDispatcher orderHistoryDomainEventDispatcher(OrderHistoryEventConsumer orderHistoryEventConsumer,
-                                                                 MessageConsumer messageConsumer) {
-
-    return new DomainEventDispatcher("orderHistoryServiceEvents",
-            orderHistoryEventConsumer.domainEventHandlers(), messageConsumer);
+  public DomainEventDispatcher orderHistoryDomainEventDispatcher(OrderHistoryEventConsumer orderHistoryEventConsumer, DomainEventDispatcherFactory domainEventDispatcherFactory) {
+    return domainEventDispatcherFactory.make("orderHistoryServiceEvents", orderHistoryEventConsumer.domainEventHandlers());
   }
 
   @Bean
@@ -37,10 +34,7 @@ public class OrderHistoryViewBackendConfiguration {
   }
 
   @Bean("customerHistoryDomainEventDispatcher")
-  public DomainEventDispatcher customerHistoryDomainEventDispatcher(CustomerHistoryEventConsumer customerHistoryEventConsumer,
-                                                                    MessageConsumer messageConsumer) {
-
-    return new DomainEventDispatcher("customerHistoryServiceEvents",
-            customerHistoryEventConsumer.domainEventHandlers(), messageConsumer);
+  public DomainEventDispatcher customerHistoryDomainEventDispatcher(CustomerHistoryEventConsumer customerHistoryEventConsumer, DomainEventDispatcherFactory domainEventDispatcherFactory) {
+    return domainEventDispatcherFactory.make("customerHistoryServiceEvents", customerHistoryEventConsumer.domainEventHandlers());
   }
 }

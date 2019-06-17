@@ -57,7 +57,7 @@ services:
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
   zookeeper:
-    image: eventuateio/eventuateio-local-zookeeper:0.30.2.RELEASE
+    image: eventuateio/eventuate-zookeeper:0.4.0.RELEASE
     ports:
       - 2181:2181
       - 2888:2888
@@ -65,7 +65,7 @@ services:
 
 
   kafka:
-    image: eventuateio/eventuateio-local-kafka:0.30.2.RELEASE
+    image: eventuateio/eventuate-kafka:0.3.0.RELEASE
     ports:
       - 9092:9092
     depends_on:
@@ -77,7 +77,7 @@ services:
 
 
   mysql:
-    image: eventuateio/eventuate-tram-mysql:0.21.2.RELEASE
+    image: eventuateio/eventuate-mysql:0.5.0.RELEASE
     ports:
       - 3306:3306
     environment:
@@ -94,7 +94,7 @@ services:
       - "27017:27017"
 
   cdcservice:
-    image: eventuateio/eventuate-tram-cdc-mysql-service:0.21.2.RELEASE
+    image: eventuateio/eventuate-cdc-service:0.3.0.RELEASE
     ports:
       - "8099:8080"
     depends_on:

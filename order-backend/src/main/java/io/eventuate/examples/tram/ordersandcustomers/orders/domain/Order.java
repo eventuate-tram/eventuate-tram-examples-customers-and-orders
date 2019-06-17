@@ -4,7 +4,7 @@ package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCreatedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
-import io.eventuate.tram.events.ResultWithEvents;
+import io.eventuate.tram.events.publisher.ResultWithEvents;
 
 import javax.persistence.*;
 

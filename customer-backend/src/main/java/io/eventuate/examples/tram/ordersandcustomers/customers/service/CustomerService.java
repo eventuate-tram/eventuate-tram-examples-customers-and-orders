@@ -3,8 +3,8 @@ package io.eventuate.examples.tram.ordersandcustomers.customers.service;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerRepository;
-import io.eventuate.tram.events.ResultWithEvents;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
+import io.eventuate.tram.events.publisher.ResultWithEvents;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CustomerService {

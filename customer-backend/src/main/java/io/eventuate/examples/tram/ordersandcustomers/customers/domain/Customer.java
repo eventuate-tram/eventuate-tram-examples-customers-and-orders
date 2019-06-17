@@ -2,7 +2,7 @@ package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreatedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
-import io.eventuate.tram.events.ResultWithEvents;
+import io.eventuate.tram.events.publisher.ResultWithEvents;
 
 import javax.persistence.*;
 import java.util.Collections;

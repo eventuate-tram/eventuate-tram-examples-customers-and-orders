@@ -2,13 +2,12 @@ package io.eventuate.examples.tram.ordersandcustomers.orders;
 
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.CustomerEventConsumer;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
-import io.eventuate.tram.consumer.common.NoopDuplicateMessageDetector;
+import io.eventuate.jdbckafka.TramJdbcKafkaConfiguration;
 import io.eventuate.tram.consumer.common.TramNoopDuplicateMessageDetectorConfiguration;
-import io.eventuate.tram.consumer.kafka.TramConsumerKafkaConfiguration;
 import io.eventuate.tram.events.publisher.TramEventsPublisherConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
-import io.eventuate.tram.messaging.consumer.MessageConsumer;
-import io.eventuate.tram.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
+import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
+import io.eventuate.tram.events.subscriber.TramEventSubscriberConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +17,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories
 @EnableAutoConfiguration
-@Import({TramConsumerKafkaConfiguration.class,
+@Import({TramJdbcKafkaConfiguration.class,
         TramEventsPublisherConfiguration.class,
-        TramMessageProducerJdbcConfiguration.class,
-        TramNoopDuplicateMessageDetectorConfiguration.class})
+        TramNoopDuplicateMessageDetectorConfiguration.class,
+        TramEventSubscriberConfiguration.class})
 public class OrderConfiguration {
 
   @Bean
@@ -36,7 +35,7 @@ public class OrderConfiguration {
   }
 
   @Bean
-  public DomainEventDispatcher domainEventDispatcher(CustomerEventConsumer customerEventConsumer, MessageConsumer messageConsumer) {
-    return new DomainEventDispatcher("consumerServiceEvents", customerEventConsumer.domainEventHandlers(), messageConsumer);
+  public DomainEventDispatcher domainEventDispatcher(CustomerEventConsumer customerEventConsumer, DomainEventDispatcherFactory domainEventDispatcherFactory) {
+    return domainEventDispatcherFactory.make("consumerServiceEvents", customerEventConsumer.domainEventHandlers());
   }
 }
