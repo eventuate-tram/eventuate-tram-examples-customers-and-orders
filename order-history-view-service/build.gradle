@@ -9,12 +9,13 @@ buildscript {
 }
 
 apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
 
 dependencies {
     compile project(":order-history-backend")
     compile project(":common-swagger")
 
+    compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
-    compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: '0.25.0.RELEASE'
 }

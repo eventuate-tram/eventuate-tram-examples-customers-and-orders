@@ -2,12 +2,12 @@ package io.eventuate.examples.tram.ordersandcustomers.orders;
 
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.CustomerEventConsumer;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
-import io.eventuate.jdbckafka.TramJdbcKafkaConfiguration;
 import io.eventuate.tram.consumer.common.TramNoopDuplicateMessageDetectorConfiguration;
 import io.eventuate.tram.events.publisher.TramEventsPublisherConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
 import io.eventuate.tram.events.subscriber.TramEventSubscriberConfiguration;
+import io.eventuate.tram.jdbckafka.TramJdbcKafkaConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
