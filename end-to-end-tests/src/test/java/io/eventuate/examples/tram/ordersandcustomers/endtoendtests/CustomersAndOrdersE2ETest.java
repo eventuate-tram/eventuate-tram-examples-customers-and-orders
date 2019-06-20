@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
@@ -83,7 +84,7 @@ public class CustomersAndOrdersE2ETest{
     assertOrderState(order2Id, OrderState.REJECTED);
 
 
-    Eventually.eventually(() -> {
+    Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
       CustomerView customerView = getCustomerView(customerId);
 
       Map<Long, OrderInfo> orders = customerView.getOrders();
@@ -118,7 +119,7 @@ public class CustomersAndOrdersE2ETest{
   }
 
   private void assertOrderState(Long id, OrderState expectedState) {
-    Eventually.eventually(() -> {
+    Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
       ResponseEntity<GetOrderResponse> response =
               restTemplate.getForEntity(baseUrlOrders("orders/" + id), GetOrderResponse.class);
 
