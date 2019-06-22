@@ -9,7 +9,7 @@ jobs:
           key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}
       - run:
           command: |
-            export TERM=dumb
+            . ./.circleci/setenv-circle-ci.sh
             ./gradlew testClasses
       - save_cache:
           paths:
@@ -17,15 +17,15 @@ jobs:
           key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}
       - run:
           command: |
-            export TERM=dumb
+            . ./.circleci/setenv-circle-ci.sh
             ./build-and-test-all-mysql-binlog.sh
       - run:
           command: |
-            export TERM=dumb
+            . ./.circleci/setenv-circle-ci.sh
             ./build-and-test-all-postgres-polling.sh
       - run:
           command: |
-            export TERM=dumb
+            . ./.circleci/setenv-circle-ci.sh
             ./build-and-test-all-postgres-wal.sh
       - run:
           name: Save test results
