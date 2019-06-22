@@ -32,8 +32,12 @@ jobs:
           command: |
             mkdir -p ~/junit/
             find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+            sudo bash -c 'find /var/lib/docker/containers -name "*-json.log" -exec cp {} ~/container-logs \;'
+            sudo bash -c 'find  ~/container-logs -type f -exec chown circleci {} \;'
           when: always
       - store_test_results:
           path: ~/junit
       - store_artifacts:
           path: ~/junit
+      - store_artifacts:
+          path: ~/container-logs
