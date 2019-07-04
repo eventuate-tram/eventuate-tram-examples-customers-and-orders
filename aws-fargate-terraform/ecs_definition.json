@@ -1,0 +1,233 @@
+[
+    {
+      "dnsSearchDomains": null,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": null,
+        "options": {
+          "awslogs-group": "/ecs/eventuate",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "entryPoint": null,
+      "portMappings": [
+        {
+          "hostPort": 2181,
+          "protocol": "tcp",
+          "containerPort": 2181
+        },
+        {
+          "hostPort": 2888,
+          "protocol": "tcp",
+          "containerPort": 2888
+        },
+        {
+          "hostPort": 3888,
+          "protocol": "tcp",
+          "containerPort": 3888
+        }
+      ],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 340,
+      "environment": [],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": null,
+      "memoryReservation": 512,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "eventuateio/eventuateio-local-zookeeper:0.18.0.RELEASE",
+      "startTimeout": null,
+      "dependsOn": null,
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": false,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "zookeeper"
+    },
+    {
+      "dnsSearchDomains": null,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": null,
+        "options": {
+          "awslogs-group": "/ecs/eventuate",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "entryPoint": null,
+      "portMappings": [
+        {
+          "hostPort": 9092,
+          "protocol": "tcp",
+          "containerPort": 9092
+        }
+      ],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 340,
+      "environment": [
+        {
+          "name": "ADVERTISED_HOST_NAME",
+          "value": "127.0.0.1"
+        },
+        {
+          "name": "KAFKA_HEAP_OPTS",
+          "value": "-Xmx320m -Xms320m"
+        },
+        {
+          "name": "ZOOKEEPER_SERVERS",
+          "value": "127.0.0.1:2181"
+        }
+      ],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": null,
+      "memoryReservation": 512,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "eventuateio/eventuateio-local-kafka:0.18.0.RELEASE",
+      "startTimeout": null,
+      "dependsOn": [
+        {
+          "containerName": "zookeeper",
+          "condition": "START"
+        }
+      ],
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": false,
+      "links": [],
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "kafka"
+    },
+    {
+      "dnsSearchDomains": null,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": null,
+        "options": {
+          "awslogs-group": "/ecs/eventuate",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "entryPoint": null,
+      "portMappings": [
+        {
+          "hostPort": 8099,
+          "protocol": "tcp",
+          "containerPort": 8099
+        },
+        {
+          "hostPort": 8088,
+          "protocol": "tcp",
+          "containerPort": 8088
+        }
+      ],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 340,
+      "environment": [
+        {
+          "name": "EVENTUATELOCAL_CDC_BINLOG_CLIENT_ID",
+          "value": "1234567890"
+        },
+        {
+          "name": "EVENTUATELOCAL_CDC_DB_PASSWORD",
+          "value": "${db_pwd}"
+        },
+        {
+          "name": "EVENTUATELOCAL_CDC_DB_USER_NAME",
+          "value": "${db_user}"
+        },
+        {
+          "name": "EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS",
+          "value": "127.0.0.1:9092"
+        },
+        {
+          "name": "EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING",
+          "value": "127.0.0.1:2181"
+        },
+        {
+          "name": "SPRING_DATASOURCE_DRIVER_CLASS_NAME",
+          "value": "com.mysql.jdbc.Driver"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "${db_pwd}"
+        },
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "${db_url}"
+        },
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "${db_user}"
+        }
+      ],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": null,
+      "memoryReservation": 1000,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "eventuateio/eventuate-tram-cdc-mysql-service:0.7.0.RELEASE",
+      "startTimeout": null,
+      "dependsOn": [
+        {
+          "containerName": "kafka",
+          "condition": "START"
+        }
+      ],
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": true,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "cdcservice"
+    }
+  ]

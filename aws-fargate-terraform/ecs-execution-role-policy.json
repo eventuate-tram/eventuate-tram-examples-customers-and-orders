@@ -1,0 +1,52 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "SecretsManagerDbCredentialsAccess",
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:PutResourcePolicy",
+        "secretsmanager:PutSecretValue",
+        "secretsmanager:DeleteSecret",
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:TagResource"
+      ],
+      "Resource": "arn:aws:secretsmanager:*:*:secret:rds-db-credentials/*"
+    },
+    {
+      "Sid": "RDSDataServiceAccess",
+      "Effect": "Allow",
+      "Action": [
+        "dbqms:CreateFavoriteQuery",
+        "dbqms:DescribeFavoriteQueries",
+        "dbqms:UpdateFavoriteQuery",
+        "dbqms:DeleteFavoriteQueries",
+        "dbqms:GetQueryString",
+        "dbqms:CreateQueryHistory",
+        "dbqms:DescribeQueryHistory",
+        "dbqms:UpdateQueryHistory",
+        "dbqms:DeleteQueryHistory",
+        "dbqms:DescribeQueryHistory",
+        "rds-data:ExecuteSql",
+        "secretsmanager:CreateSecret",
+        "secretsmanager:ListSecrets",
+        "secretsmanager:GetRandomPassword",
+        "tag:GetResources"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
