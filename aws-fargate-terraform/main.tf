@@ -21,6 +21,7 @@ resource "aws_db_instance" "mysql_instance" {
   skip_final_snapshot  = true
   publicly_accessible  = true
   parameter_group_name = "${aws_db_parameter_group.mysql_parameter_group.name}"
+  vpc_security_group_ids = ["${aws_security_group.sg-rds.id}"]
 
   provisioner "local-exec" {
     command = <<EOF
@@ -38,4 +39,3 @@ resource "aws_db_parameter_group" "mysql_parameter_group" {
 output "mysql_endpoint" {
   value = "${aws_db_instance.mysql_instance.endpoint}"
 }
-

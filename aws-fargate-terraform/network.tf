@@ -67,4 +67,3 @@ resource "aws_internet_gateway" "igw_eventuate" {
 }
 
 resource "aws_eip" "nat" {}
-

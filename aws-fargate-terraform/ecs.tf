@@ -42,6 +42,7 @@ resource "template_file" "app_task_definition" {
     db_url  = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
     db_pwd  = "${aws_db_instance.mysql_instance.password}"
     db_user = "${aws_db_instance.mysql_instance.username}"
+    logs_region = "${var.region}"
   }
 }
 
@@ -117,4 +118,3 @@ resource "aws_iam_role_policy" "ecs_service_role_policy" {
   policy = "${data.aws_iam_policy_document.ecs_service_policy.json}"
   role   = "${aws_iam_role.ecs_role.id}"
 }
-
