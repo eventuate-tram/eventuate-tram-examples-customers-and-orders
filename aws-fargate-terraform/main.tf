@@ -21,11 +21,12 @@ resource "aws_db_instance" "mysql_instance" {
   skip_final_snapshot  = true
   publicly_accessible  = true
   parameter_group_name = "${aws_db_parameter_group.mysql_parameter_group.name}"
+  vpc_security_group_ids = ["${aws_security_group.sg-rds.id}"]
 
   provisioner "local-exec" {
     command = <<EOF
-        mysqlsh -h $(echo ${aws_db_instance.mysql_instance.endpoint} | sed -e 's/:.*//') -u ${aws_db_instance.mysql_instance.username} --password=${aws_db_instance.mysql_instance.password} --sql  < 1.initialize-database.sql;
-        mysqlsh -h $(echo ${aws_db_instance.mysql_instance.endpoint} | sed -e 's/:.*//') -u ${aws_db_instance.mysql_instance.username} --password=${aws_db_instance.mysql_instance.password} --sql  < 2.initialize-database.sql
+        mysqlsh --user=${aws_db_instance.mysql_instance.username} --password=${aws_db_instance.mysql_instance.password} --host ${aws_db_instance.mysql_instance.address} --sql  < 1.initialize-database.sql
+        mysqlsh --user=${aws_db_instance.mysql_instance.username} --password=${aws_db_instance.mysql_instance.password} --host ${aws_db_instance.mysql_instance.address} --sql  < 2.initialize-database.sql
         EOF
   }
 }
@@ -38,9 +39,3 @@ resource "aws_db_parameter_group" "mysql_parameter_group" {
 output "mysql_endpoint" {
   value = "${aws_db_instance.mysql_instance.endpoint}"
 }
-
-//provider "mysql" {
-//  endpoint = "${aws_db_instance.mysql_instance.endpoint}"
-//  username = "${aws_db_instance.mysql_instance.username}"
-//  password = "${aws_db_instance.mysql_instance.password}"
-//}
