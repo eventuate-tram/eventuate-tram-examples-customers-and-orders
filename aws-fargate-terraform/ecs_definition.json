@@ -37,6 +37,7 @@
     "dnsServers": null,
     "mountPoints": [],
     "workingDirectory": null,
+      "secrets": null,
     "dockerSecurityOptions": null,
     "memory": null,
     "memoryReservation": 512,
