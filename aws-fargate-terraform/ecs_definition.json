@@ -153,6 +153,10 @@
         "condition": "START"
       }
     ],
-    "name": "cdcservice"
+    "name": "cdcservice",
+    "healthCheck" : {
+      "command" : [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1" ],
+      "startPeriod": 60
+    }
   }
 ]
