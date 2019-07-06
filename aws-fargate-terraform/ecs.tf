@@ -118,3 +118,7 @@ resource "aws_iam_role_policy" "ecs_service_role_policy" {
   policy = "${data.aws_iam_policy_document.ecs_service_policy.json}"
   role   = "${aws_iam_role.ecs_role.id}"
 }
+
+resource "aws_cloudwatch_log_group" "logs_eventuate" {
+  name = "/ecs/eventuate"
+}

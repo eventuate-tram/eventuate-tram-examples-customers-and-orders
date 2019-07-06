@@ -1,16 +1,13 @@
 [
   {
-    "dnsSearchDomains": null,
     "logConfiguration": {
       "logDriver": "awslogs",
-      "secretOptions": null,
       "options": {
         "awslogs-group": "/ecs/eventuate",
         "awslogs-region": "${logs_region}",
         "awslogs-stream-prefix": "ecs"
       }
     },
-    "entryPoint": null,
     "portMappings": [
       {
         "hostPort": 2181,
@@ -28,51 +25,22 @@
         "containerPort": 3888
       }
     ],
-    "command": null,
-    "linuxParameters": null,
     "cpu": 340,
     "environment": [],
-    "resourceRequirements": null,
-    "ulimits": null,
-    "dnsServers": null,
-    "mountPoints": [],
-    "workingDirectory": null,
-      "secrets": null,
-    "dockerSecurityOptions": null,
-    "memory": null,
     "memoryReservation": 512,
-    "volumesFrom": [],
-    "stopTimeout": null,
     "image": "eventuateio/eventuateio-local-zookeeper:0.18.0.RELEASE",
-    "startTimeout": null,
     "dependsOn": null,
-    "disableNetworking": null,
-    "interactive": null,
-    "healthCheck": null,
-    "essential": false,
-    "links": null,
-    "hostname": null,
-    "extraHosts": null,
-    "pseudoTerminal": null,
-    "user": null,
-    "readonlyRootFilesystem": null,
-    "dockerLabels": null,
-    "systemControls": null,
-    "privileged": null,
     "name": "zookeeper"
   },
   {
-    "dnsSearchDomains": null,
     "logConfiguration": {
       "logDriver": "awslogs",
-      "secretOptions": null,
       "options": {
         "awslogs-group": "/ecs/eventuate",
         "awslogs-region": "${logs_region}",
         "awslogs-stream-prefix": "ecs"
       }
     },
-    "entryPoint": null,
     "portMappings": [
       {
         "hostPort": 9092,
@@ -80,8 +48,6 @@
         "containerPort": 9092
       }
     ],
-    "command": null,
-    "linuxParameters": null,
     "cpu": 340,
     "environment": [
       {
@@ -97,52 +63,25 @@
         "value": "127.0.0.1:2181"
       }
     ],
-    "resourceRequirements": null,
-    "ulimits": null,
-    "dnsServers": null,
-    "mountPoints": [],
-    "workingDirectory": null,
-    "secrets": null,
-    "dockerSecurityOptions": null,
-    "memory": null,
     "memoryReservation": 512,
-    "volumesFrom": [],
-    "stopTimeout": null,
     "image": "eventuateio/eventuateio-local-kafka:0.18.0.RELEASE",
-    "startTimeout": null,
     "dependsOn": [
       {
         "containerName": "zookeeper",
         "condition": "START"
       }
     ],
-    "disableNetworking": null,
-    "interactive": null,
-    "healthCheck": null,
-    "essential": false,
-    "links": [],
-    "hostname": null,
-    "extraHosts": null,
-    "pseudoTerminal": null,
-    "user": null,
-    "readonlyRootFilesystem": null,
-    "dockerLabels": null,
-    "systemControls": null,
-    "privileged": null,
     "name": "kafka"
   },
   {
-    "dnsSearchDomains": null,
     "logConfiguration": {
       "logDriver": "awslogs",
-      "secretOptions": null,
       "options": {
         "awslogs-group": "/ecs/eventuate",
         "awslogs-region": "${logs_region}",
         "awslogs-stream-prefix": "ecs"
       }
     },
-    "entryPoint": null,
     "portMappings": [
       {
         "hostPort": 8099,
@@ -155,8 +94,6 @@
         "containerPort": 8088
       }
     ],
-    "command": null,
-    "linuxParameters": null,
     "cpu": 340,
     "environment": [
       {
@@ -196,38 +133,14 @@
         "value": "${db_user}"
       }
     ],
-    "resourceRequirements": null,
-    "ulimits": null,
-    "dnsServers": null,
-    "mountPoints": [],
-    "workingDirectory": null,
-    "secrets": null,
-    "dockerSecurityOptions": null,
-    "memory": null,
     "memoryReservation": 1000,
-    "volumesFrom": [],
-    "stopTimeout": null,
     "image": "eventuateio/eventuate-tram-cdc-mysql-service:0.7.0.RELEASE",
-    "startTimeout": null,
     "dependsOn": [
       {
         "containerName": "kafka",
         "condition": "START"
       }
     ],
-    "disableNetworking": null,
-    "interactive": null,
-    "healthCheck": null,
-    "essential": true,
-    "links": null,
-    "hostname": null,
-    "extraHosts": null,
-    "pseudoTerminal": null,
-    "user": null,
-    "readonlyRootFilesystem": null,
-    "dockerLabels": null,
-    "systemControls": null,
-    "privileged": null,
     "name": "cdcservice"
   }
 ]
