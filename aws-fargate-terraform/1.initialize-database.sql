@@ -1,6 +1,3 @@
-create database eventuate;
-GRANT ALL PRIVILEGES ON eventuate.* TO 'mysqluser'@'%' WITH GRANT OPTION;
-
 USE eventuate;
 
 DROP table IF EXISTS events;
