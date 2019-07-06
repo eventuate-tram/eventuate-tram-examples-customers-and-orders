@@ -22,7 +22,9 @@ resource "aws_db_instance" "mysql_instance" {
   publicly_accessible  = true
   parameter_group_name = "${aws_db_parameter_group.mysql_parameter_group.name}"
   vpc_security_group_ids = ["${aws_security_group.sg-rds.id}"]
-
+  backup_retention_period = "1"
+  apply_immediately = true
+  
   provisioner "local-exec" {
     command = <<EOF
         mysqlsh --user=${aws_db_instance.mysql_instance.username} --password=${aws_db_instance.mysql_instance.password} --host ${aws_db_instance.mysql_instance.address} --sql  < 1.initialize-database.sql
@@ -34,6 +36,11 @@ resource "aws_db_instance" "mysql_instance" {
 resource "aws_db_parameter_group" "mysql_parameter_group" {
   family = "mysql5.7"
   name   = "mysql-cdc"
+
+  parameter {
+   name  = "binlog_format"
+   value = "ROW"
+  }
 }
 
 output "mysql_endpoint" {
