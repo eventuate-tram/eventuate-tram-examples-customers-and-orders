@@ -22,7 +22,7 @@ services:
   customerservice:
     build:
       context: ./customer-service/
-    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-customers-service
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service
     ports:
       - "8082:8080"
     depends_on:
