@@ -28,6 +28,9 @@ jobs:
             . ./.circleci/setenv-circle-ci.sh
             ./build-and-test-all-postgres-wal.sh
       - run:
+          command: |
+            ./publish-docker-images.sh
+      - run:
           name: Save test results
           command: |
             mkdir -p ~/junit ~/container-logs
