@@ -1,7 +1,7 @@
-package io.eventuate.examples.tram.ordersandcustomers.orderhistoryviewservice;
+package io.eventuate.examples.tram.ordersandcustomers.orderhistoryservice;
 
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryViewBackendConfiguration;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistoryviewservice.web.OrderHistoryViewWebConfiguration;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistoryservice.web.OrderHistoryViewWebConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

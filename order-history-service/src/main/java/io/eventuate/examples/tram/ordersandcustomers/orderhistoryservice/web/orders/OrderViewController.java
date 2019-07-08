@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.orderhistoryviewservice.web.orders;
+package io.eventuate.examples.tram.ordersandcustomers.orderhistoryservice.web.orders;
 
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderViewRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.OrderView;

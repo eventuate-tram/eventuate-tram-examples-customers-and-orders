@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.orderhistoryviewservice.web;
+package io.eventuate.examples.tram.ordersandcustomers.orderhistoryservice.web;
 
 import io.eventuate.examples.tram.ordersandcustomers.commonswagger.CommonSwaggerConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;

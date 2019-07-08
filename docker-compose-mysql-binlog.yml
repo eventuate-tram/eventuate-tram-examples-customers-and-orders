@@ -40,8 +40,8 @@ services:
 
   orderhistoryservice:
     build:
-      context: ./order-history-view-service/
-    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-view-service
+      context: ./order-history-service/
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service
     ports:
       - "8083:8080"
     depends_on:
@@ -50,7 +50,7 @@ services:
       - kafka
       - zookeeper
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb/clients_and_orders
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb/customers_and_orders
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
       SPRING_DATASOURCE_USERNAME: mysqluser
       SPRING_DATASOURCE_PASSWORD: mysqlpw
