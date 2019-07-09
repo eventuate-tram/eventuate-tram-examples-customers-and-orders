@@ -84,6 +84,9 @@ Using `Eventuate Tram`, it publishes `Customer` domain events that are consumed 
 
 For more information, see the link:./customer-service-canvas.adoc[microservice canvas for the `Customer Service`].
 
+image::./customer-service-canvas.png[width=300]
+
+
 === Order Service
 
 The `Order Service` implements REST API for managing orders.
@@ -92,12 +95,16 @@ Using `Eventuate Tram`, it publishes `Order` domain events that are consumed by 
 
 For more information, see the link:./order-service-canvas.adoc[microservice canvas for the `Order Service`].
 
+image::./order-service-canvas.png[width=300]
+
 === Order History Service
 
 The `Order History Service` implements REST API for querying a customer's order history
 This service subscribes to events published by the `Order Service` and `Customer Service` and updates a MongoDB-based CQRS view.
 
 For more information, see the link:./order-history-service-canvas.adoc[microservice canvas for the `Order History Service`].
+
+image::./order-history-service-canvas.png[width=300]
 
 == Building and running
 
