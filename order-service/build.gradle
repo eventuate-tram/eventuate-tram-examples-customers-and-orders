@@ -1,5 +1,4 @@
 dependencies {
-    compile project(":common-swagger")
     compile project(":order-backend")
     compile project(":order-web-api")
 

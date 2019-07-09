@@ -13,7 +13,6 @@ apply plugin: "io.spring.dependency-management"
 
 dependencies {
     compile project(":order-history-backend")
-    compile project(":common-swagger")
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-web"

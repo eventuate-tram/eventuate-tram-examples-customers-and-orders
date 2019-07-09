@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.common;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.MoneyDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,7 +16,7 @@ public class CustomerView {
 
   private Map<Long, OrderInfo> orders = new HashMap<>();
   private String name;
-  private Money creditLimit;
+  private MoneyDTO creditLimit;
 
   public void setId(Long id) {
     this.id = id;
@@ -38,11 +38,11 @@ public class CustomerView {
     return name;
   }
 
-  public void setCreditLimit(Money creditLimit) {
+  public void setCreditLimit(MoneyDTO creditLimit) {
     this.creditLimit = creditLimit;
   }
 
-  public Money getCreditLimit() {
+  public MoneyDTO getCreditLimit() {
     return creditLimit;
   }
 }

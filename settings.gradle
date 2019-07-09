@@ -1,5 +1,4 @@
 include 'common'
-include 'common-swagger'
 include 'customer-backend'
 include 'customer-web-api'
 include 'customer-service'

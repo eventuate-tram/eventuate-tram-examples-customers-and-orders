@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.commondomain;
+package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;

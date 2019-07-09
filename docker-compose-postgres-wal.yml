@@ -31,10 +31,10 @@ services:
       - zookeeper
       - cdcservice
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
-      SPRING_DATASOURCE_USERNAME: eventuate
-      SPRING_DATASOURCE_PASSWORD: eventuate
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      DB_URL: jdbc:postgresql://postgres/eventuate
+      DB_USERNAME: eventuate
+      DB_PASSWORD: eventuate
+      DB_DRIVERCLASSNAME: org.postgresql.Driver
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
   
@@ -74,8 +74,7 @@ services:
       - ADVERTISED_HOST_NAME=${DOCKER_HOST_IP}
       - KAFKA_HEAP_OPTS=-Xmx320m -Xms320m
       - ZOOKEEPER_SERVERS=zookeeper:2181
-  
-  
+
   postgres:
     image: eventuateio/eventuate-postgres:0.5.0.RELEASE
     ports:

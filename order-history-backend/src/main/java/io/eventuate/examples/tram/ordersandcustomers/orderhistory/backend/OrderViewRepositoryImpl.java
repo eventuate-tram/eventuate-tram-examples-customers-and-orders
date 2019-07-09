@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.MoneyDTO;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.OrderView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class OrderViewRepositoryImpl implements OrderViewRepositoryCustom {
   }
 
   @Override
-  public void addOrder(Long orderId, Money orderTotal) {
+  public void addOrder(Long orderId, MoneyDTO orderTotal) {
     mongoTemplate.upsert(new Query(where("id").is(orderId)),
             new Update().set("orderTotal", orderTotal), OrderView.class);
   }

@@ -4,16 +4,16 @@ import io.eventuate.tram.events.common.DomainEvent;
 
 public class OrderRejectedEvent implements DomainEvent {
 
-  private OrderDetails orderDetails;
+  private OrderDetailsDTO orderDetails;
 
   public OrderRejectedEvent() {
   }
 
-  public OrderRejectedEvent(OrderDetails orderDetails) {
+  public OrderRejectedEvent(OrderDetailsDTO orderDetails) {
     this.orderDetails = orderDetails;
   }
 
-  public OrderDetails getOrderDetails() {
+  public OrderDetailsDTO getOrderDetails() {
     return orderDetails;
   }
 }

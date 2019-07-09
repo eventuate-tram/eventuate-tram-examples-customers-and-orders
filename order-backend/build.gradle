@@ -1,8 +1,10 @@
 dependencies {
     compile project(":common")
 
-    compile "io.eventuate.tram.core:eventuate-tram-jdbc-kafka:$eventuateTramVersion"
-    compile "io.eventuate.tram.core:eventuate-tram-events:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-jdbc-kafka-spring:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-consumer-common-spring:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-events-spring:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-messaging-spring:$eventuateTramVersion"
 
     compile 'mysql:mysql-connector-java:5.1.36'
     compile ('org.postgresql:postgresql:9.4-1200-jdbc41') {

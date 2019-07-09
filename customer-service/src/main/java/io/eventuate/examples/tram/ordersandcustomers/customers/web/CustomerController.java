@@ -4,24 +4,19 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCust
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerResponse;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
 
-@RestController
+import javax.inject.Inject;
+
+@Controller
 public class CustomerController {
 
+  @Inject
   private CustomerService customerService;
 
-  @Autowired
-  public CustomerController(CustomerService customerService) {
-    this.customerService = customerService;
-  }
-
-  @RequestMapping(value = "/customers", method = RequestMethod.POST)
-  public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequest createCustomerRequest) {
+  @Post(value = "/customers")
+  public CreateCustomerResponse createCustomer(CreateCustomerRequest createCustomerRequest) {
     Customer customer = customerService.createCustomer(createCustomerRequest.getName(), createCustomerRequest.getCreditLimit());
     return new CreateCustomerResponse(customer.getId());
   }

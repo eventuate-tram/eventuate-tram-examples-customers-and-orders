@@ -1,6 +1,5 @@
 dependencies {
     compile "io.eventuate.tram.core:eventuate-tram-events:$eventuateTramVersion"
     compile "commons-lang:commons-lang:2.6"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 }
 

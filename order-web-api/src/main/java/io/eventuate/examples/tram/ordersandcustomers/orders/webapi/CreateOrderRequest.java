@@ -1,21 +1,21 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.webapi;
 
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.MoneyDTO;
 
 public class CreateOrderRequest {
-  private Money orderTotal;
+  private MoneyDTO orderTotal;
   private Long customerId;
 
   public CreateOrderRequest() {
   }
 
-  public CreateOrderRequest(Long customerId, Money orderTotal) {
+  public CreateOrderRequest(Long customerId, MoneyDTO orderTotal) {
     this.customerId = customerId;
     this.orderTotal = orderTotal;
   }
 
-  public Money getOrderTotal() {
+  public MoneyDTO getOrderTotal() {
     return orderTotal;
   }
 

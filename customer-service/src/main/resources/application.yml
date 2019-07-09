@@ -1,0 +1,12 @@
+datasources:
+  default:
+    url: ${DB_URL}
+    driverclassname: ${DB_DRIVERCLASSNAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update

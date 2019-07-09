@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.MoneyDTO;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.OrderInfo;
@@ -21,13 +21,13 @@ public class CustomerViewRepositoryImpl implements CustomerViewRepositoryCustom 
   }
 
   @Override
-  public void addCustomer(Long customerId, String customerName, Money creditLimit) {
+  public void addCustomer(Long customerId, String customerName, MoneyDTO creditLimit) {
     mongoTemplate.upsert(new Query(where("id").is(customerId)),
             new Update().set("name", customerName).set("creditLimit", creditLimit), CustomerView.class);
   }
 
   @Override
-  public void addOrder(Long customerId, Long orderId, Money orderTotal) {
+  public void addOrder(Long customerId, Long orderId, MoneyDTO orderTotal) {
     mongoTemplate.upsert(new Query(where("id").is(customerId)),
             new Update().set("orders." + orderId, new OrderInfo(orderId, orderTotal)), CustomerView.class);
   }

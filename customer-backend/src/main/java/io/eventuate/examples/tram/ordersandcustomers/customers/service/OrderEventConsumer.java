@@ -4,28 +4,30 @@ import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCredit
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerValidationFailedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCreatedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.customers.EventuateMicronautJpaTransactionManagement;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerCreditLimitExceededException;
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerRepository;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.persistence.EntityManager;
 import java.util.Collections;
-import java.util.Optional;
 
+@Singleton
 public class OrderEventConsumer {
   private Logger logger = LoggerFactory.getLogger(getClass());
 
-  @Autowired
-  private CustomerRepository customerRepository;
-
-  @Autowired
+  @Inject
   private DomainEventPublisher domainEventPublisher;
+
+  @Inject
+  private EventuateMicronautJpaTransactionManagement eventuateMicronautJpaTransactionManagement;
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder
@@ -35,6 +37,12 @@ public class OrderEventConsumer {
   }
 
   public void orderCreatedEventHandler(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope) {
+    eventuateMicronautJpaTransactionManagement.doWithJpaTransaction(entityManager -> {
+      orderCreatedEventHandler(domainEventEnvelope, entityManager);
+    });
+  }
+
+  public void orderCreatedEventHandler(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope, EntityManager entityManager) {
 
     Long orderId = Long.parseLong(domainEventEnvelope.getAggregateId());
 
@@ -42,18 +50,15 @@ public class OrderEventConsumer {
 
     Long customerId = orderCreatedEvent.getOrderDetails().getCustomerId();
 
-    Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
+    Customer customer = entityManager.find(Customer.class, customerId);
 
-    if (!possibleCustomer.isPresent()) {
+    if (customer == null) {
       logger.info("Non-existent customer: {}", customerId);
       domainEventPublisher.publish(Customer.class,
               customerId,
               Collections.singletonList(new CustomerValidationFailedEvent(orderId)));
       return;
     }
-
-    Customer customer = possibleCustomer.get();
-
 
     try {
       customer.reserveCredit(orderId, orderCreatedEvent.getOrderDetails().getOrderTotal());

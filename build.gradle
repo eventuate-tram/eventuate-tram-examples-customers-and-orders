@@ -7,10 +7,6 @@ buildscript {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
-
 subprojects {
 
     apply plugin: "java"

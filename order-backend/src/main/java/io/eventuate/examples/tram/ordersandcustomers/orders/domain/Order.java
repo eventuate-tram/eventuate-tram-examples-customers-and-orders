@@ -2,7 +2,7 @@ package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
 
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCreatedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetailsDTO;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 
@@ -32,8 +32,8 @@ public class Order {
     this.state = OrderState.PENDING;
   }
 
-  public static ResultWithEvents<Order> createOrder(OrderDetails orderDetails) {
-    Order order = new Order(orderDetails);
+  public static ResultWithEvents<Order> createOrder(OrderDetailsDTO orderDetails) {
+    Order order = new Order(new OrderDetails(orderDetails.getCustomerId(), new Money(orderDetails.getOrderTotal().getAmount())));
     OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent(orderDetails);
     return new ResultWithEvents<>(order, singletonList(orderCreatedEvent));
   }

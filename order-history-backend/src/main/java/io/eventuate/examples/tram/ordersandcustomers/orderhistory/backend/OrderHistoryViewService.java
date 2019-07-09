@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.MoneyDTO;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -16,11 +16,11 @@ public class OrderHistoryViewService {
     this.orderViewRepository = orderViewRepository;
   }
 
-  public void createCustomer(Long customerId, String customerName, Money creditLimit) {
+  public void createCustomer(Long customerId, String customerName, MoneyDTO creditLimit) {
     customerViewRepository.addCustomer(customerId, customerName, creditLimit);
   }
 
-  public void addOrder(Long customerId, Long orderId, Money orderTotal) {
+  public void addOrder(Long customerId, Long orderId, MoneyDTO orderTotal) {
     customerViewRepository.addOrder(customerId, orderId, orderTotal);
     orderViewRepository.addOrder(orderId, orderTotal);
   }

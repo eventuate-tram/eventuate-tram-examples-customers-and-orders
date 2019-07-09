@@ -1,12 +1,37 @@
+plugins {
+    id "io.spring.dependency-management"
+    id "java"
+    id "com.github.johnrengelman.shadow" version "4.0.2"
+    id "application"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:micronaut-bom:1.1.3'
+    }
+}
+
 dependencies {
-    compile project(":common-swagger")
     compile project(":customer-backend")
     compile project(":customer-web-api")
 
-    compile "org.springframework.boot:spring-boot-starter"
-    compile "org.springframework.boot:spring-boot-starter-actuator"
-    compile "org.springframework.boot:spring-boot-starter-web"
+    annotationProcessor "javax.persistence:javax.persistence-api:2.2"
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut:micronaut-validation"
+    compile "io.micronaut:micronaut-inject"
+    compile "io.micronaut:micronaut-validation"
+    compile "io.micronaut:micronaut-runtime"
+    compile "io.micronaut:micronaut-http-server-netty"
+    runtime "ch.qos.logback:logback-classic:1.2.3"
 }
 
-apply plugin: 'org.springframework.boot'
-apply plugin: "io.spring.dependency-management"
+mainClassName = "io.eventuate.examples.tram.ordersandcustomers.customers.CustomerServiceMain"
+
+shadowJar {
+    mergeServiceFiles()
+}

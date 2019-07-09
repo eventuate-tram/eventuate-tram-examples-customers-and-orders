@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreatedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.MoneyDTO;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 
 import javax.persistence.*;
@@ -39,10 +39,11 @@ public class Customer {
     this.creditReservations = Collections.emptyMap();
   }
 
-  public static ResultWithEvents<Customer> create(String name, Money creditLimit) {
-    Customer customer = new Customer(name, creditLimit);
-    return new ResultWithEvents<>(customer,
-            singletonList(new CustomerCreatedEvent(customer.getName(), customer.getCreditLimit())));
+  public static ResultWithEvents<Customer> create(String name, MoneyDTO creditLimit) {
+    Customer customer = new Customer(name, new Money(creditLimit.getAmount()));
+    CustomerCreatedEvent customerCreatedEvent = new CustomerCreatedEvent(customer.getName(),
+            new MoneyDTO(creditLimit.getAmount()));
+    return new ResultWithEvents<>(customer, singletonList(customerCreatedEvent));
   }
 
   public Long getId() {
@@ -57,9 +58,11 @@ public class Customer {
     return creditLimit;
   }
 
-  public void reserveCredit(Long orderId, Money orderTotal) {
-    if (availableCredit().isGreaterThanOrEqual(orderTotal)) {
-      creditReservations.put(orderId, orderTotal);
+  public void reserveCredit(Long orderId, MoneyDTO orderTotal) {
+    Money order = new Money(orderTotal.getAmount());
+
+    if (availableCredit().isGreaterThanOrEqual(order)) {
+      creditReservations.put(orderId, order);
     } else
       throw new CustomerCreditLimitExceededException();
   }
