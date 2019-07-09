@@ -2,7 +2,7 @@ package io.eventuate.examples.tram.ordersandcustomers.commondomain;
 
 import io.eventuate.tram.events.common.DomainEvent;
 
-public class OrderCreatedEvent implements DomainEvent {
+public class OrderCreatedEvent implements OrderEvent {
 
   private OrderDetails orderDetails;
 

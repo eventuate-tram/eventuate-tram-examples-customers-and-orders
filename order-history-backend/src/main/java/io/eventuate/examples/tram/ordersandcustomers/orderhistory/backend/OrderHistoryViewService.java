@@ -26,12 +26,19 @@ public class OrderHistoryViewService {
   }
 
   public void approveOrder(Long customerId, Long orderId) {
-    customerViewRepository.updateOrderState(customerId, orderId, OrderState.APPROVED);
-    orderViewRepository.updateOrderState(orderId, OrderState.APPROVED);
+    updateOrderState(customerId, orderId, OrderState.APPROVED);
+  }
+
+  private void updateOrderState(Long customerId, Long orderId, OrderState state) {
+    customerViewRepository.updateOrderState(customerId, orderId, state);
+    orderViewRepository.updateOrderState(orderId, state);
   }
 
   public void rejectOrder(Long customerId, Long orderId) {
-    customerViewRepository.updateOrderState(customerId, orderId, OrderState.REJECTED);
-    orderViewRepository.updateOrderState(orderId, OrderState.REJECTED);
+    updateOrderState(customerId, orderId, OrderState.REJECTED);
+  }
+
+  public void cancelOrder(Long customerId, long orderId) {
+    updateOrderState(customerId, orderId, OrderState.CANCELLED);
   }
 }

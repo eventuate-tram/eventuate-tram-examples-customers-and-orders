@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -29,14 +30,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = CustomersAndOrdersE2ETestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class CustomersAndOrdersE2ETest{
+@SpringBootTest(classes = CustomersAndOrdersEndToEndTestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
+public class CustomersAndOrdersEndToEndTest {
 
   @Value("#{systemEnvironment['DOCKER_HOST_IP']}")
   private String hostName;
 
-  private String baseUrlOrders(String path) {
-    return "http://"+hostName+":8081/" + path;
+  private String baseUrlOrders(String... path) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("http://").append(hostName).append(":8081");
+    Arrays.stream(path).forEach(p -> {
+      sb.append('/').append(p);
+    });
+    return sb.toString();
   }
 
   private String baseUrlCustomers(String path) {
@@ -69,6 +75,22 @@ public class CustomersAndOrdersE2ETest{
     Long customerId = System.nanoTime();
     Long orderId = createOrder(customerId, new Money("123.34"));
     assertOrderState(orderId, OrderState.REJECTED);
+  }
+
+  @Test
+  public void shouldCancel() {
+    Long customerId = createCustomer("Fred", new Money("15.00"));
+    Long orderId = createOrder(customerId, new Money("12.34"));
+    assertOrderState(orderId, OrderState.APPROVED);
+    cancelOrder(orderId);
+    assertOrderState(orderId, OrderState.CANCELLED);
+
+    Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
+      CustomerView customerView = getCustomerView(customerId);
+      Map<Long, OrderInfo> orders = customerView.getOrders();
+      assertThat(orders.get(orderId).getState(), is(OrderState.CANCELLED));
+    });
+
   }
 
   @Test
@@ -116,6 +138,11 @@ public class CustomersAndOrdersE2ETest{
   private Long createOrder(Long customerId, Money orderTotal) {
     return restTemplate.postForObject(baseUrlOrders("orders"),
             new CreateOrderRequest(customerId, orderTotal), CreateOrderResponse.class).getOrderId();
+  }
+
+  private void cancelOrder(long orderId) {
+    restTemplate.postForObject(baseUrlOrders("orders", Long.toString(orderId), "cancel"),
+            null, GetOrderResponse.class);
   }
 
   private void assertOrderState(Long id, OrderState expectedState) {

@@ -1,6 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderApprovedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCancelledEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCreatedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderRejectedEvent;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
@@ -19,6 +20,7 @@ public class OrderHistoryEventConsumer {
             .onEvent(OrderCreatedEvent.class, this::orderCreatedEventHandler)
             .onEvent(OrderApprovedEvent.class, this::orderApprovedEventHandler)
             .onEvent(OrderRejectedEvent.class, this::orderRejectedEventHandler)
+            .onEvent(OrderCancelledEvent.class, this::handleOrderCancelledEvent)
             .build();
   }
 
@@ -37,6 +39,12 @@ public class OrderHistoryEventConsumer {
   private void orderRejectedEventHandler(DomainEventEnvelope<OrderRejectedEvent> domainEventEnvelope) {
     OrderRejectedEvent orderRejectedEvent = domainEventEnvelope.getEvent();
     orderHistoryViewService.rejectOrder(orderRejectedEvent.getOrderDetails().getCustomerId(),
+            Long.parseLong(domainEventEnvelope.getAggregateId()));
+  }
+
+  private void handleOrderCancelledEvent(DomainEventEnvelope<OrderCancelledEvent> domainEventEnvelope) {
+    OrderCancelledEvent orderRejectedEvent = domainEventEnvelope.getEvent();
+    orderHistoryViewService.cancelOrder(orderRejectedEvent.getOrderDetails().getCustomerId(),
             Long.parseLong(domainEventEnvelope.getAggregateId()));
   }
 }

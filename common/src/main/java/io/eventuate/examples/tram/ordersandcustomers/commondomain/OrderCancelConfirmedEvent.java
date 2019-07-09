@@ -1,15 +1,13 @@
 package io.eventuate.examples.tram.ordersandcustomers.commondomain;
 
-import io.eventuate.tram.events.common.DomainEvent;
-
-public class OrderRejectedEvent implements OrderEvent {
+public class OrderCancelConfirmedEvent implements OrderEvent {
 
   private OrderDetails orderDetails;
 
-  public OrderRejectedEvent() {
+  public OrderCancelConfirmedEvent() {
   }
 
-  public OrderRejectedEvent(OrderDetails orderDetails) {
+  public OrderCancelConfirmedEvent(OrderDetails orderDetails) {
     this.orderDetails = orderDetails;
   }
 

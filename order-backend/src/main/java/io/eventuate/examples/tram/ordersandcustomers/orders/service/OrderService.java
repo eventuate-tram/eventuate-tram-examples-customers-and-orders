@@ -1,6 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.service;
 
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderApprovedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCancelledEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderRejectedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
@@ -45,5 +46,15 @@ public class OrderService {
     order.noteCreditReservationFailed();
     domainEventPublisher.publish(Order.class,
             orderId, singletonList(new OrderRejectedEvent(order.getOrderDetails())));
+  }
+
+  public Order cancelOrder(Long orderId) {
+    Order order = orderRepository
+            .findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException(String.format("order with id %s not found", orderId)));
+    order.cancel();
+    domainEventPublisher.publish(Order.class,
+            orderId, singletonList(new OrderCancelledEvent(order.getOrderDetails())));
+    return order;
   }
 }

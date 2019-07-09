@@ -34,7 +34,17 @@ public class OrderController {
   public ResponseEntity<GetOrderResponse> getOrder(@PathVariable Long orderId) {
      return orderRepository
             .findById(orderId)
-            .map(order -> new ResponseEntity<>(new GetOrderResponse(order.getId(), order.getState()), HttpStatus.OK))
+            .map(order -> makeSuccessfulResponse(order))
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  }
+
+  @RequestMapping(value="/orders/{orderId}/cancel", method= RequestMethod.POST)
+  public ResponseEntity<GetOrderResponse> cancelOrder(@PathVariable Long orderId) {
+     Order order = orderService.cancelOrder(orderId);
+     return makeSuccessfulResponse(order);
+  }
+
+  private ResponseEntity<GetOrderResponse> makeSuccessfulResponse(Order order) {
+    return new ResponseEntity<>(new GetOrderResponse(order.getId(), order.getState()), HttpStatus.OK);
   }
 }

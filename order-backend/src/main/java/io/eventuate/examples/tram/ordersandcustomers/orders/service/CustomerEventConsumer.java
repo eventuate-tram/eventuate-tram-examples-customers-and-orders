@@ -1,5 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.service;
 
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReleasedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservationFailedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerValidationFailedEvent;
@@ -34,4 +35,5 @@ public class CustomerEventConsumer {
   private void handleCustomerValidationFailedEvent(DomainEventEnvelope<CustomerValidationFailedEvent> domainEventEnvelope) {
     orderService.rejectOrder(domainEventEnvelope.getEvent().getOrderId());
   }
+
 }

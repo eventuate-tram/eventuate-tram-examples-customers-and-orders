@@ -63,4 +63,8 @@ public class Customer {
     } else
       throw new CustomerCreditLimitExceededException();
   }
+
+  public void unreserveCredit(long orderId) {
+    creditReservations.remove(orderId);
+  }
 }

@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-public class CustomersAndOrdersE2ETestConfiguration {
+public class CustomersAndOrdersEndToEndTestConfiguration {
 
   @Bean
   public RestTemplate restTemplate(HttpMessageConverters converters) {

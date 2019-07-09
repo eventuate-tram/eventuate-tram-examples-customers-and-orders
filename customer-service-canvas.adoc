@@ -51,10 +51,10 @@ Customer event channel:
 
 Order event channel:
 
-* Customer Created
 * Order Created
 * Order Approved
 * Order Rejected
+* Order Cancelled
 
 
 

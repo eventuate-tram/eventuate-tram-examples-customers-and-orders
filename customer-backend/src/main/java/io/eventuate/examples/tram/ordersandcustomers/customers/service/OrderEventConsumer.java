@@ -1,9 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.service;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservationFailedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerCreditReservedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerValidationFailedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCreatedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.*;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerCreditLimitExceededException;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerRepository;
@@ -30,11 +27,12 @@ public class OrderEventConsumer {
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder
             .forAggregateType("io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order")
-            .onEvent(OrderCreatedEvent.class, this::orderCreatedEventHandler)
+            .onEvent(OrderCreatedEvent.class, this::handleOrderCreatedEventHandler)
+            .onEvent(OrderCancelledEvent.class, this::handleOrderCancelledEvent)
             .build();
   }
 
-  public void orderCreatedEventHandler(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope) {
+  public void handleOrderCreatedEventHandler(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope) {
 
     Long orderId = Long.parseLong(domainEventEnvelope.getAggregateId());
 
@@ -74,5 +72,18 @@ public class OrderEventConsumer {
               customer.getId(),
               Collections.singletonList(customerCreditReservationFailedEvent));
     }
+  }
+
+  public void handleOrderCancelledEvent(DomainEventEnvelope<OrderCancelledEvent> domainEventEnvelope) {
+
+    long orderId = Long.parseLong(domainEventEnvelope.getAggregateId());
+
+    OrderCancelledEvent orderCreatedEvent = domainEventEnvelope.getEvent();
+
+    long customerId = orderCreatedEvent.getOrderDetails().getCustomerId();
+
+    Customer customer = customerRepository.findById(customerId).get();
+
+    customer.unreserveCredit(orderId);
   }
 }

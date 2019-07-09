@@ -23,6 +23,7 @@ Order Management
 Synchronous:
 
 * createOrder()
+* cancelOrder()
 
  3+a|
 

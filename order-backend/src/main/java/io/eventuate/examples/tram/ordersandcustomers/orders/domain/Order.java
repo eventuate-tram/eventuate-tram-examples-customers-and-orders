@@ -57,4 +57,16 @@ public class Order {
   public OrderDetails getOrderDetails() {
     return orderDetails;
   }
+
+  public void cancel() {
+    switch (state) {
+      case PENDING:
+        throw new PendingOrderCantBeCancelledException();
+      case APPROVED:
+        this.state = OrderState.CANCELLED;
+        return;
+      default:
+        throw new UnsupportedOperationException("Can't cancel in this state: " + state);
+    }
+  }
 }
