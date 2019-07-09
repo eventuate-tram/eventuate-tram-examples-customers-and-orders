@@ -2,6 +2,8 @@
 
 This canvas describes the `Order Service`.
 
+For more information about the Microservice Canvas, please see this https://chrisrichardson.net/post/microservices/general/2019/02/27/microservice-canvas.html[blog post].
+
 [cols="8*"]
 |===
 3+a| Name: 5+a| Order Service
