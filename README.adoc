@@ -1,62 +1,110 @@
 # Eventuate Tram Customers and Orders
 
-This application  demonstrates how to maintain data consistency in an Java/JDBC/JPA-base microservice architecture using http://microservices.io/patterns/data/saga.html[sagas].
-It's a choreography-based saga version of https://github.com/eventuate-tram/eventuate-tram-sagas-examples-customers-and-orders[Eventuate Tram Sagas Customers and Orders]
+This application demonstrates two key patterns:
 
-The application consists of two services:
+* http://microservices.io/patterns/data/saga.html[Sagas] - implement transactions that span services
+* http://microservices.io/patterns/data/cqrs.html[CQRS] - implement queries that retrieve data from multiple services.
 
-* `Order Service` - creates orders
+The application consists of three services:
+
+* `Order Service` - manages orders
 * `Customer Service` - manages customers
+* `Order History Service` - maintains the order history
 
-Both services are implemented using Spring Boot, JPA and the https://github.com/eventuate-tram/eventuate-tram-core[Eventuate Tram framework], which provides transactional publish/subscribe.
+All services are implemented using Spring Boot, JPA and the https://github.com/eventuate-tram/eventuate-tram-core[Eventuate Tram framework], which provides transactional publish/subscribe.
 
 The `Order Service` uses a choreography-based saga to enforce the customer's credit limit when creating orders.
 
-== About sagas
+The `Order History Service` implements a CQRS view and subscribes to domain events published by the `Order Service` and `Customer Service`
+
+== About Sagas
 
 http://microservices.io/patterns/data/saga.html[Sagas] are a mechanism for maintaining data consistency in a http://microservices.io/patterns/microservices.html[microservice architecture].
 A saga is a sequence of transactions, each of which is local to a service.
 
 There are two main ways to coordinate sagas: orchestration and choreography.
-Please see https://github.com/eventuate-tram/eventuate-tram-sagas-examples-customers-and-orders[example] to learn about orchestration-based sagas.
 This example uses choreography-based sagas, which use domain events for coordination.
 Each step of a saga updates the local database and publishes a domain event.
 The domain event is processed by an event handler, which performs the next local transaction.
 
 To learn more about why you need sagas if you are using microservices:
 
-* the http://microservices.io/patterns/data/saga.html[Saga pattern]
-* my http://microservices.io/microservices/general/2018/03/22/microxchg-sagas.html[microXchg 2018 presentation]
-* read about sagas in my https://www.manning.com/books/microservice-patterns[Microservice patterns book]
+* Look at the https://github.com/eventuate-tram/eventuate-tram-sagas-examples-customers-and-orders[Orchestration-based saga example]
+* Read the http://microservices.io/patterns/data/saga.html[Saga pattern]
+* Look at https://microservices.io/microservices/general/2019/04/28/asynchronous-microservices.html[MicroCPH 2019 presentation]
+* Read about sagas in my https://microservices.io/book[Microservices patterns book]
 
 === The Create Order saga
 
 The saga for creating an `Order` consists of the follow steps:
 
-1. The Order Service creates an `Order` in a pending state and publishes an `OrderCreated` event
+1. The Order Service creates an `Order` in a `PENDING` state and publishes an `OrderCreated` event
 2. The `Customer Service` receives the event attempts to reserve credit for that `Order`. It publishes either a `Credit Reserved` event or a `CreditLimitExceeded` event.
-3. The `Order Service` receives the event and changes the state of the order to either `approved` or `rejected`.
+3. The `Order Service` receives the event and changes the state of the order to either `APPROVED` or `REJECTED`.
 
-=== Architecture
+== About Command Query Responsibility Segregation (CQRS)
+
+The http://microservices.io/patterns/data/cqrs.html[CQRS pattern] implements queries that retrieves data from multiple services.
+It maintains a queryable replica of the data by subscribing to domain events published by the services that own the data.
+
+In this example, the `Order History Service`  maintains a CQRS view in MongoDB by subscribing to domain events published by the `Order Service` and `Customer Service`.
+The CQRS view stores each customer as a MongoDB document that contains information the customer and their orders.
+
+To learn more about why you need CQRS if you are using microservices:
+
+* Read the http://microservices.io/patterns/data/cqrs.html[CQRS pattern]
+* Look at https://microservices.io/microservices/general/2019/04/28/asynchronous-microservices.html[GOTO Chicago 2019 presentation]
+* Read about CQRS in my https://microservices.io/book[Microservices patterns book]
+
+== Transactional messaging with Eventuate Tram
+
+The services uses the https://github.com/eventuate-tram/eventuate-tram-core[Eventuate Tram framework] to communicate asynchronously using events.
+The flow for publishing a domain event using Eventuate Tram is as follows:
+
+1. Eventuate Tram inserts events into the `MESSAGE` table as part of the ACID transaction that updates the JPA entity.
+2. The Eventuate Tram CDC service tracks inserts into the `MESSAGE` table using the MySQL binlog (or Postgres WAL) and publishes messages to Apache Kafka.
+3. A service subscribes to the events, updates its database, and possibly publishes more events.
+
+== Architecture
 
 The following diagram shows the architecture of the Customers and Orders application.
 
 image::./images/Eventuate_Tram_Customer_and_Order_Architecture.png[]
 
-The application consists of two services:
+The application consists of three services: `Customer Service`, `Order Service`, and `Order History Service`
 
-* `Customer Service` - implements the REST endpoints for managing customers.
+
+
+
+=== Customer Service
+
+The `Customer Service` implements a REST API for managing customers.
 The service persists the `Customer` JPA entity in a MySQL/Postgres database.
 Using `Eventuate Tram`, it publishes `Customer` domain events that are consumed by the `Order Service`.
 
-* `Order Service` - implements a REST endpoint for managing orders.
+For more information, see the link:./customer-service-canvas.adoc[microservice canvas for the `Customer Service`].
+
+image::./customer-service-canvas.png[width=300]
+
+
+=== Order Service
+
+The `Order Service` implements REST API for managing orders.
 The service persists the `Order` JPA entity in MySQL/Postgres database.
 Using `Eventuate Tram`, it publishes `Order` domain events that are consumed by the `Customer Service`.
 
-A service publishes events using Eventuate Tram.
-Eventuate Tram inserts events into the `MESSAGE` table as part of the ACID transaction that updates the JPA entity.
-The Eventuate Tram CDC service tracks inserts into the `MESSAGE` table using the MySQL binlog and publishes messages to Apache Kafka.
-A service subscribes to the events and updates its JPA entities in response.
+For more information, see the link:./order-service-canvas.adoc[microservice canvas for the `Order Service`].
+
+image::./order-service-canvas.png[width=300]
+
+=== Order History Service
+
+The `Order History Service` implements REST API for querying a customer's order history
+This service subscribes to events published by the `Order Service` and `Customer Service` and updates a MongoDB-based CQRS view.
+
+For more information, see the link:./order-history-service-canvas.adoc[microservice canvas for the `Order History Service`].
+
+image::./order-history-service-canvas.png[width=300]
 
 == Building and running
 
@@ -73,13 +121,13 @@ Next, launch the services using https://docs.docker.com/compose/[Docker Compose]
 
 ```
 export DOCKER_HOST_IP=...
-docker-compose -f docker-compose-mysql.yml build
-docker-compose -f docker-compose-mysql.yml up -d
+docker-compose -f docker-compose-mysql-binlog.yml build
+docker-compose -f docker-compose-mysql-binlog.yml up -d
 ```
 
 Note:
 
-1. You can also run the Postgres version using `docker-compose-eventuate-postgres.yml`
+1. You can also run the Postgres version using `docker-compose-eventuate-postgres-wal.yml`
 2. You need to set `DOCKER_HOST_IP` before running Docker Compose.
 This must be an IP address or resolvable hostname.
 It cannot be `localhost`.
@@ -89,8 +137,9 @@ See this http://eventuate.io/docs/usingdocker.html[guide to setting `DOCKER_HOST
 
 Once the application has started, you can use the application via the Swagger UI:
 
-* `Order Service` - `http://${DOCKER_HOST_IP}:8081/swagger-ui.html`
 * `Customer Service` - `http://${DOCKER_HOST_IP}:8082/swagger-ui.html`
+* `Order Service` - `http://${DOCKER_HOST_IP}:8081/swagger-ui.html`
+* `Order History Service` - `http://${DOCKER_HOST_IP}:8083/swagger-ui.html`
 
 You can also use `curl` to interact with the services.
 First, let's create a customer:
@@ -130,7 +179,7 @@ Content-Type: application/json;charset=UTF-8
 
 ```
 
-Finally, check the status of the `Order`:
+Next, check the status of the `Order` in the `Order Service`:
 
 ```bash
 $ curl -X GET http://${DOCKER_HOST_IP}:8081/orders/1
@@ -144,10 +193,35 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
+Finally, look at the customer's order history in the `Order History Service`:
+
+```bash
+$ curl -X GET --header "Accept: */*" "http://${DOCKER_HOST_IP}:8083/customers/1"
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+
+{
+  "id": 1,
+  "orders": {
+    "1": {
+      "state": "APPROVED",
+      "orderTotal": {
+        "amount": 4
+      }
+    }
+  },
+  "name": "Chris",
+  "creditLimit": {
+    "amount": 100
+  }
+}
+```
+
 == Got questions?
 
 Don't hesitate to create an issue or see
 
 * https://groups.google.com/d/forum/eventuate-users[Mailing list]
-* https://eventuate-users.slack.com[Slack]. https://eventuateusersslack.herokuapp.com/[Get invite]
+* https://join.slack.com/t/eventuate-users/shared_invite/enQtNTM4NjE0OTMzMDQ3LTc3ZjYzYjYxOGViNTdjMThkZmVmNWQzZWMwZmQyYzhjNjQ4OTE4YzJiYTE2NDdlOTljMDFlMDlkYTI2OWU1NTk[Slack Workspace]
 * http://eventuate.io/contact.html[Contact us].

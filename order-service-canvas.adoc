@@ -1,0 +1,62 @@
+= Order Service canvas
+
+This canvas describes the `Order Service`.
+
+For more information about the Microservice Canvas, please see this https://chrisrichardson.net/post/microservices/general/2019/02/27/microservice-canvas.html[blog post].
+
+[cols="8*"]
+|===
+3+a| Name: 5+a| Order Service
+
+3+a| *Description:*
+5+a|
+
+Manage Orders
+
+8+a| *Capabilities*
+8+a|
+Order Management
+8+| *Service API*
+3+| Commands 3+| Queries 2+| Events Published
+3+a|
+
+Synchronous:
+
+* createOrder()
+
+ 3+a|
+
+Synchronous:
+
+* getOrder()
+
+2+a|
+
+Order event channel:
+
+* Order Created
+* Order Approved
+* Order Rejected
+
+
+8+| *Observability*
+
+4+| Health check endpoint
+4+| /actuator/health
+
+
+
+8+| *Dependencies*
+4+| Invokes 4+| Subscribes to
+4+a|
+
+4+a|
+
+Customer event channel:
+
+* Credit Reserved
+* Credit Reservation Failed
+* Customer Validation Failed
+
+
+|===

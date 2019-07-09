@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.orderhistoryviewservice.web;
+package io.eventuate.examples.tram.ordersandcustomers.orderhistoryservice.web;
 
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;

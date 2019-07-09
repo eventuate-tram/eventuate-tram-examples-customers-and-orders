@@ -3,7 +3,6 @@ build/
 *.idea/
 *.iml
 *.log
-
-
+.terraform
+terraform.tfstate*
 out
-

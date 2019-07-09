@@ -5,9 +5,9 @@ import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
 
 public class OrderInfo {
 
-  private OrderState state;
   private Long orderId;
   private MoneyDTO orderTotal;
+  private OrderState state;
 
 
   public OrderInfo() {

@@ -1,11 +1,11 @@
 version: '3'
 services:
   orderservice:
-    build: ./order-service/
+    build:
+      context: ./order-service/
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-service
     ports:
       - "8081:8080"
-    volumes:
-      - ./build/libs:/app
     depends_on:
       - mysql
       - kafka
@@ -20,11 +20,11 @@ services:
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
   customerservice:
-    build: ./customer-service/
+    build:
+      context: ./customer-service/
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service
     ports:
       - "8082:8080"
-    volumes:
-      - ./build/libs:/app
     depends_on:
       - mysql
       - kafka
@@ -39,7 +39,9 @@ services:
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
   orderhistoryservice:
-    build: ./order-history-view-service/
+    build:
+      context: ./order-history-service/
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service
     ports:
       - "8083:8080"
     depends_on:
@@ -48,7 +50,7 @@ services:
       - kafka
       - zookeeper
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb/clients_and_orders
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb/customers_and_orders
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
       SPRING_DATASOURCE_USERNAME: mysqluser
       SPRING_DATASOURCE_PASSWORD: mysqlpw
@@ -93,7 +95,7 @@ services:
       - "27017:27017"
 
   cdcservice:
-    image: eventuateio/eventuate-cdc-service:0.3.0.RELEASE
+    image: eventuateio/eventuate-cdc-service:0.4.0.RELEASE
     ports:
       - "8099:8080"
     depends_on:
