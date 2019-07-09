@@ -1,0 +1,59 @@
+= Customer Service canvas
+
+This canvas describes the `Customer Service`.
+
+[cols="8*"]
+|===
+3+a| Name: 5+a| Customer Service
+
+3+a| *Description:*
+5+a|
+
+Manage customers including available credit
+
+8+a| *Capabilities*
+8+a|
+Customer Management
+8+| *Service API*
+3+| Commands 3+| Queries 2+| Events Published
+3+a|
+
+Synchronous:
+
+* createCustomer()
+
+ 3+a|
+
+
+2+a|
+
+Customer event channel:
+
+* Credit Reserved
+* Credit Reservation Failed
+* Customer Validation Failed
+
+
+8+| *Observability*
+
+4+| Health check endpoint
+4+| /actuator/health
+
+
+
+8+| *Dependencies*
+4+| Invokes 4+| Subscribes to
+4+a|
+
+4+a|
+
+Order event channel:
+
+* Customer Created
+* Order Created
+* Order Approved
+* Order Rejected
+
+
+
+|===

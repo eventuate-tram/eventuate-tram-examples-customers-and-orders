@@ -56,31 +56,48 @@ To learn more about why you need CQRS if you are using microservices:
 * Look at https://microservices.io/microservices/general/2019/04/28/asynchronous-microservices.html[GOTO Chicago 2019 presentation]
 * Read about CQRS in my https://microservices.io/book[Microservices patterns book]
 
+== Transactional messaging with Eventuate Tram
 
-=== Architecture
-
-The following diagram shows the architecture of the Customers and Orders application.
-
-image::./images/Eventuate_Tram_Customer_and_Order_Architecture.png[]
-
-The application consists of three services:
-
-* `Customer Service` - implements a REST API for managing customers.
-The service persists the `Customer` JPA entity in a MySQL/Postgres database.
-Using `Eventuate Tram`, it publishes `Customer` domain events that are consumed by the `Order Service`.
-
-* `Order Service` - implements REST API for managing orders.
-The service persists the `Order` JPA entity in MySQL/Postgres database.
-Using `Eventuate Tram`, it publishes `Order` domain events that are consumed by the `Customer Service`.
-
-* `Order History Service` - implements REST API for querying a customer's order history
-This service subscribes to events published by the `Order Service` and `Customer Service` and updates a MongoDB-based CQRS view.
-
+The services uses the https://github.com/eventuate-tram/eventuate-tram-core[Eventuate Tram framework] to communicate asynchronously using events.
 The flow for publishing a domain event using Eventuate Tram is as follows:
 
 1. Eventuate Tram inserts events into the `MESSAGE` table as part of the ACID transaction that updates the JPA entity.
 2. The Eventuate Tram CDC service tracks inserts into the `MESSAGE` table using the MySQL binlog (or Postgres WAL) and publishes messages to Apache Kafka.
 3. A service subscribes to the events, updates its database, and possibly publishes more events.
+
+== Architecture
+
+The following diagram shows the architecture of the Customers and Orders application.
+
+image::./images/Eventuate_Tram_Customer_and_Order_Architecture.png[]
+
+The application consists of three services: `Customer Service`, `Order Service`, and `Order History Service`
+
+
+
+
+=== Customer Service
+
+The `Customer Service` implements a REST API for managing customers.
+The service persists the `Customer` JPA entity in a MySQL/Postgres database.
+Using `Eventuate Tram`, it publishes `Customer` domain events that are consumed by the `Order Service`.
+
+For more information, see the link:./customer-service-canvas.adoc[microservice canvas for the `Customer Service`].
+
+=== Order Service
+
+The `Order Service` implements REST API for managing orders.
+The service persists the `Order` JPA entity in MySQL/Postgres database.
+Using `Eventuate Tram`, it publishes `Order` domain events that are consumed by the `Customer Service`.
+
+For more information, see the link:./customer-service-canvas.adoc[microservice canvas for the `Order Service`].
+
+=== Order History Service
+
+The `Order History Service` implements REST API for querying a customer's order history
+This service subscribes to events published by the `Order Service` and `Customer Service` and updates a MongoDB-based CQRS view.
+
+For more information, see the link:./customer-service-canvas.adoc[microservice canvas for the `Order History Service`].
 
 == Building and running
 
