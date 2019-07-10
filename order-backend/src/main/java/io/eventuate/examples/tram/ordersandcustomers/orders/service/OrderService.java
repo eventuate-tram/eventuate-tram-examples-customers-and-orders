@@ -16,11 +16,14 @@ import static java.util.Collections.singletonList;
 @Transactional
 public class OrderService {
 
-  @Autowired
-  private DomainEventPublisher domainEventPublisher;
+  private final DomainEventPublisher domainEventPublisher;
+  private final OrderRepository orderRepository;
 
-  @Autowired
-  private OrderRepository orderRepository;
+
+  public OrderService(DomainEventPublisher domainEventPublisher, OrderRepository orderRepository) {
+    this.domainEventPublisher = domainEventPublisher;
+    this.orderRepository = orderRepository;
+  }
 
   public Order createOrder(OrderDetails orderDetails) {
     ResultWithEvents<Order> orderWithEvents = Order.createOrder(orderDetails);

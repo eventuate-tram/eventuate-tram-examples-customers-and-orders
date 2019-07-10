@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.tram.consumer.common.NoopDuplicateMessageDetector;
+import io.eventuate.tram.consumer.common.TramNoopDuplicateMessageDetectorConfiguration;
 import io.eventuate.tram.events.publisher.TramEventsPublisherConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import;
 @Import({OrderHistoryViewMongoConfiguration.class,
         TramEventsPublisherConfiguration.class,
         TramJdbcKafkaConfiguration.class,
-        NoopDuplicateMessageDetector.class,
+        TramNoopDuplicateMessageDetectorConfiguration.class,
         TramEventSubscriberConfiguration.class})
 public class OrderHistoryViewBackendConfiguration {
 

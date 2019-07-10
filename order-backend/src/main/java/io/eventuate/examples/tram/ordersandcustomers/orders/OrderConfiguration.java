@@ -1,8 +1,9 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders;
 
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.CustomerEventConsumer;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
-import io.eventuate.tram.consumer.common.TramNoopDuplicateMessageDetectorConfiguration;
+import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.TramEventsPublisherConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
@@ -19,13 +20,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableAutoConfiguration
 @Import({TramJdbcKafkaConfiguration.class,
         TramEventsPublisherConfiguration.class,
-        TramNoopDuplicateMessageDetectorConfiguration.class,
         TramEventSubscriberConfiguration.class})
 public class OrderConfiguration {
 
   @Bean
-  public OrderService orderService() {
-    return new OrderService();
+  public OrderService orderService(DomainEventPublisher domainEventPublisher, OrderRepository orderRepository) {
+    return new OrderService(domainEventPublisher, orderRepository);
   }
 
 
@@ -36,6 +36,6 @@ public class OrderConfiguration {
 
   @Bean
   public DomainEventDispatcher domainEventDispatcher(CustomerEventConsumer customerEventConsumer, DomainEventDispatcherFactory domainEventDispatcherFactory) {
-    return domainEventDispatcherFactory.make("consumerServiceEvents", customerEventConsumer.domainEventHandlers());
+    return domainEventDispatcherFactory.make("customerServiceEvents", customerEventConsumer.domainEventHandlers());
   }
 }

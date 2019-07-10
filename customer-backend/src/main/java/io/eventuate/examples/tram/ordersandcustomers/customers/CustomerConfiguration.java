@@ -18,7 +18,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @Import({TramJdbcKafkaConfiguration.class,
         TramEventsPublisherConfiguration.class,
-        TramNoopDuplicateMessageDetectorConfiguration.class,
         TramEventSubscriberConfiguration.class,
         OptimisticLockingDecoratorConfiguration.class})
 @EnableJpaRepositories
