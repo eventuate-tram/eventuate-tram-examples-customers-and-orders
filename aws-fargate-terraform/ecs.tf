@@ -33,20 +33,19 @@ resource "aws_ecs_service" "svc_cdc" {
 
     assign_public_ip = true
   }
-
 }
 
 data "template_file" "cdc_task_definition" {
   template = "${file("${path.module}/ecs_cdc.json")}"
 
   vars {
-    db_url      = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
-    db_pwd      = "${aws_db_instance.mysql_instance.password}"
-    db_user     = "${aws_db_instance.mysql_instance.username}"
-    zookeeper_ip = "${element(split(",", aws_msk_cluster.eventuate.zookeeper_connect_string), 0)}"
-    kafka_ip = "${element(split(",", aws_msk_cluster.eventuate.bootstrap_brokers_tls), 0)}"
-    logs_region = "${var.region}"
-    logs_group  = "${aws_cloudwatch_log_group.logs_eventuate.name}"
+    db_url       = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
+    db_pwd       = "${aws_db_instance.mysql_instance.password}"
+    db_user      = "${aws_db_instance.mysql_instance.username}"
+    zookeeper_connection_string = "${aws_msk_cluster.eventuate.zookeeper_connect_string}"
+    eventuate_bootstrap_brokers = "${aws_msk_cluster.eventuate.bootstrap_brokers_tls}"
+    logs_region  = "${var.region}"
+    logs_group   = "${aws_cloudwatch_log_group.logs_eventuate.name}"
   }
 }
 
