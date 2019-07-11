@@ -11,7 +11,7 @@
   "environment": [
     {
       "name": "EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS",
-      "value": "${kafka_ip}"
+      "value": "${eventuate_bootstrap_brokers}"
     },
     {
       "name": "EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING",
