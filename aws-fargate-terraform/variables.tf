@@ -33,19 +33,16 @@ variable "public_subnet_cidr" {
 
 variable "public_subnet_cidr1" {
   description = "CIDR for the Public Subnet"
-  default     = "10.0.1.0/24"
+  default     = "10.0.3.0/24"
+}
+
+variable "public_subnet_cidr2" {
+  description = "CIDR for the Public Subnet"
+  default     = "10.0.2.0/24"
 }
 
 variable "destinationCIDRblock" {
   default = "0.0.0.0/0"
-}
-
-variable "ingressCIDRblock" {
-  type = "list"
-
-  default = [
-    "0.0.0.0/0",
-  ]
 }
 
 variable "mapPublicIP" {
@@ -60,6 +57,10 @@ variable "az2" {
   default = "us-east-2b"
 }
 
+variable "az3" {
+  default = "us-east-2c"
+}
+
 variable "rds_username" {
   default = "admin"
 }
@@ -70,14 +71,16 @@ variable "rds_pwd" {
 
 variable "ecs_ingress_cidr" {
   default = [
-    "0.0.0.0/0"
+    "0.0.0.0/0",
   ]
+
   type = "list"
 }
 
 variable "rds_ingress_cidr" {
   default = [
-    "0.0.0.0/0"
+    "0.0.0.0/0",
   ]
+
   type = "list"
 }

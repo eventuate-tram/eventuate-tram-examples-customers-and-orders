@@ -1,0 +1,69 @@
+[
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${logs_group}",
+          "awslogs-region": "${logs_region}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 8099,
+          "protocol": "tcp",
+          "containerPort": 8099
+        },
+        {
+          "hostPort": 8088,
+          "protocol": "tcp",
+          "containerPort": 8088
+        }
+      ],
+      "cpu": 256,
+      "environment": [
+        {
+          "name": "EVENTUATELOCAL_CDC_BINLOG_CLIENT_ID",
+          "value": "1234567890"
+        },
+        {
+          "name": "EVENTUATELOCAL_CDC_DB_PASSWORD",
+          "value": "${db_pwd}"
+        },
+        {
+          "name": "EVENTUATELOCAL_CDC_DB_USER_NAME",
+          "value": "${db_user}"
+        },
+        {
+          "name": "EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS",
+          "value": "${kafka_ip}"
+        },
+        {
+          "name": "EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING",
+          "value": "${zookeeper_ip}"
+        },
+        {
+          "name": "SPRING_DATASOURCE_DRIVER_CLASS_NAME",
+          "value": "com.mysql.jdbc.Driver"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "${db_pwd}"
+        },
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "${db_url}"
+        },
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "${db_user}"
+        }
+      ],
+      "memoryReservation": 512,
+      "image": "eventuateio/eventuate-tram-cdc-mysql-service:0.7.0.RELEASE",
+      "dependsOn": [
+
+      ],
+      "name": "cdcservice"
+    }
+  ]

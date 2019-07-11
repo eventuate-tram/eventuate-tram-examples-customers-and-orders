@@ -3,7 +3,7 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/eventuate",
+        "awslogs-group": "${log_group}",
         "awslogs-region": "${logs_region}",
         "awslogs-stream-prefix": "ecs"
       }
@@ -36,7 +36,7 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/eventuate",
+        "awslogs-group": "${log_group}",
         "awslogs-region": "${logs_region}",
         "awslogs-stream-prefix": "ecs"
       }
@@ -77,7 +77,7 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/eventuate",
+        "awslogs-group": "${log_group}",
         "awslogs-region": "${logs_region}",
         "awslogs-stream-prefix": "ecs"
       }

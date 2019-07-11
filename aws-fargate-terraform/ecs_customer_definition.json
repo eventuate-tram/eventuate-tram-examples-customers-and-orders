@@ -1,0 +1,41 @@
+[{
+  "logConfiguration": {
+    "logDriver": "awslogs",
+    "options": {
+      "awslogs-group": "${logs_group}",
+      "awslogs-region": "${logs_region}",
+      "awslogs-stream-prefix": "ecs"
+    }
+  },
+  "cpu": 256,
+  "environment": [
+    {
+      "name": "EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS",
+      "value": "${kafka_id}"
+    },
+    {
+      "name": "EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING",
+      "value": "${zookeeper_id}"
+    },
+    {
+      "name": "SPRING_DATASOURCE_DRIVER_CLASS_NAME",
+      "value": "com.mysql.jdbc.Driver"
+    },
+    {
+      "name": "SPRING_DATASOURCE_PASSWORD",
+      "value": "${db_pwd}"
+    },
+    {
+      "name": "SPRING_DATASOURCE_URL",
+      "value": "${db_url}"
+    },
+    {
+      "name": "SPRING_DATASOURCE_USERNAME",
+      "value": "${db_user}"
+    }
+  ],
+  "memoryReservation": 512,
+  "image": "eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service",
+  "essential": true,
+  "name": "customer"
+}]

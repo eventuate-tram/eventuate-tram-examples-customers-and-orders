@@ -31,6 +31,17 @@ resource "aws_subnet" "public-subnet1" {
   }
 }
 
+resource "aws_subnet" "public-subnet2" {
+  vpc_id                  = "${aws_vpc.vpc-eventuate.id}"
+  cidr_block              = "${var.public_subnet_cidr2}"
+  map_public_ip_on_launch = true
+  availability_zone       = "${var.az3}"
+
+  tags = {
+    Name = "Pubilc Subnet"
+  }
+}
+
 resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.vpc-eventuate.id}"
 

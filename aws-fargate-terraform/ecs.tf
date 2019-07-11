@@ -2,11 +2,11 @@ resource "aws_ecs_cluster" "cluster" {
   name = "eventuate-cluster"
 }
 
-resource "aws_ecs_service" "svc_eventuate" {
-  name            = "svc-eventuate"
+resource "aws_ecs_service" "svc_cdc" {
+  name            = "svc-cdc"
   launch_type     = "FARGATE"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.task-eventuate.arn}"
+  task_definition = "${aws_ecs_task_definition.task-cdc.arn}"
   desired_count   = 1
 
   depends_on = [
@@ -33,29 +33,33 @@ resource "aws_ecs_service" "svc_eventuate" {
 
     assign_public_ip = true
   }
+
 }
 
-resource "template_file" "app_task_definition" {
-  template = "${file("${path.module}/ecs_definition.json")}"
+data "template_file" "cdc_task_definition" {
+  template = "${file("${path.module}/ecs_cdc.json")}"
 
   vars {
-    db_url  = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
-    db_pwd  = "${aws_db_instance.mysql_instance.password}"
-    db_user = "${aws_db_instance.mysql_instance.username}"
+    db_url      = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
+    db_pwd      = "${aws_db_instance.mysql_instance.password}"
+    db_user     = "${aws_db_instance.mysql_instance.username}"
+    zookeeper_ip = "${element(split(",", aws_msk_cluster.eventuate.zookeeper_connect_string), 0)}"
+    kafka_ip = "${element(split(",", aws_msk_cluster.eventuate.bootstrap_brokers_tls), 0)}"
     logs_region = "${var.region}"
+    logs_group  = "${aws_cloudwatch_log_group.logs_eventuate.name}"
   }
 }
 
-resource "aws_ecs_task_definition" "task-eventuate" {
-  family                = "eventuate"
-  container_definitions = "${template_file.app_task_definition.rendered}"
+resource "aws_ecs_task_definition" "task-cdc" {
+  family                = "cdc"
+  container_definitions = "${data.template_file.cdc_task_definition.rendered}"
 
   requires_compatibilities = [
     "FARGATE",
   ]
 
-  memory             = "2048"
-  cpu                = "1024"
+  memory             = "512"
+  cpu                = "256"
   network_mode       = "awsvpc"
   execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
@@ -120,5 +124,5 @@ resource "aws_iam_role_policy" "ecs_service_role_policy" {
 }
 
 resource "aws_cloudwatch_log_group" "logs_eventuate" {
-  name = "/ecs/eventuate"
+  name = "/ecs/cdc"
 }
