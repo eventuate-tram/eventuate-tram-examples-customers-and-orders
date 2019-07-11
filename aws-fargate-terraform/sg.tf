@@ -99,11 +99,19 @@ resource "aws_security_group" "kafka" {
   vpc_id      = "${aws_vpc.vpc-eventuate.id}"
 
   ingress {
+    from_port   = 9092
+    to_port     = 9092
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 9094
     to_port     = 9094
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
 
   ingress {
     from_port   = 2181
