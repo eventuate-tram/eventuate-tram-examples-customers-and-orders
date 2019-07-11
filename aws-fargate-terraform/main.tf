@@ -25,7 +25,7 @@ resource "aws_db_instance" "mysql_instance" {
 
   provisioner "local-exec" {
     command = <<EOF
-        mysqlsh --user=${aws_db_instance.mysql_instance.username} --password=${aws_db_instance.mysql_instance.password} --host ${aws_db_instance.mysql_instance.address} --sql  < 1.initialize-database.sql
+        mysqlsh --user=${aws_db_instance.mysql_instance.username} --password=${aws_db_instance.mysql_instance.password} --host ${aws_db_instance.mysql_instance.address} --sql  < 1.initialize-database.sql;
         mysqlsh --user=${aws_db_instance.mysql_instance.username} --password=${aws_db_instance.mysql_instance.password} --host ${aws_db_instance.mysql_instance.address} --sql  < 2.initialize-database.sql
         EOF
   }
