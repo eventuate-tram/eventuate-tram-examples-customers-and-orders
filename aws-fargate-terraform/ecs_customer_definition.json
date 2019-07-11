@@ -7,8 +7,11 @@
       "awslogs-stream-prefix": "ecs"
     }
   },
-  "cpu": 256,
   "environment": [
+    {
+      "name": "JAVA_OPTS",
+      "value": "-Xmx768m -Xms768m"
+    },
     {
       "name": "EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS",
       "value": "${kafka_id}"
@@ -34,8 +37,11 @@
       "value": "${db_user}"
     }
   ],
-  "memoryReservation": 512,
   "image": "eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service",
   "essential": true,
-  "name": "customer"
+  "name": "customer",
+  "healthCheck" : {
+    "command" : [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1" ],
+    "startPeriod": 60
+  }
 }]

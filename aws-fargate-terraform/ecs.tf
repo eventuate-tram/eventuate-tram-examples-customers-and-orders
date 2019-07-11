@@ -58,7 +58,7 @@ resource "aws_ecs_task_definition" "task-cdc" {
     "FARGATE",
   ]
 
-  memory             = "512"
+  memory             = "2048"
   cpu                = "256"
   network_mode       = "awsvpc"
   execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
