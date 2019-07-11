@@ -20,7 +20,7 @@ resource "aws_msk_cluster" "eventuate" {
     encryption_at_rest_kms_key_arn = "${aws_kms_key.kms.arn}"
 
     encryption_in_transit = {
-      client_broker = "TLS"
+      client_broker = "TLS_PLAINTEXT"
     }
   }
 
@@ -41,3 +41,9 @@ output "bootstrap_brokers_tls" {
   description = "TLS connection host:port pairs"
   value       = "${aws_msk_cluster.eventuate.bootstrap_brokers_tls}"
 }
+
+output "bootstrap_brokers" {
+  description = "TLS connection host:port pairs"
+  value       = "${aws_msk_cluster.eventuate.bootstrap_brokers}"
+}
+
