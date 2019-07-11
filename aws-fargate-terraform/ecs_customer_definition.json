@@ -11,11 +11,11 @@
   "environment": [
     {
       "name": "EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS",
-      "value": "${kafka_id}"
+      "value": "${kafka_ip}"
     },
     {
       "name": "EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING",
-      "value": "${zookeeper_id}"
+      "value": "${zookeeper_connection_string}"
     },
     {
       "name": "SPRING_DATASOURCE_DRIVER_CLASS_NAME",

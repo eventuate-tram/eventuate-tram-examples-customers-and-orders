@@ -35,13 +35,13 @@ data "template_file" "customer_task_definition" {
   template = "${file("${path.module}/ecs_customer_definition.json")}"
 
   vars {
-    db_url             = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
-    db_pwd             = "${aws_db_instance.mysql_instance.password}"
-    db_user            = "${aws_db_instance.mysql_instance.username}"
-    zookeeper_id = "${element(split(",", aws_msk_cluster.eventuate.zookeeper_connect_string), 0)}"
-    kafka_id = "${element(split(",", aws_msk_cluster.eventuate.bootstrap_brokers_tls), 0)}"
-    logs_region        = "${var.region}"
-    logs_group         = "${aws_cloudwatch_log_group.logs_customer_service.name}"
+    db_url                      = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
+    db_pwd                      = "${aws_db_instance.mysql_instance.password}"
+    db_user                     = "${aws_db_instance.mysql_instance.username}"
+    zookeeper_connection_string = "${aws_msk_cluster.eventuate.zookeeper_connect_string}"
+    kafka_ip                    = "${aws_msk_cluster.eventuate.bootstrap_brokers_tls}"
+    logs_region                 = "${var.region}"
+    logs_group                  = "${aws_cloudwatch_log_group.logs_customer_service.name}"
   }
 }
 

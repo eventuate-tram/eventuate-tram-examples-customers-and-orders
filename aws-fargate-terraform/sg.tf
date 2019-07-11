@@ -123,4 +123,3 @@ resource "aws_security_group" "kafka" {
     Name = "kafka-eventuate"
   }
 }
-
