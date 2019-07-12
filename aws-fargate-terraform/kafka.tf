@@ -9,11 +9,11 @@ resource "aws_msk_cluster" "eventuate" {
 
     client_subnets = [
       "${aws_subnet.public-subnet1.id}",
-      "${aws_subnet.public-subnet.id}",
       "${aws_subnet.public-subnet2.id}",
+      "${aws_subnet.public-subnet3.id}"
     ]
 
-    security_groups = ["${aws_security_group.kafka.id}"]
+    security_groups = ["${aws_security_group.sg_kafka.id}"]
   }
 
   encryption_info {
@@ -56,3 +56,9 @@ output "bootstrap_brokers_tls" {
   description = "TLS connection host:port pairs"
   value       = "${aws_msk_cluster.eventuate.bootstrap_brokers_tls}"
 }
+
+output "bootstrap_brokers" {
+  description = "TLS connection host:port pairs"
+  value       = "${aws_msk_cluster.eventuate.bootstrap_brokers}"
+}
+

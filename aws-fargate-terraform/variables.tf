@@ -26,7 +26,7 @@ variable "vpcCIDRblock" {
   default = "10.0.0.0/16"
 }
 
-variable "public_subnet_cidr" {
+variable "public_subnet_cidr3" {
   description = "CIDR for the Public Subnet"
   default     = "10.0.0.0/24"
 }
