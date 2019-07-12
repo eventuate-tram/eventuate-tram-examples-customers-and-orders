@@ -105,6 +105,7 @@ resource "aws_security_group" "sg_kafka" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+
   ingress {
     from_port   = 2181
     to_port     = 2181
