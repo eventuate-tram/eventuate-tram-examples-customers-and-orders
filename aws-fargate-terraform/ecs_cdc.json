@@ -22,12 +22,20 @@
       ],
       "environment": [
         {
-          "name": "JAVA_OPTS",
-          "value": "-Xmx512m -Xms512m"
+          "name": "EVENTUATELOCAL_CDC_MYSQL_BINLOG_CLIENT_UNIQUE_ID",
+          "value": "1234567890"
         },
         {
-          "name": "EVENTUATELOCAL_CDC_BINLOG_CLIENT_ID",
-          "value": "1234567890"
+          "name": "EVENTUATELOCAL_CDC_READ_OLD_DEBEZIUM_DB_OFFSET_STORAGE_TOPIC",
+          "value": "false"
+        },
+        {
+          "name": "EVENTUATELOCAL_CDC_READER_NAME",
+          "value": "MySqlReader"
+        },
+        {
+          "name": "EVENTUATELOCAL_CDC_OFFSET_STORE_KEY",
+          "value": "MySqlBinlog"
         },
         {
           "name": "EVENTUATELOCAL_CDC_DB_PASSWORD",
@@ -62,7 +70,7 @@
           "value": "${db_user}"
         }
       ],
-      "image": "eventuateio/eventuate-tram-cdc-mysql-service:0.7.0.RELEASE",
+      "image": "eventuateio/eventuate-cdc-service:0.4.0.RELEASE",
       "dependsOn": [
 
       ],

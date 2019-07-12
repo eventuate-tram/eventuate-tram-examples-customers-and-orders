@@ -22,6 +22,8 @@ resource "aws_db_instance" "mysql_instance" {
   publicly_accessible    = true
   parameter_group_name   = "${aws_db_parameter_group.mysql_parameter_group.name}"
   vpc_security_group_ids = ["${aws_security_group.sg-rds.id}"]
+  backup_retention_period = "1"
+  apply_immediately       = true
 
   provisioner "local-exec" {
     command = <<EOF

@@ -24,9 +24,24 @@ resource "aws_msk_cluster" "eventuate" {
     }
   }
 
+  configuration_info {
+    arn      = "${aws_msk_configuration.msk.arn}"
+    revision = "${aws_msk_configuration.msk.latest_revision}"
+  }
+
   tags = {
     Name = "eventuate"
   }
+}
+
+resource "aws_msk_configuration" "msk" {
+  kafka_versions = ["2.1.0"]
+  name           = "example"
+
+  server_properties = <<PROPERTIES
+auto.create.topics.enable = true
+delete.topic.enable = true
+PROPERTIES
 }
 
 resource "aws_kms_key" "kms" {
