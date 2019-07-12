@@ -7,6 +7,13 @@
       "awslogs-stream-prefix": "ecs"
     }
   },
+  "portMappings": [
+    {
+      "hostPort": 8080,
+      "protocol": "tcp",
+      "containerPort": 8080
+    }
+  ],
   "environment": [
     {
       "name": "JAVA_OPTS",

@@ -6,7 +6,7 @@ resource "aws_ecs_service" "svc_customer" {
   desired_count   = 1
 
   depends_on = [
-    "aws_iam_role_policy.ecs_service_role_policy",
+    "aws_iam_role_policy.ecs_service_role_policy","aws_alb_listener.customer_listner"
   ]
 
   lifecycle {
@@ -23,12 +23,19 @@ resource "aws_ecs_service" "svc_customer" {
     ]
 
     subnets = [
-      "${aws_subnet.public-subnet.id}",
       "${aws_subnet.public-subnet1.id}",
+      "${aws_subnet.public-subnet2.id}",
     ]
 
     assign_public_ip = true
   }
+
+  load_balancer {
+    container_name = "customer"
+    container_port = 8080
+    target_group_arn = "${aws_alb_target_group.customer_target_group.arn}"
+  }
+  health_check_grace_period_seconds = 120
 }
 
 data "template_file" "customer_task_definition" {

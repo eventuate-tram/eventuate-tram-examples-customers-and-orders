@@ -9,9 +9,9 @@ resource "aws_vpc" "vpc-eventuate" {
   }
 }
 
-resource "aws_subnet" "public-subnet" {
+resource "aws_subnet" "public-subnet3" {
   vpc_id                  = "${aws_vpc.vpc-eventuate.id}"
-  cidr_block              = "${var.public_subnet_cidr}"
+  cidr_block              = "${var.public_subnet_cidr3}"
   map_public_ip_on_launch = true
   availability_zone       = "${var.az1}"
 
@@ -55,8 +55,8 @@ resource "aws_route_table" "public" {
   }
 }
 
-resource "aws_route_table_association" "public" {
-  subnet_id      = "${aws_subnet.public-subnet.id}"
+resource "aws_route_table_association" "public3" {
+  subnet_id      = "${aws_subnet.public-subnet3.id}"
   route_table_id = "${aws_route_table.public.id}"
 }
 
@@ -65,8 +65,13 @@ resource "aws_route_table_association" "public1" {
   route_table_id = "${aws_route_table.public.id}"
 }
 
+resource "aws_route_table_association" "public2" {
+  subnet_id      = "${aws_subnet.public-subnet2.id}"
+  route_table_id = "${aws_route_table.public.id}"
+}
+
 resource "aws_db_subnet_group" "rds-subnet" {
-  subnet_ids = ["${aws_subnet.public-subnet1.id}", "${aws_subnet.public-subnet.id}"]
+  subnet_ids = ["${aws_subnet.public-subnet1.id}", "${aws_subnet.public-subnet2.id}", "${aws_subnet.public-subnet3.id}"]
 }
 
 resource "aws_internet_gateway" "igw_eventuate" {

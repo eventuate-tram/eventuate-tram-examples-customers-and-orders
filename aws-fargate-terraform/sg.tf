@@ -93,8 +93,8 @@ resource "aws_security_group" "sg-rds" {
   }
 }
 
-resource "aws_security_group" "kafka" {
-  name        = "kafka"
+resource "aws_security_group" "sg_kafka" {
+  name        = "sgkafka"
   description = "only 90092, 2181 inbound"
   vpc_id      = "${aws_vpc.vpc-eventuate.id}"
 
@@ -120,6 +120,27 @@ resource "aws_security_group" "kafka" {
   }
 
   tags {
-    Name = "kafka-eventuate"
+    Name = "sg-kafka"
+  }
+}
+
+resource "aws_security_group" "sg-alb" {
+  name = "ecs-alb"
+  description = "only 80 inbound"
+  vpc_id = "${aws_vpc.vpc-eventuate.id}"
+  ingress {
+    from_port    = 80
+    to_port      = 80
+    protocol     = "TCP"
+    cidr_blocks  = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags {
+    Name = "ecs-alb"
   }
 }

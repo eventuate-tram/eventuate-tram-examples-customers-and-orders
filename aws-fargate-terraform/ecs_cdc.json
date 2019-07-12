@@ -15,9 +15,9 @@
           "containerPort": 8099
         },
         {
-          "hostPort": 8088,
+          "hostPort": 8080,
           "protocol": "tcp",
-          "containerPort": 8088
+          "containerPort": 8080
         }
       ],
       "environment": [

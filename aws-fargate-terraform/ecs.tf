@@ -10,7 +10,7 @@ resource "aws_ecs_service" "svc_cdc" {
   desired_count   = 1
 
   depends_on = [
-    "aws_iam_role_policy.ecs_service_role_policy",
+    "aws_iam_role_policy.ecs_service_role_policy", "aws_alb_listener.cdc_listner"
   ]
 
   lifecycle {
@@ -27,12 +27,19 @@ resource "aws_ecs_service" "svc_cdc" {
     ]
 
     subnets = [
-      "${aws_subnet.public-subnet.id}",
       "${aws_subnet.public-subnet1.id}",
+      "${aws_subnet.public-subnet2.id}",
     ]
 
     assign_public_ip = true
   }
+
+  load_balancer {
+    container_name = "cdcservice"
+    container_port = 8080
+    target_group_arn = "${aws_alb_target_group.cdc_target_group.arn}"
+  }
+  health_check_grace_period_seconds = 120
 }
 
 data "template_file" "cdc_task_definition" {
