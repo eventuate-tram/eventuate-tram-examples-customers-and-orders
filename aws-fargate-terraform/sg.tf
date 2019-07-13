@@ -8,6 +8,10 @@ resource "aws_security_group" "sg-ecs" {
     to_port   = 8099
     protocol  = "TCP"
 
+    security_groups = [
+      "${aws_security_group.sg-alb.id}",
+    ]
+
     cidr_blocks = "${var.ingress_cidr}"
   }
 
