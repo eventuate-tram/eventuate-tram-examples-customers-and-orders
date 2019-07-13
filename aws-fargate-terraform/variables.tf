@@ -69,7 +69,7 @@ variable "rds_pwd" {
   default = "Eventuate123"
 }
 
-variable "ecs_ingress_cidr" {
+variable "ingress_cidr" {
   default = [
     "0.0.0.0/0",
   ]
@@ -77,10 +77,6 @@ variable "ecs_ingress_cidr" {
   type = "list"
 }
 
-variable "rds_ingress_cidr" {
-  default = [
-    "0.0.0.0/0",
-  ]
-
-  type = "list"
+variable "prefix" {
+  default = "dev"
 }

@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "cluster" {
-  name = "eventuate-cluster"
+  name = "${var.prefix}-eventuate-cluster"
 }
 
 resource "aws_ecs_service" "svc_cdc" {
-  name            = "svc-cdc"
+  name            = "${var.prefix}-svc-cdc"
   launch_type     = "FARGATE"
   cluster         = "${aws_ecs_cluster.cluster.id}"
   task_definition = "${aws_ecs_task_definition.task-cdc.arn}"

@@ -1,5 +1,5 @@
 resource "aws_security_group" "sg-ecs" {
-  name        = "ecs-cdc"
+  name        = "${var.prefix}-ecs-cdc"
   description = "open 8080 to 8099 inbound"
   vpc_id      = "${aws_vpc.vpc-eventuate.id}"
 
@@ -8,7 +8,7 @@ resource "aws_security_group" "sg-ecs" {
     to_port   = 8099
     protocol  = "TCP"
 
-    cidr_blocks = "${var.ecs_ingress_cidr}"
+    cidr_blocks = "${var.ingress_cidr}"
   }
 
   egress {
@@ -26,36 +26,8 @@ resource "aws_security_group" "sg-ecs" {
   }
 }
 
-resource "aws_security_group" "sg_customer" {
-  name        = "ecs-customer"
-  description = "open 8080 to 8082 inbound"
-  vpc_id      = "${aws_vpc.vpc-eventuate.id}"
-
-  ingress {
-    from_port = 8080
-    to_port   = 8082
-    protocol  = "TCP"
-
-    cidr_blocks = "${var.ecs_ingress_cidr}"
-  }
-
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-
-    cidr_blocks = [
-      "0.0.0.0/0"
-    ]
-  }
-
-  tags {
-    Name = "ecs-customer_service"
-  }
-}
-
 resource "aws_security_group" "sg-rds" {
-  name        = "sgrds"
+  name        = "${var.prefix}-sgrds"
   description = "RDS security group"
   vpc_id      = "${aws_vpc.vpc-eventuate.id}"
 
@@ -75,7 +47,7 @@ resource "aws_security_group" "sg-rds" {
       "${aws_security_group.sg-ecs.id}",
     ]
 
-    cidr_blocks = "${var.rds_ingress_cidr}"
+    cidr_blocks = "${var.ingress_cidr}"
   }
 
   egress {
@@ -94,7 +66,7 @@ resource "aws_security_group" "sg-rds" {
 }
 
 resource "aws_security_group" "sg_kafka" {
-  name        = "sgkafka"
+  name        = "${var.prefix}-sgkafka"
   description = "only 90092, 2181 inbound"
   vpc_id      = "${aws_vpc.vpc-eventuate.id}"
 
@@ -102,7 +74,8 @@ resource "aws_security_group" "sg_kafka" {
     from_port   = 9092
     to_port     = 9094
     protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = "${var.ingress_cidr}"
+    security_groups = ["${aws_security_group.sg-ecs.id}"]
   }
 
 
@@ -110,7 +83,8 @@ resource "aws_security_group" "sg_kafka" {
     from_port   = 2181
     to_port     = 2181
     protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = "${var.ingress_cidr}"
+    security_groups = ["${aws_security_group.sg-ecs.id}"]
   }
 
   egress {
@@ -126,14 +100,14 @@ resource "aws_security_group" "sg_kafka" {
 }
 
 resource "aws_security_group" "sg-alb" {
-  name = "ecs-alb"
+  name = "${var.prefix}-ecs-alb"
   description = "only 80 inbound"
   vpc_id = "${aws_vpc.vpc-eventuate.id}"
   ingress {
     from_port    = 80
     to_port      = 80
     protocol     = "TCP"
-    cidr_blocks  = ["0.0.0.0/0"]
+    cidr_blocks  = "${var.ingress_cidr}"
   }
   egress {
     from_port = 0
