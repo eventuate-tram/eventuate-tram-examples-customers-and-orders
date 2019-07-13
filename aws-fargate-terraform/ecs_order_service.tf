@@ -1,12 +1,12 @@
-resource "aws_ecs_service" "svc_customer" {
-  name            = "${var.prefix}-svc-customer"
+resource "aws_ecs_service" "svc_order" {
+  name            = "${var.prefix}-svc-order"
   launch_type     = "FARGATE"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.task-customer.arn}"
+  task_definition = "${aws_ecs_task_definition.task-order.arn}"
   desired_count   = 1
 
   depends_on = [
-    "aws_iam_role_policy.ecs_service_role_policy","aws_alb_listener.customer_listner"
+    "aws_iam_role_policy.ecs_service_role_policy","aws_alb_listener.order_listner"
   ]
 
   lifecycle {
@@ -31,15 +31,15 @@ resource "aws_ecs_service" "svc_customer" {
   }
 
   load_balancer {
-    container_name = "customer"
+    container_name = "order"
     container_port = 8080
-    target_group_arn = "${aws_alb_target_group.customer_target_group.arn}"
+    target_group_arn = "${aws_alb_target_group.order_target_group.arn}"
   }
   health_check_grace_period_seconds = 120
 }
 
-data "template_file" "customer_task_definition" {
-  template = "${file("${path.module}/ecs_customer_definition.json")}"
+data "template_file" "order_task_definition" {
+  template = "${file("${path.module}/ecs_order_definition.json")}"
 
   vars {
     db_url                      = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
@@ -48,13 +48,13 @@ data "template_file" "customer_task_definition" {
     zookeeper_connection_string = "${aws_msk_cluster.eventuate.zookeeper_connect_string}"
     eventuate_bootstrap_brokers = "${aws_msk_cluster.eventuate.bootstrap_brokers}"
     logs_region                 = "${var.region}"
-    logs_group                  = "${aws_cloudwatch_log_group.logs_customer_service.name}"
+    logs_group                  = "${aws_cloudwatch_log_group.logs_order_service.name}"
   }
 }
 
-resource "aws_ecs_task_definition" "task-customer" {
-  family                = "customer"
-  container_definitions = "${data.template_file.customer_task_definition.rendered}"
+resource "aws_ecs_task_definition" "task-order" {
+  family                = "order"
+  container_definitions = "${data.template_file.order_task_definition.rendered}"
 
   requires_compatibilities = [
     "FARGATE",
@@ -68,6 +68,6 @@ resource "aws_ecs_task_definition" "task-customer" {
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-resource "aws_cloudwatch_log_group" "logs_customer_service" {
-  name = "/ecs/customer"
+resource "aws_cloudwatch_log_group" "logs_order_service" {
+  name = "/ecs/order"
 }

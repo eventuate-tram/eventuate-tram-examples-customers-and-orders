@@ -7,7 +7,7 @@ provider "aws" {
 
 resource "aws_db_instance" "mysql_instance" {
   name                   = "eventuate"
-  identifier             = "eventuate-mysql"
+  identifier             = "${var.prefix}-eventuate-mysql"
   allocated_storage      = 20
   storage_type           = "gp2"
   port                   = 3306
