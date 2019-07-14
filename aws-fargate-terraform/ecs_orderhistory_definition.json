@@ -1,0 +1,54 @@
+[{
+  "logConfiguration": {
+    "logDriver": "awslogs",
+    "options": {
+      "awslogs-group": "${logs_group}",
+      "awslogs-region": "${logs_region}",
+      "awslogs-stream-prefix": "ecs"
+    }
+  },
+  "portMappings": [
+    {
+      "hostPort": 8080,
+      "protocol": "tcp",
+      "containerPort": 8080
+    }
+  ],
+  "environment": [
+    {
+      "name": "SPRING_DATA_MONGODB_URI",
+      "value": "${mongo_uri}"
+    },
+    {
+      "name": "EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS",
+      "value": "${eventuate_bootstrap_brokers}"
+    },
+    {
+      "name": "EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING",
+      "value": "${zookeeper_connection_string}"
+    },
+    {
+      "name": "SPRING_DATASOURCE_DRIVER_CLASS_NAME",
+      "value": "com.mysql.jdbc.Driver"
+    },
+    {
+      "name": "SPRING_DATASOURCE_PASSWORD",
+      "value": "${db_pwd}"
+    },
+    {
+      "name": "SPRING_DATASOURCE_URL",
+      "value": "${db_url}"
+    },
+    {
+      "name": "SPRING_DATASOURCE_USERNAME",
+      "value": "${db_user}"
+    }
+  ],
+  "image": "eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service",
+  "essential": true,
+  "name": "orderhistory",
+  "healthCheck" : {
+    "command" : [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1" ],
+    "startPeriod": 60
+  }
+}]

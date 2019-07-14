@@ -123,3 +123,42 @@ resource "aws_security_group" "sg-alb" {
     Name = "ecs-alb"
   }
 }
+
+resource "aws_security_group" "sg-docdb" {
+  name        = "${var.prefix}-sgdocdb"
+  description = "DocDB security group"
+  vpc_id      = "${aws_vpc.vpc-eventuate.id}"
+
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    self      = true
+  }
+
+  ingress {
+    from_port = 27017
+    to_port   = 27017
+    protocol  = "tcp"
+
+    security_groups = [
+      "${aws_security_group.sg-ecs.id}",
+    ]
+
+    cidr_blocks = "${var.ingress_cidr}"
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+
+    cidr_blocks = [
+      "0.0.0.0/0",
+    ]
+  }
+
+  tags {
+    Name = "rds-eventuate"
+  }
+}
