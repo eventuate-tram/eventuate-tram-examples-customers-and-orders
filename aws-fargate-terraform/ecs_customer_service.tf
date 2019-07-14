@@ -6,7 +6,7 @@ resource "aws_ecs_service" "svc_customer" {
   desired_count   = 1
 
   depends_on = [
-    "aws_iam_role_policy.ecs_service_role_policy","aws_alb_listener.customer_listner"
+    "aws_iam_role_policy.ecs_service_role_policy","aws_alb_listener.services_listner"
   ]
 
   lifecycle {

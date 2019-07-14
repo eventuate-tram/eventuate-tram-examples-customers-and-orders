@@ -80,3 +80,7 @@ variable "ingress_cidr" {
 variable "prefix" {
   default = "dev"
 }
+
+variable "docdb_username" {
+  default = "eventuateadmin"
+}
