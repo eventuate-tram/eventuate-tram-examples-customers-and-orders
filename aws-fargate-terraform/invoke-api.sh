@@ -1,6 +1,6 @@
 #! /bin/bash -e
 
-HOST=$(terraform output lb_order_dns)
+HOST=$(terraform output lb_services_dns)
 
 if [ -z "$HOST" ] ; then
   echo HOST is empty
