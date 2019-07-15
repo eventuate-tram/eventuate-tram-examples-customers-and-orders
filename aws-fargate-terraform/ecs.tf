@@ -49,8 +49,8 @@ data "template_file" "cdc_task_definition" {
     db_url       = "jdbc:mysql://${aws_db_instance.mysql_instance.endpoint}/${aws_db_instance.mysql_instance.name}"
     db_pwd       = "${aws_db_instance.mysql_instance.password}"
     db_user      = "${aws_db_instance.mysql_instance.username}"
-    zookeeper_connection_string = "${aws_msk_cluster.eventuate.zookeeper_connect_string}"
-    eventuate_bootstrap_brokers = "${aws_msk_cluster.eventuate.bootstrap_brokers}"
+    zookeeper_connection_string = "${join(",", sort(split(",", aws_msk_cluster.eventuate.zookeeper_connect_string)))}"
+    eventuate_bootstrap_brokers = "${join(",", sort(split(",", aws_msk_cluster.eventuate.bootstrap_brokers)))}"
     logs_region  = "${var.region}"
     logs_group   = "${aws_cloudwatch_log_group.logs_eventuate.name}"
   }

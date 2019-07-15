@@ -155,6 +155,18 @@ resource "aws_alb_listener_rule" "order_listner_rule" {
   listener_arn = "${aws_alb_listener.services_listner.arn}"
 }
 
+resource "aws_alb_listener_rule" "order_listner_rule2" {
+  "action" {
+    type = "forward"
+    target_group_arn = "${aws_alb_target_group.order_target_group.arn}"
+  }
+  "condition" {
+    field = "path-pattern"
+    values = ["/orders"]
+  }
+  listener_arn = "${aws_alb_listener.services_listner.arn}"
+}
+
 resource "aws_alb_listener_rule" "orderhistory_listner_rule" {
   "action" {
     type = "forward"
@@ -165,4 +177,12 @@ resource "aws_alb_listener_rule" "orderhistory_listner_rule" {
     values = ["/customers/*"]
   }
   listener_arn = "${aws_alb_listener.services_listner.arn}"
+}
+
+output "lb_cdc_dns" {
+  value = "${aws_alb.lb_cdc.dns_name}"
+}
+
+output "lb_services_dns" {
+  value = "${aws_alb.lb_services.dns_name}"
 }
