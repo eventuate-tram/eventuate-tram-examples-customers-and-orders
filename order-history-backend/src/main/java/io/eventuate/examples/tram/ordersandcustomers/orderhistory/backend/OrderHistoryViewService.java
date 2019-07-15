@@ -14,7 +14,7 @@ public class OrderHistoryViewService {
   private OrderViewRepository orderViewRepository;
 
   @Autowired
-  public OrderHistoryViewService(CustomerViewRepository customerViewRepository, OrderViewRepository orderViewRepository, MongoTemplate mongoTemplate) {
+  public OrderHistoryViewService(CustomerViewRepository customerViewRepository, OrderViewRepository orderViewRepository) {
     this.customerViewRepository = customerViewRepository;
     this.orderViewRepository = orderViewRepository;
   }

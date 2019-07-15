@@ -8,5 +8,5 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @EnableAutoConfiguration
 @Import(OrderHistoryViewBackendConfiguration.class)
-public class OrderHistoryViewServiceTestConfiguration {
+public class OrderHistoryViewServiceIntegrationTestConfiguration {
 }
