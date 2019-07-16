@@ -1,7 +1,5 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.messaging.kafka.consumer.MessageConsumerKafkaConfiguration;
-import io.eventuate.tram.consumer.common.TramConsumerCommonConfiguration;
 import io.eventuate.tram.consumer.common.TramNoopDuplicateMessageDetectorConfiguration;
 import io.eventuate.tram.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
@@ -14,8 +12,6 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import({OrderHistoryViewMongoConfiguration.class,
         EventuateTramKafkaMessageConsumerConfiguration.class,
-        MessageConsumerKafkaConfiguration.class, // FIXME
-        TramConsumerCommonConfiguration.class, // FIXME
         TramNoopDuplicateMessageDetectorConfiguration.class,
         TramEventSubscriberConfiguration.class})
 public class OrderHistoryViewBackendConfiguration {
