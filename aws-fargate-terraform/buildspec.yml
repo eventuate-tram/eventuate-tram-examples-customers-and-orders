@@ -1,0 +1,55 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: openjdk8
+      docker: 18
+  pre_build:
+    commands:
+      - $(aws ecr get-login --region ${region} --no-include-email)
+      - REGISTRY_URI_CUSTOMER=${repository_url_customer}
+      - REGISTRY_URI_ORDER=${repository_url_order}
+      - REGISTRY_URI_ORDER_HISTORY=${repository_url_orderhistory}
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - echo Finished the pre_build phase...
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - export DOCKER_HOST_IP=`hostname -i`
+#      - ./build-and-test-all-mysql-binlog.sh
+      - cd customer-service
+      - docker build -t $REGISTRY_URI_CUSTOMER:latest .
+      - docker tag $REGISTRY_URI_CUSTOMER:latest $REGISTRY_URI_CUSTOMER:$IMAGE_TAG
+      - cd ../order-service
+      - docker build -t $REGISTRY_URI_ORDER:latest .
+      - docker tag $REGISTRY_URI_ORDER:latest $REGISTRY_URI_ORDER:$IMAGE_TAG
+      - cd ../order-history-service
+      - docker build -t $REGISTRY_URI_ORDER_HISTORY:latest .
+      - docker tag $REGISTRY_URI_ORDER_HISTORY:latest $REGISTRY_URI_ORDER_HISTORY:$IMAGE_TAG
+      - cd ..
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REGISTRY_URI_ORDER:latest
+      - docker push $REGISTRY_URI_ORDER:$IMAGE_TAG
+      - docker push $REGISTRY_URI_CUSTOMER:latest
+      - docker push $REGISTRY_URI_CUSTOMER:$IMAGE_TAG
+      - docker push $REGISTRY_URI_ORDER_HISTORY:latest
+      - docker push $REGISTRY_URI_ORDER_HISTORY:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"order","imageUri":"%s"}]' $REGISTRY_URI_ORDER:$IMAGE_TAG > imagedefinitions1.json
+      - printf '[{"name":"customer","imageUri":"%s"}]' $REGISTRY_URI_CUSTOMER:$IMAGE_TAG > imagedefinitions2.json
+      - printf '[{"name":"orderhistory","imageUri":"%s"}]' $REGISTRY_URI_ORDER_HISTORY:$IMAGE_TAG > imagedefinitions3.json
+      - ls -l
+      - cat imagedefinitions1.json
+      - cat imagedefinitions2.json
+      - cat imagedefinitions3.json
+artifacts:
+  files:
+    -imagedefinitions1.json
+    -imagedefinitions2.json
+    -imagedefinitions3.json

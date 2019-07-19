@@ -44,7 +44,7 @@
       "value": "${db_user}"
     }
   ],
-  "image": "eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service",
+  "image": "${image_uri}",
   "essential": true,
   "name": "customer",
   "healthCheck" : {

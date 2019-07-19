@@ -40,7 +40,7 @@
       "value": "${db_user}"
     }
   ],
-  "image": "eventuateexamples/eventuate-tram-examples-customers-and-orders-order-service",
+  "image": "${image_uri}",
   "essential": true,
   "name": "order",
   "healthCheck" : {
