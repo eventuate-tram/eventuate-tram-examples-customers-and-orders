@@ -4,23 +4,23 @@ provider "github" {
 }
 
 resource "aws_ecr_repository" "cdc" {
-  name = "${var.prefix}-cdc"
+  name = "${var.prefix}-cdc-service"
 }
 
 resource "aws_ecr_repository" "customer" {
-  name = "${var.prefix}-customer"
+  name = "${var.prefix}-customer-service"
 }
 
 resource "aws_ecr_repository" "order" {
-  name = "${var.prefix}-order"
+  name = "${var.prefix}-order-service"
 }
 
 resource "aws_ecr_repository" "orderhistory" {
-  name = "${var.prefix}-orderhistory"
+  name = "${var.prefix}-orderhistory-service"
 }
 
 resource "aws_s3_bucket" "source" {
-  bucket        = "${var.prefix}-evntuate-source"
+  bucket        = "${var.prefix}-eventuate-source"
   acl           = "private"
   force_destroy = true
 }

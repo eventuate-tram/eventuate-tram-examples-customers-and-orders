@@ -36,7 +36,7 @@ resource "aws_msk_cluster" "eventuate" {
 
 resource "aws_msk_configuration" "msk" {
   kafka_versions = ["2.1.0"]
-  name           = "dev-example"
+  name           = "${var.prefix}-example"
 
   server_properties = <<PROPERTIES
 auto.create.topics.enable = true
