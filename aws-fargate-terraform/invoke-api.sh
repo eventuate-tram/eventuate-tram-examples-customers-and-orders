@@ -3,7 +3,7 @@
 HOST=$(terraform output lb_services_dns)
 
 if [ -z "$HOST" ] ; then
-  echo HOST is empty
+  echo lb_services_dns is empty
   exit 99
 fi
 
