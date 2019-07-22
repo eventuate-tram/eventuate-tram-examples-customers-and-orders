@@ -86,9 +86,7 @@ variable "docdb_username" {
 }
 
 variable "git_pat" {
-  default = ""
 }
 
 variable "git_username" {
-  default = ""
 }

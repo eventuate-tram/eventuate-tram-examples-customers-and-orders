@@ -18,27 +18,17 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - export DOCKER_HOST_IP=`hostname -i`
-#      - ./build-and-test-all-mysql-binlog.sh
-      - cd customer-service
-      - docker build -t $REGISTRY_URI_CUSTOMER:latest .
-      - docker tag $REGISTRY_URI_CUSTOMER:latest $REGISTRY_URI_CUSTOMER:$IMAGE_TAG
-      - cd ../order-service
-      - docker build -t $REGISTRY_URI_ORDER:latest .
-      - docker tag $REGISTRY_URI_ORDER:latest $REGISTRY_URI_ORDER:$IMAGE_TAG
-      - cd ../order-history-service
-      - docker build -t $REGISTRY_URI_ORDER_HISTORY:latest .
-      - docker tag $REGISTRY_URI_ORDER_HISTORY:latest $REGISTRY_URI_ORDER_HISTORY:$IMAGE_TAG
-      - cd ..
+      - ./gradlew assemble
+      - docker build -t $REGISTRY_URI_CUSTOMER:$IMAGE_TAG customer-service
+      - docker build -t $REGISTRY_URI_ORDER:$IMAGE_TAG order-service
+      - docker build -t $REGISTRY_URI_ORDER_HISTORY:$IMAGE_TAG order-history-service
 
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push $REGISTRY_URI_ORDER:latest
       - docker push $REGISTRY_URI_ORDER:$IMAGE_TAG
-      - docker push $REGISTRY_URI_CUSTOMER:latest
       - docker push $REGISTRY_URI_CUSTOMER:$IMAGE_TAG
-      - docker push $REGISTRY_URI_ORDER_HISTORY:latest
       - docker push $REGISTRY_URI_ORDER_HISTORY:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"order","imageUri":"%s"}]' $REGISTRY_URI_ORDER:$IMAGE_TAG > imagedefinitions1.json
@@ -50,6 +40,6 @@ phases:
       - cat imagedefinitions3.json
 artifacts:
   files:
-    -imagedefinitions1.json
-    -imagedefinitions2.json
-    -imagedefinitions3.json
+    - imagedefinitions1.json
+    - imagedefinitions2.json
+    - imagedefinitions3.json

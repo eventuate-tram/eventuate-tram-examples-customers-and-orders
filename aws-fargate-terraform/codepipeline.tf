@@ -4,19 +4,19 @@ provider "github" {
 }
 
 resource "aws_ecr_repository" "cdc" {
-  name = "cdc"
+  name = "${var.prefix}-cdc"
 }
 
 resource "aws_ecr_repository" "customer" {
-  name = "customer"
+  name = "${var.prefix}-customer"
 }
 
 resource "aws_ecr_repository" "order" {
-  name = "order"
+  name = "${var.prefix}-order"
 }
 
 resource "aws_ecr_repository" "orderhistory" {
-  name = "orderhistory"
+  name = "${var.prefix}-orderhistory"
 }
 
 resource "aws_s3_bucket" "source" {
@@ -26,7 +26,7 @@ resource "aws_s3_bucket" "source" {
 }
 
 resource "aws_iam_role" "codebuild_role" {
-  name = "codebuild-role"
+  name = "${var.prefix}-codebuild-role"
   assume_role_policy = "${file("${path.module}/codebuild_role.json")}"
 }
 
@@ -38,7 +38,7 @@ data "template_file" "codebuild_policy" {
 }
 
 resource "aws_iam_role_policy" "codebuild_policy" {
-  name = "codebuild-policy"
+  name = "${var.prefix}-codebuild-policy"
   role = "${aws_iam_role.codebuild_role.id}"
   policy = "${data.template_file.codebuild_policy.rendered}"
 }
@@ -59,7 +59,7 @@ data "template_file" "buildspec" {
 }
 
 resource "aws_codebuild_project" "eventuate_build" {
-  name = "eventuate-codebuild"
+  name = "${var.prefix}-eventuate-codebuild"
   build_timeout = "50"
   service_role = "${aws_iam_role.codebuild_role.arn}"
 
@@ -68,7 +68,7 @@ resource "aws_codebuild_project" "eventuate_build" {
   }
 
   environment {
-    compute_type = "BUILD_GENERAL1_SMALL"
+    compute_type = "BUILD_GENERAL1_MEDIUM"
     image = "aws/codebuild/standard:2.0"
     type = "LINUX_CONTAINER"
     privileged_mode = true
@@ -82,7 +82,7 @@ resource "aws_codebuild_project" "eventuate_build" {
 }
 
 resource "aws_codepipeline" "pipeline" {
-  name     = "app-pipeline"
+  name     = "${var.prefix}-app-pipeline"
   role_arn = "${aws_iam_role.codepipeline_role.arn}"
 
   artifact_store {
@@ -164,7 +164,7 @@ resource "aws_codepipeline" "pipeline" {
 
       configuration {
         ClusterName = "${aws_ecs_cluster.cluster.name}"
-        ServiceName = "${aws_ecs_service.svc_order.name}"
+        ServiceName = "${aws_ecs_service.svc_customer.name}"
         FileName    = "imagedefinitions2.json"
       }
     }
@@ -196,7 +196,7 @@ locals {
 }
 
 resource "aws_codepipeline_webhook" "pipeline_webhook" {
-  name            = "app-webhook-github"
+  name            = "${var.prefix}-app-webhook-github"
   authentication  = "GITHUB_HMAC"
   target_action   = "Source"
   target_pipeline = "${aws_codepipeline.pipeline.name}"
@@ -228,7 +228,7 @@ data "github_repository" "repo" {
 }
 
 resource "aws_iam_role" "codepipeline_role" {
-  name = "codepipeline-role"
+  name = "${var.prefix}-codepipeline-role"
   assume_role_policy = "${file("${path.module}/codepipeline_role.json")}"
 }
 
@@ -240,7 +240,7 @@ data "template_file" "codepipeline_policy" {
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
-  name = "codepipeline_policy"
+  name = "${var.prefix}-codepipeline_policy"
   role = "${aws_iam_role.codepipeline_role.id}"
   policy = "${data.template_file.codepipeline_policy.rendered}"
 }
