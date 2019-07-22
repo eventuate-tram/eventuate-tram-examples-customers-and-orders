@@ -84,3 +84,9 @@ variable "prefix" {
 variable "docdb_username" {
   default = "eventuateadmin"
 }
+
+variable "git_pat" {
+}
+
+variable "git_username" {
+}

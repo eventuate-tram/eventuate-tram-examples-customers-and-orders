@@ -44,7 +44,7 @@
       "value": "${db_user}"
     }
   ],
-  "image": "eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service",
+  "image": "${image_uri}",
   "name": "orderhistory",
   "essential": true,
   "healthCheck" : {
