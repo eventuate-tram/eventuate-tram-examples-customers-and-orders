@@ -71,7 +71,7 @@ resource "aws_security_group" "sg-rds" {
 
 resource "aws_security_group" "sg_kafka" {
   name        = "${var.prefix}-sgkafka"
-  description = "only 90092, 2181 inbound"
+  description = "only 9092-9094, 2181 inbound"
   vpc_id      = "${aws_vpc.vpc-eventuate.id}"
 
   ingress {

@@ -54,7 +54,7 @@ data "template_file" "order_task_definition" {
 }
 
 resource "aws_ecs_task_definition" "task-order" {
-  family                = "order"
+  family                = "order_service"
   container_definitions = "${data.template_file.order_task_definition.rendered}"
 
   requires_compatibilities = [
@@ -70,5 +70,5 @@ resource "aws_ecs_task_definition" "task-order" {
 }
 
 resource "aws_cloudwatch_log_group" "logs_order_service" {
-  name = "/ecs/order"
+  name = "/ecs/order_service"
 }

@@ -1,5 +1,5 @@
 resource "aws_msk_cluster" "eventuate" {
-  cluster_name           = "eventuate"
+  cluster_name           = "${var.prefix}-eventuate"
   kafka_version          = "2.1.0"
   number_of_broker_nodes = 3
 
