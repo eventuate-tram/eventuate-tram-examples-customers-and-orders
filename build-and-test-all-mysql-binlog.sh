@@ -3,6 +3,6 @@
 set -e
 
 export DATABASE=mysql
-export MODE=-binlog
+export MODE=binlog
 
 ./_build-and-test-all.sh

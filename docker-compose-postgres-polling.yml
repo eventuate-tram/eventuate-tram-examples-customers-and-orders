@@ -57,15 +57,13 @@ services:
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
   zookeeper:
-    image: eventuateio/eventuate-zookeeper:0.8.0.RELEASE
+    image: eventuateio/eventuate-zookeeper:$EVENTUATE_COMMON_VERSION
     ports:
       - 2181:2181
-      - 2888:2888
-      - 3888:3888
 
 
   kafka:
-    image: eventuateio/eventuate-kafka:0.3.0.RELEASE
+    image: eventuateio/eventuate-kafka:$EVENTUATE_KAFKA_VERSION
     ports:
       - 9092:9092
     depends_on:
@@ -77,7 +75,7 @@ services:
 
 
   postgres:
-    image: eventuateio/eventuate-postgres:0.8.0.RELEASE
+    image: eventuateio/eventuate-postgres:$EVENTUATE_COMMON_VERSION
     ports:
       - 5432:5432
     environment:
@@ -93,7 +91,7 @@ services:
       - "27017:27017"
 
   cdcservice:
-    image: eventuateio/eventuate-cdc-service:0.5.0.RELEASE
+    image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
     ports:
       - "8099:8080"
     depends_on:

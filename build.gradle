@@ -33,6 +33,40 @@ subprojects {
 }
 
 dockerCompose {
-    projectName = null
-    useComposeFiles = ["docker-compose-mysql-binlog.yml"]
+    environment.put "EVENTUATE_COMMON_VERSION", eventuateCommonImageVersion
+    environment.put "EVENTUATE_KAFKA_VERSION", eventuateMessagingKafkaImageVersion
+    environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
+
+    mysqlbinlog {
+        projectName = null
+        useComposeFiles = ["docker-compose-mysql-binlog.yml"]
+    }
+
+    mysqlbinlogcdc {
+        projectName = null
+        useComposeFiles = ["docker-compose-mysql-binlog.yml"]
+        startedServices = ["cdcservice"]
+    }
+
+    postgrespolling {
+        projectName = null
+        useComposeFiles = ["docker-compose-postgres-polling.yml"]
+    }
+
+    postgrespollingcdc {
+        projectName = null
+        useComposeFiles = ["docker-compose-postgres-polling.yml"]
+        startedServices = ["cdcservice"]
+    }
+
+    postgreswal {
+        projectName = null
+        useComposeFiles = ["docker-compose-postgres-wal.yml"]
+    }
+
+    postgreswalcdc {
+        projectName = null
+        useComposeFiles = ["docker-compose-postgres-wal.yml"]
+        startedServices = ["cdcservice"]
+    }
 }
