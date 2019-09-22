@@ -9,6 +9,8 @@ fi
 
 echo $HOST
 
+echo Creating customer ...
+
 CREATE_CUSTOMER=$(curl -f -X POST --header "Content-Type: application/json" --header "Accept: */*" -d "{
   \"creditLimit\": {
     \"amount\": 50
@@ -21,6 +23,8 @@ echo $CREATE_CUSTOMER
 CUSTOMER_ID=$(echo $CREATE_CUSTOMER | jq -r .customerId)
 
 echo $CUSTOMER_ID
+
+echo Creating Order ...
 
 CREATE_ORDER_RESPONSE=$(curl -f -X POST --header "Content-Type: application/json" --header "Accept: */*" -d "{
   \"customerId\": $CUSTOMER_ID,
@@ -37,6 +41,8 @@ echo $ORDER_ID
 
 STATE=
 
+echo Querying view for Order Status ...
+
 until [ "$STATE" = "APPROVED" ] ; do
   GET_ORDER_RESPONSE=$(curl -X GET --header "Accept: */*" "http://${HOST}/customers/${CUSTOMER_ID}")
   echo $GET_ORDER_RESPONSE
@@ -47,3 +53,6 @@ until [ "$STATE" = "APPROVED" ] ; do
 
   sleep 1
 done
+
+echo 
+echo "    SUCCESS!!!"
