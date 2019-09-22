@@ -1,6 +1,6 @@
 resource "aws_msk_cluster" "eventuate" {
   cluster_name           = "${var.prefix}-eventuate"
-  kafka_version          = "2.1.0"
+  kafka_version          = "2.2.1"
   number_of_broker_nodes = 3
 
   broker_node_group_info {
@@ -35,8 +35,8 @@ resource "aws_msk_cluster" "eventuate" {
 }
 
 resource "aws_msk_configuration" "msk" {
-  kafka_versions = ["2.1.0"]
-  name           = "${var.prefix}-example"
+  kafka_versions = ["2.2.1"]
+  name           = "${var.prefix}-msk-2-2-1-example"
 
   server_properties = <<PROPERTIES
 auto.create.topics.enable = true
@@ -61,4 +61,3 @@ output "bootstrap_brokers" {
   description = "TLS connection host:port pairs"
   value       = "${aws_msk_cluster.eventuate.bootstrap_brokers}"
 }
-
