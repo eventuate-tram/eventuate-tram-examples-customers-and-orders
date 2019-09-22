@@ -35,7 +35,7 @@ resource "aws_db_instance" "mysql_instance" {
 
 resource "aws_db_parameter_group" "mysql_parameter_group" {
   family = "mysql5.7"
-  name   = "mysql-cdc"
+  name   = "${var.prefix}-mysql-cdc"
 
   parameter {
     name  = "binlog_format"

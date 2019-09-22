@@ -3,9 +3,6 @@ provider "github" {
   token = "${var.git_pat}"
 }
 
-resource "aws_ecr_repository" "cdc" {
-  name = "${var.prefix}-cdc-service"
-}
 
 resource "aws_ecr_repository" "customer" {
   name = "${var.prefix}-customer-service"
@@ -47,7 +44,6 @@ data "template_file" "buildspec" {
   template = "${file("${path.module}/buildspec.yml")}"
 
   vars {
-    repository_url_cdc = "${aws_ecr_repository.cdc.repository_url}"
     repository_url_customer = "${aws_ecr_repository.customer.repository_url}"
     repository_url_order = "${aws_ecr_repository.order.repository_url}"
     repository_url_orderhistory = "${aws_ecr_repository.orderhistory.repository_url}"
@@ -133,7 +129,7 @@ resource "aws_codepipeline" "pipeline" {
   }
 
   stage {
-    name = "DeployOrder"
+    name = "DeployOrderService"
 
     action {
       name            = "DeployOrder"
@@ -152,7 +148,7 @@ resource "aws_codepipeline" "pipeline" {
   }
 
   stage {
-    name = "DeployCustomer"
+    name = "DeployCustomerService"
 
     action {
       name            = "DeployCustomer"
@@ -171,7 +167,7 @@ resource "aws_codepipeline" "pipeline" {
   }
 
   stage {
-    name = "DeployOrderHistory"
+    name = "DeployOrderHistoryService"
 
     action {
       name            = "DeployOrderHistory"

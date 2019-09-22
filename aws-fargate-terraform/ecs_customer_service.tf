@@ -54,7 +54,7 @@ data "template_file" "customer_task_definition" {
 }
 
 resource "aws_ecs_task_definition" "task-customer" {
-  family                = "customer"
+  family                = "customer_service"
   container_definitions = "${data.template_file.customer_task_definition.rendered}"
 
   requires_compatibilities = [
@@ -70,5 +70,5 @@ resource "aws_ecs_task_definition" "task-customer" {
 }
 
 resource "aws_cloudwatch_log_group" "logs_customer_service" {
-  name = "/ecs/customer"
+  name = "/ecs/customer_service"
 }

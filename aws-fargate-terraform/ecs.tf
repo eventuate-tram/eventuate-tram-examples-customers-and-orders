@@ -57,7 +57,7 @@ data "template_file" "cdc_task_definition" {
 }
 
 resource "aws_ecs_task_definition" "task-cdc" {
-  family                = "cdc"
+  family                = "cdc_service"
   container_definitions = "${data.template_file.cdc_task_definition.rendered}"
 
   requires_compatibilities = [
@@ -72,12 +72,12 @@ resource "aws_ecs_task_definition" "task-cdc" {
 }
 
 resource "aws_iam_role" "ecs_execution_role" {
-  name               = "ecs_task_execution_role"
+  name               = "${var.prefix}_ecs_task_execution_role"
   assume_role_policy = "${file("${path.module}/ecs-task-execution-role.json")}"
 }
 
 resource "aws_iam_role_policy" "ecs_execution_role_policy" {
-  name   = "ecs_execution_role_policy"
+  name   = "${var.prefix}_ecs_execution_role_policy"
   policy = "${file("${path.module}/ecs-execution-role-policy.json")}"
   role   = "${aws_iam_role.ecs_execution_role.id}"
 }
@@ -101,7 +101,7 @@ data "aws_iam_policy_document" "ecs_service_role" {
 }
 
 resource "aws_iam_role" "ecs_role" {
-  name               = "ecs_role"
+  name               = "${var.prefix}_ecs_role"
   assume_role_policy = "${data.aws_iam_policy_document.ecs_service_role.json}"
 }
 
@@ -130,5 +130,5 @@ resource "aws_iam_role_policy" "ecs_service_role_policy" {
 }
 
 resource "aws_cloudwatch_log_group" "logs_eventuate" {
-  name = "/ecs/cdc"
+  name = "/ecs/cdc_service"
 }

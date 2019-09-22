@@ -55,7 +55,7 @@ data "template_file" "orderhistory_task_definition" {
 }
 
 resource "aws_ecs_task_definition" "task-orderhistory" {
-  family                = "orderhistory"
+  family                = "orderhistory_service"
   container_definitions = "${data.template_file.orderhistory_task_definition.rendered}"
 
   requires_compatibilities = [
@@ -71,5 +71,5 @@ resource "aws_ecs_task_definition" "task-orderhistory" {
 }
 
 resource "aws_cloudwatch_log_group" "logs_orderhistory_service" {
-  name = "/ecs/orderhistory"
+  name = "/ecs/orderhistory_service"
 }
