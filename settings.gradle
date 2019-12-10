@@ -9,5 +9,6 @@ include 'order-service'
 include 'order-history-common'
 include 'order-history-service'
 include 'order-history-backend'
+include 'jmeter-service'
 include 'end-to-end-tests'
 
