@@ -4,3 +4,4 @@ RUN mkdir /usr/local/plans
 RUN mkdir /usr/local/results
 CMD java ${JAVA_OPTS} -jar jmeter-service-*.jar
 COPY build/libs/jmeter-service-*.jar .
+COPY TestPlan.jmx /usr/local/plans

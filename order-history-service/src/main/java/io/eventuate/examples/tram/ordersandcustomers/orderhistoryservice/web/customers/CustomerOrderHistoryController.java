@@ -27,4 +27,9 @@ public class CustomerOrderHistoryController {
             .map(c -> new ResponseEntity<>(c, HttpStatus.OK))
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
+
+  @RequestMapping(value="/customers/count", method= RequestMethod.GET)
+  public long getCustomerCount() {
+    return customerViewRepository.count();
+  }
 }

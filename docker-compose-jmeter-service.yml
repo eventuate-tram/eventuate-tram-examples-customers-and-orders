@@ -4,9 +4,11 @@ services:
     build:
       context: ./jmeter-service/
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-jmeter-service
+    depends_on:
+      - customerservice
     ports:
       - "8084:8080"
     environment:
       JMETER_SERVICE_RESULTS_FOLDER: /usr/local/results
-      JMETER_SERVICE_TESTPLAN_FOLDER: /usr/local/plans
+      JMETER_SERVICE_TESTPLAN_PATH: /usr/local/plans/TestPlan.jmx
       JMETER_PATH: /usr/local/apache-jmeter-5.2.1/bin/jmeter
