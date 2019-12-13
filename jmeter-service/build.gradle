@@ -1,6 +1,8 @@
 dependencies {
     compile project(":common-swagger")
 
+    compile "commons-io:commons-io:2.6"
+
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-web"
