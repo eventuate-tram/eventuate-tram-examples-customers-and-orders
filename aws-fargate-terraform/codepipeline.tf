@@ -23,6 +23,7 @@ resource "aws_s3_bucket" "source" {
 }
 
 resource "aws_iam_role" "codebuild_role" {
+  count = "${var.enable_codepipeline ? 1 : 0}"
   name = "${var.prefix}-codebuild-role"
   assume_role_policy = "${file("${path.module}/codebuild_role.json")}"
 }
@@ -35,6 +36,7 @@ data "template_file" "codebuild_policy" {
 }
 
 resource "aws_iam_role_policy" "codebuild_policy" {
+  count = "${var.enable_codepipeline ? 1 : 0}"
   name = "${var.prefix}-codebuild-policy"
   role = "${aws_iam_role.codebuild_role.id}"
   policy = "${data.template_file.codebuild_policy.rendered}"
@@ -55,6 +57,7 @@ data "template_file" "buildspec" {
 }
 
 resource "aws_codebuild_project" "eventuate_build" {
+  count = "${var.enable_codepipeline ? 1 : 0}"
   name = "${var.prefix}-eventuate-codebuild"
   build_timeout = "50"
   service_role = "${aws_iam_role.codebuild_role.arn}"
@@ -78,6 +81,7 @@ resource "aws_codebuild_project" "eventuate_build" {
 }
 
 resource "aws_codepipeline" "pipeline" {
+  count = "${var.enable_codepipeline ? 1 : 0}"
   name     = "${var.prefix}-app-pipeline"
   role_arn = "${aws_iam_role.codepipeline_role.arn}"
 
@@ -192,6 +196,7 @@ locals {
 }
 
 resource "aws_codepipeline_webhook" "pipeline_webhook" {
+  count = "${var.enable_codepipeline ? 1 : 0}"
   name            = "${var.prefix}-app-webhook-github"
   authentication  = "GITHUB_HMAC"
   target_action   = "Source"
@@ -207,6 +212,7 @@ resource "aws_codepipeline_webhook" "pipeline_webhook" {
 }
 
 resource "github_repository_webhook" "git_webhook" {
+  count = "${var.enable_codepipeline ? 1 : 0}"
   repository = "${data.github_repository.repo.name}"
 
   configuration {
@@ -224,6 +230,7 @@ data "github_repository" "repo" {
 }
 
 resource "aws_iam_role" "codepipeline_role" {
+  count = "${var.enable_codepipeline ? 1 : 0}"
   name = "${var.prefix}-codepipeline-role"
   assume_role_policy = "${file("${path.module}/codepipeline_role.json")}"
 }
@@ -236,6 +243,7 @@ data "template_file" "codepipeline_policy" {
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
+  count = "${var.enable_codepipeline ? 1 : 0}"
   name = "${var.prefix}-codepipeline_policy"
   role = "${aws_iam_role.codepipeline_role.id}"
   policy = "${data.template_file.codepipeline_policy.rendered}"

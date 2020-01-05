@@ -50,7 +50,7 @@ data "template_file" "orderhistory_task_definition" {
     logs_region                 = "${var.region}"
     logs_group                  = "${aws_cloudwatch_log_group.logs_orderhistory_service.name}"
     mongo_uri                   = "mongodb://${aws_docdb_cluster.docdb_cluster.master_username}:${aws_docdb_cluster.docdb_cluster.master_password}@${aws_docdb_cluster.docdb_cluster.endpoint}/customers_and_orders"
-    image_uri                   = "${aws_ecr_repository.customer.repository_url}"
+    image_uri                   = "${var.enable_codepipeline ? aws_ecr_repository.orderhistory.repository_url : "${var.docker_hub_image_prefix}order-history-service:latest"}"
   }
 }
 

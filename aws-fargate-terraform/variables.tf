@@ -90,3 +90,13 @@ variable "git_pat" {
 
 variable "git_username" {
 }
+
+variable "enable_codepipeline" {
+  type = "string"
+  default = "false"
+}
+
+variable "docker_hub_image_prefix" {
+  type = "string"
+  default = "eventuateexamples/eventuate-tram-examples-customers-and-orders-"
+}

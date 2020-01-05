@@ -49,7 +49,7 @@ data "template_file" "order_task_definition" {
     eventuate_bootstrap_brokers = "${join(",", sort(split(",", aws_msk_cluster.eventuate.bootstrap_brokers)))}"
     logs_region                 = "${var.region}"
     logs_group                  = "${aws_cloudwatch_log_group.logs_order_service.name}"
-    image_uri                   = "${aws_ecr_repository.customer.repository_url}"
+    image_uri                   = "${var.enable_codepipeline ? aws_ecr_repository.order.repository_url : "${var.docker_hub_image_prefix}order-service:latest"}"
   }
 }
 
