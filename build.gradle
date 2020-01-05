@@ -42,6 +42,11 @@ dockerCompose {
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
     }
 
+    mysqlbinlogwithjmeter {
+        projectName = null
+        useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-jmeter-service.yml"]
+    }
+
     mysqlbinlogcdc {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
