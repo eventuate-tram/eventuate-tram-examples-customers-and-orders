@@ -36,7 +36,8 @@ dockerCompose {
     environment.put "EVENTUATE_COMMON_VERSION", eventuateCommonImageVersion
     environment.put "EVENTUATE_KAFKA_VERSION", eventuateMessagingKafkaImageVersion
     environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
-
+    environment.put "EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING", eventuateCdcKafkaEnableBatchProcessing
+    
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]

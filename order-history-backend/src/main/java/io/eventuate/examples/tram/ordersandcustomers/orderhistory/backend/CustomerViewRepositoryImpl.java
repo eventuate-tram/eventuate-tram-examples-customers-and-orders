@@ -23,7 +23,7 @@ public class CustomerViewRepositoryImpl implements CustomerViewRepositoryCustom 
   @Override
   public void addCustomer(Long customerId, String customerName, Money creditLimit) {
     mongoTemplate.upsert(new Query(where("id").is(customerId)),
-            new Update().set("name", customerName).set("creditLimit", creditLimit), CustomerView.class);
+            new Update().set("name", customerName).set("creditLimit", creditLimit).set("creationTime", System.currentTimeMillis()), CustomerView.class);
   }
 
   @Override

@@ -26,6 +26,8 @@ public class Customer {
   @ElementCollection
   private Map<Long, Money> creditReservations;
 
+  private Long creationTime;
+
   Money availableCredit() {
     return creditLimit.subtract(creditReservations.values().stream().reduce(Money.ZERO, Money::add));
   }
@@ -37,6 +39,7 @@ public class Customer {
     this.name = name;
     this.creditLimit = creditLimit;
     this.creditReservations = Collections.emptyMap();
+    this.creationTime = System.currentTimeMillis();
   }
 
   public static ResultWithEvents<Customer> create(String name, Money creditLimit) {
