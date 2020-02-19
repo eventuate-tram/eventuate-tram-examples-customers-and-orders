@@ -29,6 +29,10 @@ jobs:
             ./build-and-test-all-postgres-wal.sh
       - run:
           command: |
+            . ./.circleci/setenv-circle-ci.sh
+            ./build-and-test-all-mysql-maven.sh
+      - run:
+          command: |
             ./publish-docker-images.sh
       - run:
           name: Save test results
