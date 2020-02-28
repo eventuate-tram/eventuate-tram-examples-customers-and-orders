@@ -21,7 +21,7 @@ dockerCompose {
 dependencies {
     compile project(":order-history-common")
 
-    compile "io.eventuate.tram.core:eventuate-tram-consumer-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
 
     compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"

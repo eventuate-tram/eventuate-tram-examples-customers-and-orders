@@ -1,8 +1,8 @@
 dependencies {
     compile project(":common")
 
-    compile "io.eventuate.tram.core:eventuate-tram-jdbc-kafka:$eventuateTramVersion"
-    compile "io.eventuate.tram.core:eventuate-tram-events:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-events:$eventuateTramVersion"
     compile "io.eventuate.tram.core:eventuate-tram-optimistic-locking:$eventuateTramVersion"
 
     compile 'mysql:mysql-connector-java:5.1.36'

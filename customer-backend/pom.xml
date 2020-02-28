@@ -19,12 +19,12 @@
 
         <dependency>
             <groupId>io.eventuate.tram.core</groupId>
-            <artifactId>eventuate-tram-jdbc-kafka</artifactId>
+            <artifactId>eventuate-tram-spring-jdbc-kafka</artifactId>
             <version>${eventuateTramVersion}</version>
         </dependency>
         <dependency>
             <groupId>io.eventuate.tram.core</groupId>
-            <artifactId>eventuate-tram-events</artifactId>
+            <artifactId>eventuate-tram-spring-events</artifactId>
             <version>${eventuateTramVersion}</version>
         </dependency>
         <dependency>
