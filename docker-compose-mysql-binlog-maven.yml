@@ -1,0 +1,116 @@
+version: '3'
+services:
+  orderservice:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile-maven
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mysql
+      - kafka
+      - zookeeper
+      - cdcservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
+      SPRING_DATASOURCE_USERNAME: mysqluser
+      SPRING_DATASOURCE_PASSWORD: mysqlpw
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+
+  customerservice:
+    build:
+      context: ./customer-service
+      dockerfile: Dockerfile-maven
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mysql
+      - kafka
+      - zookeeper
+      - cdcservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
+      SPRING_DATASOURCE_USERNAME: mysqluser
+      SPRING_DATASOURCE_PASSWORD: mysqlpw
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+
+  orderhistoryservice:
+    build:
+      context: ./order-history-service
+      dockerfile: Dockerfile-maven
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service
+    ports:
+      - "8083:8080"
+    depends_on:
+      - mongodb
+      - mysql
+      - kafka
+      - zookeeper
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb/customers_and_orders
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+
+  zookeeper:
+    image: eventuateio/eventuate-zookeeper:$EVENTUATE_COMMON_VERSION
+    ports:
+      - 2181:2181
+
+
+  kafka:
+    image: eventuateio/eventuate-kafka:$EVENTUATE_KAFKA_VERSION
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    environment:
+      - ADVERTISED_HOST_NAME=${DOCKER_HOST_IP}
+      - KAFKA_HEAP_OPTS=-Xmx320m -Xms320m
+      - ZOOKEEPER_SERVERS=zookeeper:2181
+      - ZOOKEEPER_CONNECTION_TIMEOUT_MS=60000
+
+
+  mysql:
+    image: eventuateio/eventuate-mysql:$EVENTUATE_COMMON_VERSION
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=mysqluser
+      - MYSQL_PASSWORD=mysqlpw
+
+
+  mongodb:
+    image: mongo:3.0.4
+    hostname: mongodb
+    command: mongod --smallfiles
+    ports:
+      - "27017:27017"
+
+  cdcservice:
+    image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
+    ports:
+      - "8099:8080"
+    depends_on:
+      - mysql
+      - kafka
+      - zookeeper
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
+      SPRING_DATASOURCE_USERNAME: mysqluser
+      SPRING_DATASOURCE_PASSWORD: mysqlpw
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+      EVENTUATELOCAL_CDC_DB_USER_NAME: root
+      EVENTUATELOCAL_CDC_DB_PASSWORD: rootpassword
+      EVENTUATELOCAL_CDC_READER_NAME: MySqlReader
+      EVENTUATELOCAL_CDC_OFFSET_STORE_KEY: MySqlBinlog
+      EVENTUATELOCAL_CDC_MYSQL_BINLOG_CLIENT_UNIQUE_ID: 1234567890
+      EVENTUATELOCAL_CDC_READ_OLD_DEBEZIUM_DB_OFFSET_STORAGE_TOPIC: "false"
