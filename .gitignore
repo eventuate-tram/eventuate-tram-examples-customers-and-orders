@@ -1,5 +1,4 @@
 .gradle
-.mvn
 build/
 target/
 *.idea/
