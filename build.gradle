@@ -46,6 +46,7 @@ dockerCompose {
     mysqlbinlogwithjmeter {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-jmeter-service.yml"]
+        startedServices = ["jmeterservice", "customerservice"]
     }
 
     mysqlbinlogcdc {
