@@ -1,6 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.tram.spring.consumer.common.TramNoopDuplicateMessageDetectorConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -31,7 +32,7 @@ public class OrderHistoryViewServiceRetryIntegrationTest {
 
   @Configuration
   @EnableAutoConfiguration
-  @Import(OrderHistoryViewMongoConfiguration.class)
+  @Import({OrderHistoryViewMongoConfiguration.class, TramNoopDuplicateMessageDetectorConfiguration.class})
   public static class Config {
     @Bean
     public OrderHistoryViewService orderHistoryViewService(CustomerViewRepository customerViewRepository, OrderViewRepository orderViewRepository) {
