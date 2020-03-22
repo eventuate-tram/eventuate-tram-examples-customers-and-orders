@@ -1,6 +1,8 @@
 dependencies {
     compile project(":common")
 
+    compile "io.eventuate.tram.core:eventuate-tram-events-spring-starter:$eventuateTramVersion"
+
     compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka:$eventuateTramVersion"
     compile "io.eventuate.tram.core:eventuate-tram-spring-events:$eventuateTramVersion"
     compile "io.eventuate.tram.core:eventuate-tram-optimistic-locking:$eventuateTramVersion"
