@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>io.eventuate.tram.core</groupId>
-            <artifactId>eventuate-tram-spring-events</artifactId>
+            <artifactId>eventuate-tram-events</artifactId>
             <version>${eventuateTramVersion}</version>
         </dependency>
         <dependency>
