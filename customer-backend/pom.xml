@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>io.eventuate.tram.core</groupId>
-            <artifactId>eventuate-tram-optimistic-locking</artifactId>
+            <artifactId>eventuate-tram-spring-optimistic-locking</artifactId>
             <version>${eventuateTramVersion}</version>
         </dependency>
 
