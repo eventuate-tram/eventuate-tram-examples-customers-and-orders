@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <eventuateTramVersion>0.24.0.RC2</eventuateTramVersion>
+        <eventuateTramVersion>0.24.0.BUILD-SNAPSHOT</eventuateTramVersion>
         <springBootVersion>2.1.5.RELEASE</springBootVersion>
         <eventuateUtilVersion>0.2.0.RELEASE</eventuateUtilVersion>
     </properties>
@@ -74,6 +74,13 @@
         <repository>
             <id>eventuate-tram-release</id>
             <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-release</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>eventuate-tram-snapshot</id>
+            <url>https://snapshots.repositories.eventuate.io/repository</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
