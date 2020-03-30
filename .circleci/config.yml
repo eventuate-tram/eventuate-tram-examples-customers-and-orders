@@ -8,15 +8,19 @@ jobs:
       - run:
           command: .circleci/install-jdk-14.sh
       - restore_cache:
-          key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}
+          keys:
+            - eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+            - eventuate-tram-examples-java-spring-todo-list-
       - run:
           command: |
             . ./.circleci/setenv-circle-ci.sh
             ./gradlew testClasses
+            ./mvnw package -DskipTests
       - save_cache:
           paths:
             - ~/.gradle
-          key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}
+            - ~/.m2
+          key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
       - run:
           command: |
             . ./.circleci/setenv-circle-ci.sh
