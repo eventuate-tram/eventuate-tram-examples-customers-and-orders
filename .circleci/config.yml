@@ -5,6 +5,8 @@ jobs:
     working_directory: ~/eventuate-tram-examples-customers-and-orders
     steps:
       - checkout
+      - run:
+        command: .circleci/install-jdk-14.sh
       - restore_cache:
           key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}
       - run:
