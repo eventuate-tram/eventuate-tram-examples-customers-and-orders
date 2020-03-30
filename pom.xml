@@ -12,15 +12,15 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+        <java.version>14</java.version>
         <eventuateTramVersion>0.24.0.BUILD-SNAPSHOT</eventuateTramVersion>
-        <springBootVersion>2.1.5.RELEASE</springBootVersion>
+        <springBootVersion>2.2.6.RELEASE</springBootVersion>
         <eventuateUtilVersion>0.2.0.RELEASE</eventuateUtilVersion>
     </properties>
 
     <modules>
         <module>common</module>
-        <module>common-swagger</module>
+        <module>common-swagger-maven</module>
         <module>customer-backend</module>
         <module>customer-web-api</module>
         <module>customer-service</module>
@@ -38,7 +38,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
