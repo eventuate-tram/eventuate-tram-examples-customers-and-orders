@@ -11,9 +11,22 @@
     <name>customer-service</name>
 
     <dependencies>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${springBootVersion}</version>
+        </dependency>
+
         <dependency>
             <groupId>eventuate.tram.examples.customers.and.orders</groupId>
-            <artifactId>common-swagger</artifactId>
+            <artifactId>common-swagger-maven</artifactId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

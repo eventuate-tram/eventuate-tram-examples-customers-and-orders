@@ -9,17 +9,13 @@ buildscript {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
-
 apply plugin: 'docker-compose'
 
 subprojects {
 
     apply plugin: "java"
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 14
+    targetCompatibility = 14
 
     repositories {
         mavenCentral()
