@@ -1,4 +1,4 @@
-FROM java:openjdk-8u111-alpine
+FROM openjdk:14-jdk-alpine3.10
 RUN wget -q -O - http://mirror.linux-ia64.org/apache//jmeter/binaries/apache-jmeter-5.2.1.tgz |  tar -xzf - -C /usr/local
 RUN mkdir /usr/local/plans
 RUN mkdir /usr/local/results
