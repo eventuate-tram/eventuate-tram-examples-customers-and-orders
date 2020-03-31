@@ -8,7 +8,7 @@ export EVENTUATE_CDC_VERSION=0.6.0.RC3
 
 . ./set-env-mysql.sh
 
-./mvnw package -DskipTests
+./mvnw install -DskipTests
 
 docker-compose -f docker-compose-mysql-binlog-maven.yml down
 docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d mysql zookeeper kafka
