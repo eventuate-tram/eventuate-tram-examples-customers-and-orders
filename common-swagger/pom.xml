@@ -6,9 +6,9 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>common-swagger-maven</artifactId>
+    <artifactId>common-swagger</artifactId>
     <packaging>jar</packaging>
-    <name>common-swagger-maven</name>
+    <name>common-swagger</name>
 
     <dependencies>
         <dependency>
