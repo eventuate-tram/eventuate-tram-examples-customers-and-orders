@@ -20,7 +20,7 @@
 
     <modules>
         <module>common</module>
-        <module>common-swagger-maven</module>
+        <module>common-swagger</module>
         <module>customer-backend</module>
         <module>customer-web-api</module>
         <module>customer-service</module>
@@ -56,6 +56,9 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>central</id>
@@ -63,6 +66,9 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>eventuate-tram-rc</id>
@@ -70,6 +76,9 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>eventuate-tram-release</id>
@@ -77,13 +86,19 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>eventuate-tram-snapshot</id>
             <url>https://snapshots.repositories.eventuate.io/repository</url>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 </project>
