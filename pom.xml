@@ -15,7 +15,7 @@
         <java.version>1.8</java.version>
         <eventuateTramVersion>0.24.0.BUILD-SNAPSHOT</eventuateTramVersion>
         <springBootVersion>2.1.5.RELEASE</springBootVersion>
-        <eventuateUtilVersion>0.2.0.RELEASE</eventuateUtilVersion>
+        <eventuateUtilVersion>0.3.0.BUILD-SNAPSHOT</eventuateUtilVersion>
     </properties>
 
     <modules>
