@@ -5,16 +5,22 @@ jobs:
     working_directory: ~/eventuate-tram-examples-customers-and-orders
     steps:
       - checkout
+      - run:
+          command: .circleci/install-jdk-14.sh
       - restore_cache:
-          key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}
+          keys:
+            - eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+            - eventuate-tram-examples-java-spring-todo-list-
       - run:
           command: |
             . ./.circleci/setenv-circle-ci.sh
             ./gradlew testClasses
+            ./mvnw package test-compile -DskipTests
       - save_cache:
           paths:
             - ~/.gradle
-          key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}
+            - ~/.m2
+          key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
       - run:
           command: |
             . ./.circleci/setenv-circle-ci.sh
@@ -33,6 +39,7 @@ jobs:
             ./build-and-test-all-mysql-maven.sh
       - run:
           command: |
+            . ./.circleci/setenv-circle-ci.sh
             ./publish-docker-images.sh
       - run:
           name: Save test results

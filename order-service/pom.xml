@@ -11,6 +11,18 @@
     <name>order-service</name>
 
     <dependencies>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${springBootVersion}</version>
+        </dependency>
+
         <dependency>
             <groupId>eventuate.tram.examples.customers.and.orders</groupId>
             <artifactId>common-swagger</artifactId>
@@ -40,12 +52,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>${springBootVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-hateoas</artifactId>
             <version>${springBootVersion}</version>
         </dependency>
 

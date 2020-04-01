@@ -12,10 +12,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+        <java.version>14</java.version>
         <eventuateTramVersion>0.24.0.BUILD-SNAPSHOT</eventuateTramVersion>
-        <springBootVersion>2.1.5.RELEASE</springBootVersion>
         <eventuateUtilVersion>0.3.0.BUILD-SNAPSHOT</eventuateUtilVersion>
+        <springBootVersion>2.2.6.RELEASE</springBootVersion>
     </properties>
 
     <modules>
@@ -38,7 +38,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -56,6 +56,9 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>central</id>
@@ -63,6 +66,9 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>eventuate-tram-rc</id>
@@ -70,6 +76,9 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>eventuate-tram-release</id>
@@ -77,13 +86,19 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>eventuate-tram-snapshot</id>
             <url>https://snapshots.repositories.eventuate.io/repository</url>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 </project>
