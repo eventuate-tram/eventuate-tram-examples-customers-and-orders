@@ -1,5 +1,3 @@
 dependencies {
-    compile "io.springfox:springfox-swagger2:2.9.2"
-    compile "io.springfox:springfox-swagger-ui:2.9.2"
-    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    compile "io.eventuate.util:eventuate-util-spring-swagger:$eventuateUtilVersion"
 }

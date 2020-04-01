@@ -14,8 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>14</java.version>
         <eventuateTramVersion>0.24.0.BUILD-SNAPSHOT</eventuateTramVersion>
+        <eventuateUtilVersion>0.3.0.BUILD-SNAPSHOT</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
-        <eventuateUtilVersion>0.2.0.RELEASE</eventuateUtilVersion>
     </properties>
 
     <modules>
