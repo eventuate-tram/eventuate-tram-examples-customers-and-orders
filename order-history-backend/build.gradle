@@ -8,8 +8,6 @@ buildscript {
     }
 }
 
-apply plugin: VerifyMongoDBConfigurationPlugin
-
 apply plugin: 'docker-compose'
 
 dockerCompose.isRequiredBy(test)
