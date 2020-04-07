@@ -109,7 +109,7 @@ image::./order-history-service-canvas.png[width=300]
 == Building and running
 
 Note: you do not need to install Gradle since it will be downloaded automatically.
-You just need to have Java 8 installed.
+You just need to have Java 14 installed.
 
 First, build the application
 
@@ -120,26 +120,21 @@ First, build the application
 Next, launch the services using https://docs.docker.com/compose/[Docker Compose]:
 
 ```
-export DOCKER_HOST_IP=...
 ./gradlew mysqlbinlogComposeBuild
 ./gradlew mysqlbinlogComposeUp
 ```
 
 Note:
 
-1. You can also run the Postgres version using `./gradlew postgrespollingComposeUp` or `./gradlew postgreswalComposeUp`
-2. You need to set `DOCKER_HOST_IP` before running Docker Compose.
-This must be an IP address or resolvable hostname.
-It cannot be `localhost`.
-See this http://eventuate.io/docs/usingdocker.html[guide to setting `DOCKER_HOST_IP`] for more information.
+You can also run the Postgres version using `./gradlew postgrespollingComposeUp` or `./gradlew postgreswalComposeUp`
 
 == Using the application
 
 Once the application has started, you can use the application via the Swagger UI:
 
-* `Customer Service` - `http://${DOCKER_HOST_IP}:8082/swagger-ui.html`
-* `Order Service` - `http://${DOCKER_HOST_IP}:8081/swagger-ui.html`
-* `Order History Service` - `http://${DOCKER_HOST_IP}:8083/swagger-ui.html`
+* `Customer Service` - `http://localhost:8082/swagger-ui.html`
+* `Order Service` - `http://localhost:8081/swagger-ui.html`
+* `Order History Service` - `http://localhost:8083/swagger-ui.html`
 
 You can also use `curl` to interact with the services.
 First, let's create a customer:
@@ -150,7 +145,7 @@ $ curl -X POST --header "Content-Type: application/json" -d '{
     "amount": 5
   },
   "name": "Jane Doe"
-}' http://${DOCKER_HOST_IP}:8082/customers
+}' http://localhost:8082/customers
 
 HTTP/1.1 200
 Content-Type: application/json;charset=UTF-8
@@ -168,7 +163,7 @@ $ curl -X POST --header "Content-Type: application/json" -d '{
   "orderTotal": {
     "amount": 4
   }
-}' http://${DOCKER_HOST_IP}:8081/orders
+}' http://localhost:8081/orders
 
 HTTP/1.1 200
 Content-Type: application/json;charset=UTF-8
@@ -182,7 +177,7 @@ Content-Type: application/json;charset=UTF-8
 Next, check the status of the `Order` in the `Order Service`:
 
 ```bash
-$ curl -X GET http://${DOCKER_HOST_IP}:8081/orders/1
+$ curl -X GET http://localhost:8081/orders/1
 
 HTTP/1.1 200
 Content-Type: application/json;charset=UTF-8
@@ -196,7 +191,7 @@ Content-Type: application/json;charset=UTF-8
 Finally, look at the customer's order history in the `Order History Service`:
 
 ```bash
-$ curl -X GET --header "Accept: */*" "http://${DOCKER_HOST_IP}:8083/customers/1"
+$ curl -X GET --header "Accept: */*" "http://localhost:8083/customers/1"
 
 HTTP/1.1 200
 Content-Type: application/json;charset=UTF-8

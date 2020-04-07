@@ -17,7 +17,7 @@ services:
       SPRING_DATASOURCE_USERNAME: mysqluser
       SPRING_DATASOURCE_PASSWORD: mysqlpw
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
-      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
   customerservice:
@@ -37,7 +37,7 @@ services:
       SPRING_DATASOURCE_USERNAME: mysqluser
       SPRING_DATASOURCE_PASSWORD: mysqlpw
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
-      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
   orderhistoryservice:
@@ -54,26 +54,29 @@ services:
       - zookeeper
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb/customers_and_orders
-      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
   zookeeper:
-    image: eventuateio/eventuate-zookeeper:$EVENTUATE_COMMON_VERSION
+    image: confluentinc/cp-zookeeper:5.2.4
     ports:
       - 2181:2181
-
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka:
-    image: eventuateio/eventuate-kafka:$EVENTUATE_KAFKA_VERSION
+    image: "confluentinc/cp-enterprise-kafka:5.2.4"
     ports:
       - 9092:9092
     depends_on:
       - zookeeper
     environment:
-      - ADVERTISED_HOST_NAME=${DOCKER_HOST_IP}
-      - KAFKA_HEAP_OPTS=-Xmx320m -Xms320m
-      - ZOOKEEPER_SERVERS=zookeeper:2181
-      - ZOOKEEPER_CONNECTION_TIMEOUT_MS=60000
+      KAFKA_LISTENERS: LC://kafka:29092,LX://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: LC://kafka:29092,LX://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LC:PLAINTEXT,LX:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LC
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
 
   mysql:
@@ -84,7 +87,6 @@ services:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - MYSQL_USER=mysqluser
       - MYSQL_PASSWORD=mysqlpw
-
 
   mongodb:
     image: mongo:3.0.4
@@ -106,7 +108,7 @@ services:
       SPRING_DATASOURCE_USERNAME: mysqluser
       SPRING_DATASOURCE_PASSWORD: mysqlpw
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
-      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
       EVENTUATELOCAL_CDC_DB_USER_NAME: root
       EVENTUATELOCAL_CDC_DB_PASSWORD: rootpassword

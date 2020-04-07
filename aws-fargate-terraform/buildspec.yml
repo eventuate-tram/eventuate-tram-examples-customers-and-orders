@@ -17,7 +17,6 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - export DOCKER_HOST_IP=`hostname -i`
       - ./gradlew assemble
       - docker build -t $REGISTRY_URI_CUSTOMER:$IMAGE_TAG customer-service
       - docker build -t $REGISTRY_URI_ORDER:$IMAGE_TAG order-service
