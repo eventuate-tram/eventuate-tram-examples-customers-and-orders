@@ -13,6 +13,7 @@ jobs:
             - eventuate-tram-examples-java-spring-todo-list-
       - run:
           command: |
+            ./.circleci/upgrade-docker-compose.sh
             . ./.circleci/setenv-circle-ci.sh
             ./gradlew testClasses
             ./mvnw package test-compile -DskipTests
