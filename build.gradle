@@ -45,6 +45,12 @@ dockerCompose {
         startedServices = ["jmeterservice", "customerservice"]
     }
 
+    mysqlbinlogwithorderhistorytextsearchservice {
+        projectName = null
+        useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-snapshots-mysql-binlog.yml"]
+        startedServices = ["elasticsearch", "orderhistorytextsearchservice"]
+    }
+
     mysqlbinlogcdc {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]

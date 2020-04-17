@@ -12,4 +12,6 @@ dependencies {
 
     compile 'org.springframework.retry:spring-retry:1.2.4.RELEASE'
     compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+
+    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewVersion"
 }
