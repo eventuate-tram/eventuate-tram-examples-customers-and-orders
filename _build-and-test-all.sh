@@ -11,7 +11,7 @@ ${dockercdc}Up
 
 ./wait-for-services.sh localhost "8099"
 
-./gradlew -x :end-to-end-tests:test build
+./gradlew -x :end-to-end-tests:test -x :snapshot-tests:test build
 
 #Testing db cli
 if [ "${DATABASE}" == "mysql" ]; then
