@@ -51,7 +51,10 @@ public class CustomerConfiguration {
             Customer.class,
             customerRepository,
             customer -> {
-              DomainEvent domainEvent = new CustomerSnapshotEvent(customer.getId(), customer.getName());
+              DomainEvent domainEvent = new CustomerSnapshotEvent(customer.getId(),
+                      customer.getName(),
+                      customer.getCreditLimit());
+
               return new DomainEventWithEntityId(customer.getId(), domainEvent);
             },
             new DBLockService.TableSpec("customer", "customer0_"),

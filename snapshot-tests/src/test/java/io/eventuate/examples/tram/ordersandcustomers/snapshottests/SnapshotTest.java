@@ -1,9 +1,12 @@
 package io.eventuate.examples.tram.ordersandcustomers.snapshottests;
 
 import io.eventuate.examples.tram.ordersandcustomers.CustomerTextView;
+import io.eventuate.examples.tram.ordersandcustomers.OrderTextView;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerRequest;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerResponse;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
 import io.eventuate.tram.viewsupport.rebuild.TopicPartitionOffset;
 import io.eventuate.util.test.async.Eventually;
 import org.junit.Assert;
@@ -28,6 +31,10 @@ public class SnapshotTest {
   @Value("localhost")
   private String hostName;
 
+  private String baseUrlOrders(String path) {
+    return "http://"+hostName+":8081/" + path;
+  }
+
   private String baseUrlCustomers(String path) {
     return "http://"+hostName+":8082/" + path;
   }
@@ -40,11 +47,11 @@ public class SnapshotTest {
   RestTemplate restTemplate;
 
   @Test
-  public void test() {
-    Long id = createCustomer("john", new Money("200"));
+  public void testCustomers() {
+    Long id = createCustomer("john", new Money("200.00"));
     List<TopicPartitionOffset> topicPartitionOffsets = exportCustomerSnapshots();
 
-    setTopicPartitionOffset(topicPartitionOffsets);
+    setTopicPartitionOffset("customerTextSearchServiceEvents", topicPartitionOffsets);
     execConsoleCommand("./gradlew", "mysqlbinlogwithorderhistorytextsearchserviceComposeUp");
 
     Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
@@ -52,16 +59,37 @@ public class SnapshotTest {
 
       Assert.assertEquals(1, customerTextViews.size());
       Assert.assertEquals("john", customerTextViews.get(0).getName());
+      Assert.assertEquals("200.00", customerTextViews.get(0).getCreditLimit());
       Assert.assertEquals(id.toString(), customerTextViews.get(0).getId());
     });
   }
 
-  public void setTopicPartitionOffset(List<TopicPartitionOffset> topicPartitionOffsets) {
+  @Test
+  public void testOrders() {
+    Long customerId = createCustomer("jack", new Money("300.00"));
+    Long orderId = createOrder(customerId, new Money("100.00"));
+
+    List<TopicPartitionOffset> topicPartitionOffsets = exportOrderSnapshots();
+
+    setTopicPartitionOffset("orderTextSearchServiceEvents", topicPartitionOffsets);
+    execConsoleCommand("./gradlew", "mysqlbinlogwithorderhistorytextsearchserviceComposeUp");
+
+    Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
+      List<OrderTextView> orderTextViews = Arrays.asList(restTemplate.getForEntity(baseUrlOrderHistoryTextSearch("orders?search=100.00"), OrderTextView[].class).getBody());
+
+      Assert.assertEquals(1, orderTextViews.size());
+      Assert.assertEquals(orderId.toString(), orderTextViews.get(0).getId());
+      Assert.assertEquals(customerId.toString(), orderTextViews.get(0).getCustomerId());
+      Assert.assertEquals("100.00", orderTextViews.get(0).getOrderTotal());
+    });
+  }
+
+  public void setTopicPartitionOffset(String group, List<TopicPartitionOffset> topicPartitionOffsets) {
     for (TopicPartitionOffset topicPartitionOffset : topicPartitionOffsets) {
       try {
         execConsoleCommand("sh",
                 "set-consumer-group-offset.sh",
-                "todoServiceEvents",
+                group,
                 topicPartitionOffset.getTopic(),
                 String.valueOf(topicPartitionOffset.getOffset())).waitFor();
       } catch (InterruptedException e) {
@@ -87,8 +115,17 @@ public class SnapshotTest {
     return Arrays.asList(restTemplate.postForObject(baseUrlCustomers("customers/make-snapshot"), null,  TopicPartitionOffset[].class));
   }
 
+  private List<TopicPartitionOffset> exportOrderSnapshots() {
+    return Arrays.asList(restTemplate.postForObject(baseUrlOrders("orders/make-snapshot"), null,  TopicPartitionOffset[].class));
+  }
+
   private Long createCustomer(String name, Money credit) {
     return restTemplate.postForObject(baseUrlCustomers("customers"),
             new CreateCustomerRequest(name, credit), CreateCustomerResponse.class).getCustomerId();
+  }
+
+  private Long createOrder(Long customerId, Money orderTotal) {
+    return restTemplate.postForObject(baseUrlOrders("orders"),
+            new CreateOrderRequest(customerId, orderTotal), CreateOrderResponse.class).getOrderId();
   }
 }

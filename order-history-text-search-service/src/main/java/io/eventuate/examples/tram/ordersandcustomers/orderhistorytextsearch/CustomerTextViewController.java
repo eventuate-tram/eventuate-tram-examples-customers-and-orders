@@ -1,7 +1,9 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch;
 
 import io.eventuate.examples.tram.ordersandcustomers.CustomerTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.backend.TextViewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,8 +12,9 @@ import java.util.List;
 @RequestMapping(path = "/customers")
 public class CustomerTextViewController {
 
+  @Qualifier("customerTextViewService")
   @Autowired
-  private CustomerTextViewService customerTextViewService;
+  private TextViewService<CustomerTextView> customerTextViewService;
 
   @RequestMapping(method = RequestMethod.GET)
   public List<CustomerTextView> search(@RequestParam String search) {

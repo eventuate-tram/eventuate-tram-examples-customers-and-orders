@@ -35,7 +35,7 @@ public class CustomerController {
   }
 
   @RequestMapping(value = "/customers/make-snapshot", method = RequestMethod.POST)
-  public List<TopicPartitionOffset> createCustomer() {
+  public List<TopicPartitionOffset> makeSnapshot() {
     return domainSnapshotExportService.exportSnapshots();
   }
 }

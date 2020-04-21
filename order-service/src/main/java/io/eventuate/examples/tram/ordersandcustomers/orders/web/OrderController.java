@@ -7,21 +7,30 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRe
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
+import io.eventuate.tram.viewsupport.rebuild.DomainSnapshotExportService;
+import io.eventuate.tram.viewsupport.rebuild.TopicPartitionOffset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class OrderController {
 
   private OrderService orderService;
   private OrderRepository orderRepository;
+  private DomainSnapshotExportService<Order> domainSnapshotExportService;
 
   @Autowired
-  public OrderController(OrderService orderService, OrderRepository orderRepository) {
+  public OrderController(OrderService orderService,
+                         OrderRepository orderRepository,
+                         DomainSnapshotExportService<Order> domainSnapshotExportService) {
+
     this.orderService = orderService;
     this.orderRepository = orderRepository;
+    this.domainSnapshotExportService = domainSnapshotExportService;
   }
 
   @RequestMapping(value = "/orders", method = RequestMethod.POST)
@@ -42,6 +51,11 @@ public class OrderController {
   public ResponseEntity<GetOrderResponse> cancelOrder(@PathVariable Long orderId) {
      Order order = orderService.cancelOrder(orderId);
      return makeSuccessfulResponse(order);
+  }
+
+  @RequestMapping(value = "/orders/make-snapshot", method = RequestMethod.POST)
+  public List<TopicPartitionOffset> makeSnapshot() {
+    return domainSnapshotExportService.exportSnapshots();
   }
 
   private ResponseEntity<GetOrderResponse> makeSuccessfulResponse(Order order) {
