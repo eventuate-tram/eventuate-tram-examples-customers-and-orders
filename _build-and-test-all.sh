@@ -9,8 +9,6 @@ ${dockerall}Down
 ${dockercdc}Build
 ${dockercdc}Up
 
-./wait-for-services.sh localhost "8099"
-
 ./gradlew -x :end-to-end-tests:test -x :snapshot-tests:test build
 
 #Testing db cli
@@ -25,8 +23,6 @@ fi
 
 ${dockerall}Build
 ${dockerall}Up
-
-./wait-for-services.sh localhost "8081 8082 8083"
 
 #Testing mongo cli
 echo 'show dbs' |  ./mongodb-cli.sh -i

@@ -1,5 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.snapshottests;
 
+import io.eventuate.common.json.mapper.JSonMapper;
 import io.eventuate.examples.tram.ordersandcustomers.CustomerTextView;
 import io.eventuate.examples.tram.ordersandcustomers.OrderTextView;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
@@ -28,8 +29,7 @@ import java.util.concurrent.TimeUnit;
 @SpringBootTest(classes = SnapshotTestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class SnapshotTest {
 
-  @Value("localhost")
-  private String hostName;
+  private String hostName = "localhost";
 
   private String baseUrlOrders(String path) {
     return "http://"+hostName+":8081/" + path;
@@ -112,11 +112,11 @@ public class SnapshotTest {
 
 
   private List<TopicPartitionOffset> exportCustomerSnapshots() {
-    return Arrays.asList(restTemplate.postForObject(baseUrlCustomers("customers/make-snapshot"), null,  TopicPartitionOffset[].class));
+    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(baseUrlCustomers("customers/make-snapshot"), null,  String.class), TopicPartitionOffset[].class));
   }
 
   private List<TopicPartitionOffset> exportOrderSnapshots() {
-    return Arrays.asList(restTemplate.postForObject(baseUrlOrders("orders/make-snapshot"), null,  TopicPartitionOffset[].class));
+    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(baseUrlOrders("orders/make-snapshot"), null,  String.class), TopicPartitionOffset[].class));
   }
 
   private Long createCustomer(String name, Money credit) {

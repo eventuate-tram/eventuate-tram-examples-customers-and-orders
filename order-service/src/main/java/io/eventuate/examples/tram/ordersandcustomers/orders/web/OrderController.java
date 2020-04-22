@@ -1,5 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.web;
 
+import io.eventuate.common.json.mapper.JSonMapper;
 import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
@@ -54,8 +55,8 @@ public class OrderController {
   }
 
   @RequestMapping(value = "/orders/make-snapshot", method = RequestMethod.POST)
-  public List<TopicPartitionOffset> makeSnapshot() {
-    return domainSnapshotExportService.exportSnapshots();
+  public String makeSnapshot() {
+    return JSonMapper.toJson(domainSnapshotExportService.exportSnapshots());
   }
 
   private ResponseEntity<GetOrderResponse> makeSuccessfulResponse(Order order) {
