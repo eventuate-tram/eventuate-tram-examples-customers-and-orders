@@ -13,9 +13,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>14</java.version>
-        <eventuateTramVersion>0.24.0.RC6</eventuateTramVersion>
-        <eventuateUtilVersion>0.4.0.RC2</eventuateUtilVersion>
+        <eventuateTramVersion>0.24.0.RELEASE</eventuateTramVersion>
+        <eventuateUtilVersion>0.4.0.RELEASE</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
+        <eventuateTramViewVersion>0.1.0.BUILD-SNAPSHOT</eventuateTramViewVersion>
+        <eventuateMessagingKafkaVersion>0.9.0.RELEASE</eventuateMessagingKafkaVersion>
     </properties>
 
     <modules>
@@ -52,7 +54,7 @@
         <repository>
             <id>jcenter</id>
             <name>jcenter</name>
-            <url>http://jcenter.bintray.com</url>
+            <url>https://jcenter.bintray.com/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -93,6 +95,17 @@
         <repository>
             <id>eventuate-tram-snapshot</id>
             <url>https://snapshots.repositories.eventuate.io/repository</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>local</id>
+            <url>file:///Users/cer/.m2/testdeploy</url>
             <releases>
                 <enabled>false</enabled>
             </releases>

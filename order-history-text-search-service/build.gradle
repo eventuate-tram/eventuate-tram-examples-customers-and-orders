@@ -1,0 +1,8 @@
+apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+dependencies {
+    compile project(":order-history-text-search-backend")
+    compile project(":common-swagger")
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+}
