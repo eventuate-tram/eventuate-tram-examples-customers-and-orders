@@ -25,6 +25,10 @@ jobs:
       - run:
           command: |
             . ./.circleci/setenv-circle-ci.sh
+            ./build-and-test-snapshots.sh
+      - run:
+          command: |
+            . ./.circleci/setenv-circle-ci.sh
             ./build-and-test-all-mysql-binlog.sh
       - run:
           command: |

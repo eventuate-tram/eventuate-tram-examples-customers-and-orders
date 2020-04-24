@@ -9,7 +9,7 @@ ${dockerall}Down
 ${dockercdc}Build
 ${dockercdc}Up
 
-./gradlew -x :end-to-end-tests:test build
+./gradlew -x :end-to-end-tests:test -x :snapshot-tests:test build
 
 #Testing db cli
 if [ "${DATABASE}" == "mysql" ]; then
