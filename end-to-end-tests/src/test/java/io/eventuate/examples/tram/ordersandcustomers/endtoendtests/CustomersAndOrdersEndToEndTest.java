@@ -33,7 +33,7 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest(classes = CustomersAndOrdersEndToEndTestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class CustomersAndOrdersEndToEndTest {
 
-  @Value("localhost")
+  @Value("${host.name}")
   private String hostName;
 
   private String baseUrlOrders(String... path) {

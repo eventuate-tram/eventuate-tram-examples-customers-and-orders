@@ -126,6 +126,9 @@ Next, launch the services using https://docs.docker.com/compose/[Docker Compose]
 
 Note:
 
+If the containers aren't accessible via `localhost` - e.g. you are using Docker Toolbox, you will have to use `${DOCKER_HOST_IP}` instead of localhost.
+See this http://eventuate.io/docs/usingdocker.html[guide to setting `DOCKER_HOST_IP`] for more information.
+
 You can also run the Postgres version using `./gradlew postgrespollingComposeUp` or `./gradlew postgreswalComposeUp`
 
 == Using the application

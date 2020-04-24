@@ -15,11 +15,11 @@ docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d mysql zook
 
 docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d cdcservice
 
-./wait-for-services.sh localhost "8099"
+./wait-for-services.sh ${DOCKER_HOST_IP:-localhost} "8099"
 
 docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d
 
-./wait-for-services.sh localhost "8081 8082 8083"
+./wait-for-services.sh ${DOCKER_HOST_IP:-localhost} "8081 8082 8083"
 
 
 ./mvnw -am -pl order-history-service test-compile
