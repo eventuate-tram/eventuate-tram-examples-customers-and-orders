@@ -17,7 +17,7 @@ docker rm eventuate-tram-examples-customers-and-orders_cdcservice_1
 
 while true ; do
     date
-    curl -s http://localhost:8099/actuator/prometheus | grep eventuate_cdc | (grep eventuate_cdc_processed_messages_total || echo not found)
+    curl -s http://${DOCKER_HOST_IP:-localhost}:8099/actuator/prometheus | grep eventuate_cdc | (grep eventuate_cdc_processed_messages_total || echo not found)
     sleep 1
 done
 
