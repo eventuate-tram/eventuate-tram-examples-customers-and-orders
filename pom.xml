@@ -16,7 +16,7 @@
         <eventuateTramVersion>0.24.0.RELEASE</eventuateTramVersion>
         <eventuateUtilVersion>0.4.0.RELEASE</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
-        <eventuateTramViewVersion>0.1.0-SNAPSHOT</eventuateTramViewVersion>
+        <eventuateTramViewVersion>0.1.0.BUILD-SNAPSHOT</eventuateTramViewVersion>
         <eventuateMessagingKafkaVersion>0.9.0.RELEASE</eventuateMessagingKafkaVersion>
     </properties>
 
