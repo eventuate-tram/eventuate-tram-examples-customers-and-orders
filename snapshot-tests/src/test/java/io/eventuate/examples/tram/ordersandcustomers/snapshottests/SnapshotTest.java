@@ -86,26 +86,24 @@ public class SnapshotTest {
 
   public void setTopicPartitionOffset(String group, List<TopicPartitionOffset> topicPartitionOffsets) {
     for (TopicPartitionOffset topicPartitionOffset : topicPartitionOffsets) {
-      try {
         execConsoleCommand("sh",
                 "set-consumer-group-offset.sh",
                 group,
                 topicPartitionOffset.getTopic(),
-                String.valueOf(topicPartitionOffset.getOffset())).waitFor();
-      } catch (InterruptedException e) {
-        throw new RuntimeException(e);
-      }
+                String.valueOf(topicPartitionOffset.getOffset()));
     }
   }
 
-  private Process execConsoleCommand(String... command) {
+  private void execConsoleCommand(String... command) {
     try {
       ProcessBuilder processBuilder = new ProcessBuilder();
       processBuilder.directory(new File(".."));
       processBuilder.command(command);
       processBuilder.inheritIO();
-      return processBuilder.start();
-    } catch (IOException e) {
+      processBuilder
+              .start()
+              .waitFor(5, TimeUnit.MINUTES);
+    } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
   }
