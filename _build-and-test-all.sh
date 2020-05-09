@@ -5,6 +5,8 @@ set -e
 dockerall="./gradlew ${DATABASE?}${MODE?}Compose"
 dockercdc="./gradlew ${DATABASE?}${MODE?}cdcCompose"
 
+./gradlew testClasses
+
 ${dockerall}Down
 ${dockercdc}Build
 ${dockercdc}Up

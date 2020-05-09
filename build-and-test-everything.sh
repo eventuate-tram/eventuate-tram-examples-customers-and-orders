@@ -2,7 +2,7 @@
 
 set -o pipefail
 
-SCRIPTS="./build-and-test-snapshots.sh ./build-and-test-all-mysql-binlog.sh ./build-and-test-all-postgres-polling.sh ./build-and-test-all-postgres-wal.sh ./build-and-test-all-mysql-maven.sh"
+SCRIPTS="./build-and-test-all-*"
 
 date > build-and-test-everything.log
 
