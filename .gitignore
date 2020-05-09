@@ -8,3 +8,4 @@ target/
 .terraform*
 terraform.tfstate*
 out
+.DS_Store
