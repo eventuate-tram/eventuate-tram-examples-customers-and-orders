@@ -1,6 +1,6 @@
 #! /bin/bash -e
 
-docker run $* \
+docker run ${1:--it} \
    --name postgresterm --network=${PWD##*/}_default \
    -e POSTGRES_HOST=postgres \
    --rm postgres:9.6.5 \

@@ -6,7 +6,6 @@ import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.Custome
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.OrderView;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerViewRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryViewService;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderViewRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ public class OrderHistoryViewServiceIntegrationTest {
 
   @Autowired
   private CustomerViewRepository customerViewRepository;
-
-  @Autowired
-  private OrderViewRepository orderViewRepository;
 
   @Test
   public void shouldCreateCustomerAndOrdersEtc() {
@@ -62,13 +58,6 @@ public class OrderHistoryViewServiceIntegrationTest {
     assertEquals(orderTotal2, customerView.getOrders().get(orderId2).getOrderTotal());
     assertEquals(OrderState.REJECTED, customerView.getOrders().get(orderId2).getState());
 
-    OrderView orderView1 = orderViewRepository.findById(orderId1).orElseThrow(IllegalArgumentException::new);
-    assertEquals(orderTotal1, orderView1.getOrderTotal());
-    assertEquals(OrderState.APPROVED, orderView1.getState());
-
-    OrderView orderView2 = orderViewRepository.findById(orderId2).orElseThrow(IllegalArgumentException::new);
-    assertEquals(orderTotal2, orderView2.getOrderTotal());
-    assertEquals(OrderState.REJECTED, orderView2.getState());
   }
 
 

@@ -120,8 +120,7 @@ First, build the application
 Next, launch the services using https://docs.docker.com/compose/[Docker Compose]:
 
 ```
-./gradlew mysqlbinlogComposeBuild
-./gradlew mysqlbinlogComposeUp
+./gradlew mysqlbinlogComposeBuild mysqlbinlogComposeUp
 ```
 
 Note:

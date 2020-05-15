@@ -14,8 +14,8 @@ apply plugin: 'docker-compose'
 subprojects {
 
     apply plugin: "java"
-    sourceCompatibility = 14
-    targetCompatibility = 14
+    sourceCompatibility = 8
+    targetCompatibility = 8
 
     repositories {
         mavenCentral()
@@ -33,7 +33,7 @@ dockerCompose {
     environment.put "EVENTUATE_KAFKA_VERSION", eventuateMessagingKafkaImageVersion
     environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
     environment.put "EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING", eventuateCdcKafkaEnableBatchProcessing
-    
+
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]

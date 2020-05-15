@@ -11,7 +11,7 @@ import org.springframework.retry.annotation.EnableRetry;
 public class OrderHistoryViewMongoConfiguration {
 
   @Bean
-  public OrderHistoryViewService orderHistoryViewService(CustomerViewRepository customerViewRepository, OrderViewRepository orderViewRepository) {
-    return new OrderHistoryViewService(customerViewRepository, orderViewRepository);
+  public OrderHistoryViewService orderHistoryViewService(CustomerViewRepository customerViewRepository) {
+    return new OrderHistoryViewService(customerViewRepository);
   }
 }

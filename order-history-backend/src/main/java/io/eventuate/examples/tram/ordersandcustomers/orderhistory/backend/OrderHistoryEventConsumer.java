@@ -1,13 +1,11 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderApprovedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCancelledEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCreatedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderRejectedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.commondomain.*;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 public class OrderHistoryEventConsumer {
 
@@ -16,12 +14,20 @@ public class OrderHistoryEventConsumer {
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder
-            .forAggregateType("io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order")
+            .forAggregateType("io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer")
+            .onEvent(CustomerCreatedEvent.class, this::customerCreatedEventHandler)
+            .andForAggregateType("io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order")
             .onEvent(OrderCreatedEvent.class, this::orderCreatedEventHandler)
             .onEvent(OrderApprovedEvent.class, this::orderApprovedEventHandler)
             .onEvent(OrderRejectedEvent.class, this::orderRejectedEventHandler)
             .onEvent(OrderCancelledEvent.class, this::handleOrderCancelledEvent)
             .build();
+  }
+
+  private void customerCreatedEventHandler(DomainEventEnvelope<CustomerCreatedEvent> domainEventEnvelope) {
+    CustomerCreatedEvent customerCreatedEvent = domainEventEnvelope.getEvent();
+    orderHistoryViewService.createCustomer(Long.parseLong(domainEventEnvelope.getAggregateId()),
+            customerCreatedEvent.getName(), customerCreatedEvent.getCreditLimit());
   }
 
   private void orderCreatedEventHandler(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope) {
@@ -48,3 +54,4 @@ public class OrderHistoryEventConsumer {
             Long.parseLong(domainEventEnvelope.getAggregateId()));
   }
 }
+
