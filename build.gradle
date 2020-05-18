@@ -33,7 +33,7 @@ dockerCompose {
     environment.put "EVENTUATE_KAFKA_VERSION", eventuateMessagingKafkaImageVersion
     environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
     environment.put "EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING", eventuateCdcKafkaEnableBatchProcessing
-    
+
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
@@ -78,4 +78,26 @@ dockerCompose {
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
         startedServices = ["cdcservice"]
     }
+
+    javaDevelopment {
+        projectName = null
+        startedServices = ["java-development"]
+        useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-java-development.yml"]
+    }
+}
+
+task prepareJavaDevelopmentDockerImage(type:Exec) {
+    commandLine './prepare-java-development-docker-image.sh'
+}
+
+javaDevelopmentComposeBuild.dependsOn(prepareJavaDevelopmentDockerImage)
+
+task buildAndStartServicesMySqlBinlog(type: GradleBuild) {
+    List<String> t = []
+
+    t.add("mysqlbinlogcdcComposeUp")
+    t.addAll(subprojects.collect { it.name }.collect { ":" + it + ":assemble" })
+    t.add("mysqlbinlogComposeUp")
+
+    tasks = t
 }
