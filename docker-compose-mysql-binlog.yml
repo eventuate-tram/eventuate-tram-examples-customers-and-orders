@@ -128,7 +128,7 @@ services:
       EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING: ${EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING}
 
   java-development:
-    image: eventuateio/eventuate-tram-examples-customers-and-orders-redis-java-development:latest
+    image: eventuateio/eventuate-tram-examples-customers-and-orders-java-development:latest
     volumes:
       - .:/development
       - /var/run/docker.sock:/var/run/docker.sock
