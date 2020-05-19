@@ -26,16 +26,13 @@ public class OrderHistoryViewServiceRetryIntegrationTest {
   @MockBean
   private CustomerViewRepository customerViewRepository;
 
-  @MockBean
-  private OrderViewRepository orderViewRepository;
-
   @Configuration
   @EnableAutoConfiguration
   @Import(OrderHistoryViewMongoConfiguration.class)
   public static class Config {
     @Bean
-    public OrderHistoryViewService orderHistoryViewService(CustomerViewRepository customerViewRepository, OrderViewRepository orderViewRepository) {
-      return new OrderHistoryViewService(customerViewRepository, orderViewRepository);
+    public OrderHistoryViewService orderHistoryViewService(CustomerViewRepository customerViewRepository) {
+      return new OrderHistoryViewService(customerViewRepository);
     }
 
   }
