@@ -3,11 +3,10 @@
 set -e
 
 dockerall="./gradlew ${DATABASE?}${MODE?}Compose"
-dockercdc="./gradlew ${DATABASE?}${MODE?}cdcCompose"
+dockerinfrastructure="./gradlew ${DATABASE?}${MODE?}infrastructureCompose"
 
 ${dockerall}Down
-${dockercdc}Build
-${dockercdc}Up
+${dockerinfrastructure}Up
 
 ./gradlew -x :end-to-end-tests:test -x :snapshot-tests:test build
 

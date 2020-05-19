@@ -6,14 +6,11 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCust
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.service.CustomerService;
 import io.eventuate.tram.viewsupport.rebuild.DomainSnapshotExportService;
-import io.eventuate.tram.viewsupport.rebuild.TopicPartitionOffset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class CustomerController {
@@ -28,6 +25,7 @@ public class CustomerController {
     this.customerService = customerService;
     this.domainSnapshotExportService = domainSnapshotExportService;
   }
+
 
   @RequestMapping(value = "/customers", method = RequestMethod.POST)
   public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequest createCustomerRequest) {

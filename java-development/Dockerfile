@@ -1,4 +1,5 @@
-FROM openjdk:14-slim-buster
+FROM openjdk:8u252-slim-buster
+
 WORKDIR /development
 RUN apt-get update && \
     apt-get install -y curl && \
