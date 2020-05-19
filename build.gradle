@@ -94,6 +94,7 @@ javaDevelopmentComposeBuild.dependsOn(prepareJavaDevelopmentDockerImage)
 task buildAndStartServicesMySqlBinlog(type: GradleBuild) {
     List<String> t = []
 
+    t.add("javaDevelopmentComposeBuild")
     t.add("mysqlbinloginfrastructureComposeUp")
     t.addAll(subprojects.collect { it.name }.collect { ":" + it + ":assemble" })
     t.add("mysqlbinlogComposeUp")
