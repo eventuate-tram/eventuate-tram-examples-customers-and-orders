@@ -54,13 +54,13 @@ dockerCompose {
 
     mysqlbinlogtextsearch {
         projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-snapshots-mysql-binlog.yml"]
+        useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
     }
 
     mysqlbinloginfrastructuretextsearch {
         projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-snapshots-mysql-binlog.yml"]
-        startedServices = ["cdcservice", "zipkin", "elasticsearch"]
+        useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
+        startedServices = ["cdcservice"]
     }
 
     postgrespolling {
