@@ -19,6 +19,7 @@ services:
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
       CDC_SERVICE_URL: http://cdcservice:8080
+      JAVA_OPTS: -Xmx192m
 
   customerservice:
     build:
@@ -39,6 +40,7 @@ services:
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
       CDC_SERVICE_URL: http://cdcservice:8080
+      JAVA_OPTS: -Xmx192m
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.2.4
@@ -108,6 +110,7 @@ services:
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
       ELASTICSEARCH_HOST: elasticsearch
       ELASTICSEARCH_PORT: 9300
+      JAVA_OPTS: -Xmx192m
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.6.3

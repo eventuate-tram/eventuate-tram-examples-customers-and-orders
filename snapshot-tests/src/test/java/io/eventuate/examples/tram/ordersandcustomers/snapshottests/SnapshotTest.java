@@ -52,7 +52,7 @@ public class SnapshotTest {
     List<TopicPartitionOffset> topicPartitionOffsets = exportCustomerSnapshots();
 
     setTopicPartitionOffset("customerTextSearchServiceEvents", topicPartitionOffsets);
-    execConsoleCommand("./gradlew", "mysqlbinlogwithorderhistorytextsearchserviceComposeUp");
+    execConsoleCommand("./gradlew", "mysqlbinlogtextsearchComposeUp");
 
     Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
       List<CustomerTextView> customerTextViews = Arrays.asList(restTemplate.getForEntity(baseUrlOrderHistoryTextSearch("customers?search=john"), CustomerTextView[].class).getBody());
@@ -72,7 +72,7 @@ public class SnapshotTest {
     List<TopicPartitionOffset> topicPartitionOffsets = exportOrderSnapshots();
 
     setTopicPartitionOffset("orderTextSearchServiceEvents", topicPartitionOffsets);
-    execConsoleCommand("./gradlew", "mysqlbinlogwithorderhistorytextsearchserviceComposeUp");
+    execConsoleCommand("./gradlew", "mysqlbinlogtextsearchComposeUp");
 
     Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
       List<OrderTextView> orderTextViews = Arrays.asList(restTemplate.getForEntity(baseUrlOrderHistoryTextSearch("orders?search=100.00"), OrderTextView[].class).getBody());
@@ -102,7 +102,7 @@ public class SnapshotTest {
       processBuilder.inheritIO();
       processBuilder
               .start()
-              .waitFor(5, TimeUnit.MINUTES);
+              .waitFor(1, TimeUnit.MINUTES);
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }

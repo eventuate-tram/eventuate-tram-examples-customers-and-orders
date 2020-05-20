@@ -57,6 +57,12 @@ dockerCompose {
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
     }
 
+    mysqlbinlogtextsearchcustomersandorders {
+        projectName = null
+        useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
+        startedServices = ["orderservice", "customerservice"]
+    }
+
     mysqlbinloginfrastructuretextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
