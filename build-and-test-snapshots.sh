@@ -2,11 +2,9 @@
 
 set -e
 
-dockerall="./gradlew mysqlbinlogCompose"
-dockerinfrastructure="./gradlew mysqlbinloginfrastructureCompose"
-dockertextsearch="./gradlew mysqlbinlogwithorderhistorytextsearchserviceCompose"
+dockerall="./gradlew  mysqlbinlogtextsearchCompose"
+dockerinfrastructure="./gradlew mysqlbinloginfrastructuretextsearchCompose"
 
-${dockertextsearch}Down
 ${dockerall}Down
 ${dockerinfrastructure}Up
 
@@ -16,5 +14,4 @@ ${dockerall}Up
 
 ./gradlew :snapshot-tests:cleanTest :snapshot-tests:test
 
-${dockertextsearch}Down
 ${dockerall}Down
