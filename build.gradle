@@ -40,22 +40,27 @@ dockerCompose {
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
     }
 
+    mysqlbinloginfrastructure {
+        projectName = null
+        useComposeFiles = ["docker-compose-mysql-binlog.yml"]
+        startedServices = ["cdcservice", "zipkin"]
+    }
+
     mysqlbinlogwithjmeter {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-jmeter-service.yml"]
         startedServices = ["jmeterservice", "customerservice"]
     }
 
-    mysqlbinlogwithorderhistorytextsearchservice {
+    mysqlbinlogtextsearch {
         projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-snapshots-mysql-binlog.yml"]
-        startedServices = ["elasticsearch", "orderhistorytextsearchservice"]
+        useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
     }
 
-    mysqlbinloginfrastructure {
+    mysqlbinloginfrastructuretextsearch {
         projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        startedServices = ["cdcservice", "zipkin"]
+        useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
+        startedServices = ["cdcservice"]
     }
 
     postgrespolling {
