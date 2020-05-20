@@ -22,10 +22,10 @@ jobs:
             - ~/.gradle
             - ~/.m2
           key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
-      - run:
-          command: |
-            . ./.circleci/setenv-circle-ci.sh
-            ./build-and-test-snapshots.sh
+#      - run:
+#          command: |
+#            . ./.circleci/setenv-circle-ci.sh
+#            ./build-and-test-snapshots.sh
       - run:
           command: |
             . ./.circleci/setenv-circle-ci.sh
