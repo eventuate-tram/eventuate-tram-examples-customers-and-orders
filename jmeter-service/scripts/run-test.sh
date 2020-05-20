@@ -13,7 +13,7 @@ docker rm eventuate-tram-examples-customers-and-orders_cdcservice_1
 
 ./jmeter-service/scripts/run-jmeter.sh
 
-./gradlew $* mysqlbinlogcdcComposeUp
+./gradlew $* mysqlbinloginfrastructureComposeUp
 
 while true ; do
     date

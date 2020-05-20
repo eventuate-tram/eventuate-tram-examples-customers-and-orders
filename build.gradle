@@ -14,8 +14,9 @@ apply plugin: 'docker-compose'
 subprojects {
 
     apply plugin: "java"
-    sourceCompatibility = 8
-    targetCompatibility = 8
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     repositories {
         mavenCentral()
@@ -51,10 +52,10 @@ dockerCompose {
         startedServices = ["elasticsearch", "orderhistorytextsearchservice"]
     }
 
-    mysqlbinlogcdc {
+    mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        startedServices = ["cdcservice"]
+        startedServices = ["cdcservice", "zipkin"]
     }
 
     postgrespolling {
@@ -62,7 +63,7 @@ dockerCompose {
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
     }
 
-    postgrespollingcdc {
+    postgrespollinginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
         startedServices = ["cdcservice"]
@@ -73,9 +74,31 @@ dockerCompose {
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
     }
 
-    postgreswalcdc {
+    postgreswalinfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
         startedServices = ["cdcservice"]
     }
+
+    javaDevelopment {
+        projectName = null
+        useComposeFiles = ["docker-compose-java-development.yml"]
+    }
+}
+
+task prepareJavaDevelopmentDockerImage(type:Exec) {
+    commandLine './prepare-java-development-docker-image.sh'
+}
+
+javaDevelopmentComposeBuild.dependsOn(prepareJavaDevelopmentDockerImage)
+
+task buildAndStartServicesMySqlBinlog(type: GradleBuild) {
+    List<String> t = []
+
+    t.add("javaDevelopmentComposeBuild")
+    t.add("mysqlbinloginfrastructureComposeUp")
+    t.addAll(subprojects.collect { it.name }.collect { ":" + it + ":assemble" })
+    t.add("mysqlbinlogComposeUp")
+
+    tasks = t
 }

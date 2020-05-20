@@ -8,8 +8,7 @@ buildscript {
     }
 }
 
-apply plugin: 'org.springframework.boot'
-apply plugin: "io.spring.dependency-management"
+apply plugin: ServicePlugin
 
 dependencies {
     compile project(":order-history-backend")
@@ -18,5 +17,5 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-actuator"
-
 }
+

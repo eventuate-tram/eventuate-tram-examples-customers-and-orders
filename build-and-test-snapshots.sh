@@ -3,12 +3,12 @@
 set -e
 
 dockerall="./gradlew mysqlbinlogCompose"
-dockercdc="./gradlew mysqlbinlogcdcCompose"
+dockerinfrastructure="./gradlew mysqlbinloginfrastructureCompose"
 dockertextsearch="./gradlew mysqlbinlogwithorderhistorytextsearchserviceCompose"
 
 ${dockertextsearch}Down
 ${dockerall}Down
-${dockercdc}Up
+${dockerinfrastructure}Up
 
 ./gradlew assemble
 
