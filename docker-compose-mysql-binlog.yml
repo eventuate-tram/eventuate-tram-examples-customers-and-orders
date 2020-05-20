@@ -127,20 +127,6 @@ services:
       EVENTUATELOCAL_CDC_READ_OLD_DEBEZIUM_DB_OFFSET_STORAGE_TOPIC: "false"
       EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING: ${EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING}
 
-  java-development:
-    image: eventuateio/eventuate-tram-examples-customers-and-orders-java-development:latest
-    volumes:
-      - .:/development
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
-      SPRING_DATASOURCE_USERNAME: mysqluser
-      SPRING_DATASOURCE_PASSWORD: mysqlpw
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
-      SPRING_SLEUTH_ENABLED: "true"
-      SPRING_SLEUTH_SAMPLER_PROBABILITY: 1
-      SPRING_ZIPKIN_BASE_URL: http://zipkin:9411/
-
   zipkin:
     image: openzipkin/zipkin:2.21
     ports:

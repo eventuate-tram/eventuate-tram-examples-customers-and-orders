@@ -4,7 +4,6 @@ TARGET=java-development/build
 rm -fr ${TARGET}
 mkdir ${TARGET}
 
-#tar -cf - *gradle* */src/* */build.gradle | tar -C ${TARGET} -xf -
 tar -cf - *gradle* */build.gradle buildSrc | tar -C ${TARGET} -xf -
 
 for main in $(find */src -name *Main.java) ; do
@@ -20,6 +19,3 @@ for main in $(find */src -name *Main.java) ; do
   }
 END
 done
-
-
-docker build -t test-java-development java-development

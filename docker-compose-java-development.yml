@@ -1,6 +1,14 @@
 version: '3'
 services:
 
+
   java-development:
-      build: ./java-development
-      image: eventuateio/eventuate-tram-examples-customers-and-orders-java-development:${DOCKER_IMAGE_TAG:-latest}
+    image: eventuateio/eventuate-tram-examples-customers-and-orders-java-development:latest
+    volumes:
+      - .:/eventuate-tram-examples-customers-and-orders
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
+      SPRING_DATASOURCE_USERNAME: mysqluser
+      SPRING_DATASOURCE_PASSWORD: mysqlpw
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver

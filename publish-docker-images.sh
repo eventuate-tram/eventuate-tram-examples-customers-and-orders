@@ -10,6 +10,6 @@ docker login -u ${DOCKER_USER_ID?} -p ${DOCKER_PASSWORD?}
 
 ./gradlew javaDevelopmentComposePull || echo no image to pull
 
-./gradlew javaDevelopmentComposeBuild
+./gradlew javaDevelopmentImageComposeBuild
 
-./gradlew javaDevelopmentComposePush
+./gradlew javaDevelopmentImageCoposePush
