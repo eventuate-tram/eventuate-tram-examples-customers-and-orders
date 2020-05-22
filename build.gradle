@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "com.avast.gradle:gradle-docker-compose-plugin:0.9.2"
+        classpath "com.avast.gradle:gradle-docker-compose-plugin:0.12.0"
     }
 }
 
@@ -38,14 +38,14 @@ dockerCompose {
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        stopContainers = false
+        removeContainers = false
     }
 
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
         startedServices = ["cdcservice", "zipkin"]
-        stopContainers = false
+        removeContainers = false
     }
 
     mysqlbinlogwithjmeter {
@@ -57,47 +57,47 @@ dockerCompose {
     mysqlbinlogtextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        stopContainers = false
+        removeContainers = false
     }
 
     mysqlbinlogtextsearchcustomersandorders {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
         startedServices = ["orderservice", "customerservice"]
-        stopContainers = false
+        removeContainers = false
     }
 
     mysqlbinloginfrastructuretextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
         startedServices = ["cdcservice"]
-        stopContainers = false
+        removeContainers = false
     }
 
     postgrespolling {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
-        stopContainers = false
+        removeContainers = false
     }
 
     postgrespollinginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
         startedServices = ["cdcservice"]
-        stopContainers = false
+        removeContainers = false
     }
 
     postgreswal {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
-        stopContainers = false
+        removeContainers = false
     }
 
     postgreswalinfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
         startedServices = ["cdcservice"]
-        stopContainers = false
+        removeContainers = false
     }
 
     javaDevelopment {
