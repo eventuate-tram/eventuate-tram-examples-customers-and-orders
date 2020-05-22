@@ -9,8 +9,8 @@ jobs:
           command: .circleci/install-jdk-14.sh
       - restore_cache:
           keys:
-            - eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
-            - eventuate-tram-examples-java-spring-todo-list-
+            - eventuate-tram-examples-customers-and-orders-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+            - eventuate-tram-examples-customers-and-orders-
       - run:
           command: |
             ./.circleci/upgrade-docker-compose.sh
@@ -22,7 +22,7 @@ jobs:
           paths:
             - ~/.gradle
             - ~/.m2
-          key: eventuate-tram-examples-java-spring-todo-list-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+          key: eventuate-tram-examples-customers-and-orders-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
       - run:
           command: |
             . ./.circleci/setenv-circle-ci.sh
