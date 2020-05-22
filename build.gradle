@@ -38,14 +38,14 @@ dockerCompose {
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
         startedServices = ["cdcservice", "zipkin"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     mysqlbinlogwithjmeter {
@@ -57,47 +57,47 @@ dockerCompose {
     mysqlbinlogtextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     mysqlbinlogtextsearchcustomersandorders {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
         startedServices = ["orderservice", "customerservice"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     mysqlbinloginfrastructuretextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
         startedServices = ["cdcservice"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     postgrespolling {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     postgrespollinginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
         startedServices = ["cdcservice"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     postgreswal {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     postgreswalinfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
         startedServices = ["cdcservice"]
-        removeContainers = false
+        removeContainers = project.ext.removeContainers
     }
 
     javaDevelopment {

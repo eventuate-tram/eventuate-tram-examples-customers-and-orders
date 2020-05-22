@@ -7,7 +7,7 @@ dockerinfrastructure="./gradlew ${DATABASE?}${MODE?}infrastructureCompose"
 
 ./gradlew testClasses
 
-${dockerall}Down
+${dockerall}Down -P removeContainers=true
 ${dockerinfrastructure}Up
 
 ./gradlew -x :end-to-end-tests:test -x :snapshot-tests:test build
@@ -30,4 +30,4 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 
-${dockerall}Down
+${dockerall}Down -P removeContainers=true
