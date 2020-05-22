@@ -109,7 +109,7 @@ image::./order-history-service-canvas.png[width=300]
 == Building and running
 
 Note: you do not need to install Gradle since it will be downloaded automatically.
-You just need to have Java 14 installed.
+You just need to have Java 8 installed.
 
 First, build the application
 
