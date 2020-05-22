@@ -18,6 +18,7 @@ services:
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+      JAVA_OPTS: -Xmx64m
 
   customerservice:
     build: ./customer-service/
@@ -37,6 +38,7 @@ services:
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+      JAVA_OPTS: -Xmx64m
 
   orderhistoryservice:
     build: ./order-history-service/
@@ -51,6 +53,7 @@ services:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb/customers_and_orders
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+      JAVA_OPTS: -Xmx64m
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.2.4
@@ -58,6 +61,7 @@ services:
       - 2181:2181
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+      KAFKA_HEAP_OPTS: -Xmx64m
 
   kafka:
     image: "confluentinc/cp-kafka:5.2.4"
@@ -72,6 +76,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: LC
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_HEAP_OPTS: -Xmx192m
 
 
   postgres:
@@ -113,3 +118,4 @@ services:
       EVENTUATELOCAL_CDC_POLLING_RETRY_INTERVAL_IN_MILLISECONDS: 500
       EVENTUATELOCAL_CDC_READER_NAME: PostgresPollingReader
       SPRING_PROFILES_ACTIVE: EventuatePolling
+      JAVA_OPTS: -Xmx64m

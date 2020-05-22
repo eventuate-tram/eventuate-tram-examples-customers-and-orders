@@ -22,6 +22,7 @@ services:
       SPRING_SLEUTH_ENABLED: "true"
       SPRING_SLEUTH_SAMPLER_PROBABILITY: 1
       SPRING_ZIPKIN_BASE_URL: http://zipkin:9411/
+      JAVA_OPTS: -Xmx64m
 
   customerservice:
     build:
@@ -45,6 +46,7 @@ services:
       SPRING_SLEUTH_ENABLED: "true"
       SPRING_SLEUTH_SAMPLER_PROBABILITY: 1
       SPRING_ZIPKIN_BASE_URL: http://zipkin:9411/
+      JAVA_OPTS: -Xmx64m
 
   orderhistoryservice:
     build:
@@ -64,6 +66,7 @@ services:
       SPRING_SLEUTH_ENABLED: "true"
       SPRING_SLEUTH_SAMPLER_PROBABILITY: 1
       SPRING_ZIPKIN_BASE_URL: http://zipkin:9411/
+      JAVA_OPTS: -Xmx64m
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.2.4
@@ -71,6 +74,7 @@ services:
       - 2181:2181
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+      KAFKA_HEAP_OPTS: -Xmx64m
 
   kafka:
     image: "confluentinc/cp-kafka:5.2.4"
@@ -86,6 +90,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: LC
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_HEAP_OPTS: -Xmx192m
 
 
   mysql:
@@ -126,10 +131,11 @@ services:
       EVENTUATELOCAL_CDC_MYSQL_BINLOG_CLIENT_UNIQUE_ID: 1234567890
       EVENTUATELOCAL_CDC_READ_OLD_DEBEZIUM_DB_OFFSET_STORAGE_TOPIC: "false"
       EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING: ${EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING}
+      JAVA_OPTS: -Xmx64m
 
   zipkin:
     image: openzipkin/zipkin:2.21
     ports:
       - "9411:9411"
     environment:
-      JAVA_OPTS: -Xmx128m
+      JAVA_OPTS: -Xmx64m
