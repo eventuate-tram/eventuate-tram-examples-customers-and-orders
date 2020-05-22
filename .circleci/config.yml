@@ -15,7 +15,6 @@ jobs:
           command: |
             ./.circleci/upgrade-docker-compose.sh
             . ./.circleci/setenv-circle-ci.sh
-            . ./.circleci/stop-and-remove-containers.sh
             ./gradlew testClasses
             ./mvnw package test-compile -DskipTests
       - save_cache:
