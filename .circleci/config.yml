@@ -1,66 +1,78 @@
-version: 2
-jobs:
-  build:
-    machine: true
-    working_directory: ~/eventuate-tram-examples-customers-and-orders
-    steps:
-      - checkout
-      - run:
-          command: .circleci/install-jdk-14.sh
-      - restore_cache:
-          keys:
-            - eventuate-tram-examples-customers-and-orders-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
-            - eventuate-tram-examples-customers-and-orders-
-      - run:
-          command: |
-            ./.circleci/upgrade-docker-compose.sh
-            . ./.circleci/setenv-circle-ci.sh
-            ./gradlew testClasses
-            ./mvnw package test-compile -DskipTests
-      - save_cache:
-          paths:
-            - ~/.gradle
-            - ~/.m2
-          key: eventuate-tram-examples-customers-and-orders-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
-      - run:
-          command: |
-            . ./.circleci/setenv-circle-ci.sh
-            ./build-and-test-snapshots.sh
-      - run:
-          command: |
-            . ./.circleci/setenv-circle-ci.sh
-            ./build-and-test-all-mysql-binlog.sh
-      - run:
-          command: |
-            . ./.circleci/setenv-circle-ci.sh
-            ./build-and-test-all-postgres-polling.sh
-      - run:
-          command: |
-            . ./.circleci/setenv-circle-ci.sh
-            ./build-and-test-all-postgres-wal.sh
-      - run:
-          command: |
-            . ./.circleci/setenv-circle-ci.sh
-            ./build-and-test-all-mysql-maven.sh
-      - run:
-          command: |
-            . ./.circleci/setenv-circle-ci.sh
-            ./publish-docker-images.sh
-      - run:
-          name: Save test results
-          command: |
-            mkdir -p ~/junit
-            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
-          when: always
-      - run:
-          name: Print container logs
-          command: |
-            export TERM=dumb
-            ./.circleci/print-container-logs.sh
-          when: always
-      - store_test_results:
-          path: ~/junit
-      - store_artifacts:
-          path: ~/junit
-      - store_artifacts:
-          path: ~/container-logs
+version: 2.1
+orbs:
+  build-and-test:
+    jobs:
+      build-and-test:
+        parameters:
+          script:
+            description: the script to execute
+            type: string
+        machine: true
+        working_directory: ~/eventuate-tram-examples-customers-and-orders
+        steps:
+          - checkout
+          - restore_cache:
+              keys:
+                - eventuate-tram-examples-customers-and-orders-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+                - eventuate-tram-examples-customers-and-orders-
+          - run:
+              command: |
+                ./.circleci/upgrade-docker-compose.sh
+                . ./.circleci/setenv-circle-ci.sh
+                ./gradlew testClasses
+                ./mvnw package test-compile -DskipTests
+          - save_cache:
+              paths:
+                - ~/.gradle
+                - ~/.m2
+              key: eventuate-tram-examples-customers-and-orders-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+          - run:
+              command: |
+                . ./.circleci/setenv-circle-ci.sh
+                <<parameters.script>>
+          - run:
+              name: Save test results
+              command: |
+                mkdir -p ~/junit
+                find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+              when: always
+          - run:
+              name: Print container logs
+              command: |
+                export TERM=dumb
+                ./.circleci/print-container-logs.sh
+              when: always
+          - store_test_results:
+              path: ~/junit
+          - store_artifacts:
+              path: ~/junit
+          - store_artifacts:
+              path: ~/container-logs
+workflows:
+  version: 2.1
+  build-test-and-deploy:
+    jobs:
+      - build-and-test/build-and-test:
+          name: build-and-test-snapshots
+          script: ./build-and-test-snapshots.sh
+      - build-and-test/build-and-test:
+          name: build-and-test-all-mysql-binlog
+          script: ./build-and-test-all-mysql-binlog.sh
+      - build-and-test/build-and-test:
+          name: build-and-test-all-postgres-polling
+          script: ./build-and-test-all-postgres-polling.sh
+      - build-and-test/build-and-test:
+          name: build-and-test-all-postgres-wal
+          script: ./build-and-test-all-postgres-wal.sh
+      - build-and-test/build-and-test:
+          name: build-and-test-all-mysql-maven
+          script: ./build-and-test-all-mysql-maven.sh
+      - build-and-test/build-and-test:
+          name: publish-docker-images
+          requires:
+            -  build-and-test-snapshots
+            -  build-and-test-all-mysql-binlog
+            -  build-and-test-all-postgres-wal
+            -  build-and-test-all-postgres-polling
+            -  build-and-test-all-mysql-maven
+          script: ./publish-docker-images.sh
