@@ -107,7 +107,7 @@ task prepareJavaDevelopmentDockerImage(type:Exec) {
 
 javaDevelopmentImageComposeBuild.dependsOn(prepareJavaDevelopmentDockerImage)
 
-task buildAndStartServicesMySqlBinlog(type: GradleBuild) {
+task buildAndStartServicesMySql(type: GradleBuild) {
     List<String> t = []
 
     t.add("mysqlbinloginfrastructureComposeUp")
