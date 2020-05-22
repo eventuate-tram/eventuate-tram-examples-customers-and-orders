@@ -5,6 +5,7 @@ export TERM=dumb
 
 unset DOCKER_HOST_IP
 
-export SDKMAN_DIR=/home/circleci/.sdkman
+echo skipping SDKMAN_DIR
 
-source "$SDKMAN_DIR/bin/sdkman-init.sh"
+#export SDKMAN_DIR=/home/circleci/.sdkman
+#source "$SDKMAN_DIR/bin/sdkman-init.sh"
