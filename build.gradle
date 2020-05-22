@@ -38,12 +38,14 @@ dockerCompose {
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
+        stopContainers = false
     }
 
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
         startedServices = ["cdcservice", "zipkin"]
+        stopContainers = false
     }
 
     mysqlbinlogwithjmeter {
@@ -55,40 +57,47 @@ dockerCompose {
     mysqlbinlogtextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
+        stopContainers = false
     }
 
     mysqlbinlogtextsearchcustomersandorders {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
         startedServices = ["orderservice", "customerservice"]
+        stopContainers = false
     }
 
     mysqlbinloginfrastructuretextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
         startedServices = ["cdcservice"]
+        stopContainers = false
     }
 
     postgrespolling {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
+        stopContainers = false
     }
 
     postgrespollinginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
         startedServices = ["cdcservice"]
+        stopContainers = false
     }
 
     postgreswal {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
+        stopContainers = false
     }
 
     postgreswalinfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
         startedServices = ["cdcservice"]
+        stopContainers = false
     }
 
     javaDevelopment {
