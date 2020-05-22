@@ -1,6 +1,6 @@
 FROM openjdk:8u252-slim-buster
 
-WORKDIR /development
+WORKDIR /eventuate-tram-examples-customers-and-orders
 RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y jq && \
