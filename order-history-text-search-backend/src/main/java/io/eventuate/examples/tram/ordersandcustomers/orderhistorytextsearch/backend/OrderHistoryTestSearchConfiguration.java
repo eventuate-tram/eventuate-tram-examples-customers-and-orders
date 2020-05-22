@@ -2,24 +2,32 @@ package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.bac
 
 import io.eventuate.examples.tram.ordersandcustomers.CustomerTextView;
 import io.eventuate.examples.tram.ordersandcustomers.OrderTextView;
-import io.eventuate.tram.consumer.common.NoopDuplicateMessageDetector;
-import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
+import io.eventuate.tram.consumer.elasticsearch.ElasticsearchIndexDuplicateMessageDetector;
+import io.eventuate.tram.consumer.kafka.elasticsearch.ElasticsearchKafkaConsumerFactorySpringConfiguration;
+import io.eventuate.tram.consumer.kafka.elasticsearch.EventuateKafkaConsumerElasticsearchSpringConfigurationPropertiesConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
+import io.eventuate.tram.spring.consumer.elasticsearch.ElasticsearchConsumerSpringConfigurationPropertiesConfiguration;
+import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
 import io.eventuate.tram.spring.events.subscriber.TramEventSubscriberConfiguration;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import java.net.InetAddress;
-
 @Configuration
-@Import({EventuateTramKafkaMessageConsumerConfiguration.class, TramEventSubscriberConfiguration.class, NoopDuplicateMessageDetector.class})
+@Import({
+        ElasticsearchConsumerSpringConfigurationPropertiesConfiguration.class,
+        EventuateKafkaConsumerElasticsearchSpringConfigurationPropertiesConfiguration.class,
+        ElasticsearchKafkaConsumerFactorySpringConfiguration.class,
+        EventuateTramKafkaMessageConsumerConfiguration.class,
+        TramEventSubscriberConfiguration.class,
+        ElasticsearchIndexDuplicateMessageDetector.class,
+        SupportingIndicesConfiguration.class
+})
 public class OrderHistoryTestSearchConfiguration {
 
   @Value("${elasticsearch.host}")
@@ -27,6 +35,9 @@ public class OrderHistoryTestSearchConfiguration {
 
   @Value("${elasticsearch.port}")
   private int elasticSearchPort;
+
+  @Value("${elasticsearch.scheme}")
+  private String elasticSearchScheme;
 
   @Bean
   public CustomerSnapshotEventConsumer customerSnapshotEventConsumer() {
@@ -49,18 +60,25 @@ public class OrderHistoryTestSearchConfiguration {
   }
 
   @Bean
-  public TransportClient elasticSearchClient() throws Exception {
-    return new PreBuiltTransportClient(Settings.builder().put("client.transport.ignore_cluster_name", true).build())
-            .addTransportAddress(new TransportAddress(InetAddress.getByName(elasticSearchHost), elasticSearchPort));
+  public RestHighLevelClient highLevelElasticSearchClient() {
+    return new RestHighLevelClient(
+            RestClient.builder(
+                    new HttpHost(
+                            elasticSearchHost,
+                            elasticSearchPort,
+                            elasticSearchScheme
+                    )
+            )
+    );
   }
 
   @Bean("customerTextViewService")
-  public TextViewService<CustomerTextView> customerTextViewService(TransportClient transportClient) {
-    return new TextViewService<>(transportClient, CustomerTextView.class, CustomerTextView.TYPE, CustomerTextView.INDEX);
+  public TextViewService<CustomerTextView> customerTextViewService(RestHighLevelClient restHighLevelClient) {
+    return new TextViewService<>(restHighLevelClient, CustomerTextView.class, CustomerTextView.TYPE, CustomerTextView.INDEX);
   }
 
   @Bean("orderTextViewService")
-  public TextViewService<OrderTextView> orderTextViewService(TransportClient transportClient) {
-    return new TextViewService<>(transportClient, OrderTextView.class, OrderTextView.TYPE, OrderTextView.INDEX);
+  public TextViewService<OrderTextView> orderTextViewService(RestHighLevelClient restHighLevelClient) {
+    return new TextViewService<>(restHighLevelClient, OrderTextView.class, OrderTextView.TYPE, OrderTextView.INDEX);
   }
 }
