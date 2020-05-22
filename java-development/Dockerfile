@@ -1,6 +1,5 @@
 FROM openjdk:8u252-slim-buster
 
-WORKDIR /eventuate-tram-examples-customers-and-orders
 RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y jq && \
@@ -21,8 +20,9 @@ RUN apt-get update && \
   chmod +x /usr/local/bin/docker-compose && \
   rm -rf /var/lib/apt/lists/*
 
+WORKDIR /eventuate-tram-examples-customers-and-orders
+CMD echo Ready ; sleep 260000
+
 COPY build /tmp-src
 
 RUN echo "Building in image..." && (cd /tmp-src ; ./gradlew testClasses assemble ; cd ; rm -fr /tmp-src)
-
-CMD echo Ready ; sleep 260000
