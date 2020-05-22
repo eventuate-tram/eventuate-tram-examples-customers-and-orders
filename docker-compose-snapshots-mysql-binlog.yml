@@ -12,10 +12,11 @@ services:
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
       ELASTICSEARCH_HOST: elasticsearch
-      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_PORT: 9200
+      ELASTICSEARCH_SCHEME: http
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.3
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
     environment:
       - http.host=0.0.0.0
       - network.publish_host=0.0.0.0
