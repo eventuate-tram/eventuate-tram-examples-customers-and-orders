@@ -134,3 +134,7 @@ task endToEndTests(type: GradleBuild) {
 
 endToEndTests.dependsOn(mysqlbinlogComposeUp)
 endToEndTests.dependsOn(":end-to-end-tests:cleanTest")
+
+task stopServicesMySql(type: GradleBuild) {
+    tasks = ["mysqlbinlogComposeDown"]
+}
