@@ -5,6 +5,8 @@ ports=$2
 
 shift 2
 
+count=0
+
 done=false
 while [[ "$done" = false ]]; do
 	for port in $ports; do
@@ -20,6 +22,11 @@ while [[ "$done" = false ]]; do
 		echo services are started
 		break;
   fi
+	(( count++ ))
+	if [ "${WAIT_FOR_SERVICES_ITERATIONS:-300}" == "$count" ] ; then
+		echo Giving up after $count iterations
+		exit 99
+	fi
 	echo -n .
 	sleep 1
 done
