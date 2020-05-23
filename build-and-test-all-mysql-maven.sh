@@ -4,6 +4,10 @@ set -e
 
 java -version
 
+source ./.circleci/install-jdk-14.sh
+
+java -version
+
 export EVENTUATE_COMMON_VERSION=0.8.0.RELEASE
 export EVENTUATE_KAFKA_VERSION=0.3.0.RELEASE
 export EVENTUATE_CDC_VERSION=0.6.1.RELEASE
