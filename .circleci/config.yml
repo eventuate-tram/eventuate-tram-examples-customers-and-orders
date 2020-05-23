@@ -13,8 +13,8 @@ orbs:
           - checkout
           - restore_cache:
               keys:
-                - eventuate-tram-examples-customers-and-orders-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
-                - eventuate-tram-examples-customers-and-orders-
+                - eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+                - eventuate-tram-examples-customers-and-orders-j8-
           - run:
               command: |
                 ./.circleci/upgrade-docker-compose.sh
