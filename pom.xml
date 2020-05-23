@@ -103,8 +103,9 @@
             </snapshots>
         </repository>
 
+        <!--
         <repository>
-            <id>local</id>
+            <id>testdeploy</id>
             <url>file:///Users/cer/.m2/testdeploy</url>
             <releases>
                 <enabled>false</enabled>
@@ -113,5 +114,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+      -->
     </repositories>
 </project>
