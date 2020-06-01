@@ -3,6 +3,8 @@ services:
   orderservice:
     build:
       context: ./order-service/
+      args:
+        baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-service
     ports:
       - "8081:8080"
@@ -22,11 +24,12 @@ services:
       SPRING_SLEUTH_ENABLED: "true"
       SPRING_SLEUTH_SAMPLER_PROBABILITY: 1
       SPRING_ZIPKIN_BASE_URL: http://zipkin:9411/
-      JAVA_OPTS: -Xmx64m
 
   customerservice:
     build:
       context: ./customer-service/
+      args:
+        baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service
     ports:
       - "8082:8080"
@@ -46,11 +49,12 @@ services:
       SPRING_SLEUTH_ENABLED: "true"
       SPRING_SLEUTH_SAMPLER_PROBABILITY: 1
       SPRING_ZIPKIN_BASE_URL: http://zipkin:9411/
-      JAVA_OPTS: -Xmx64m
 
   orderhistoryservice:
     build:
       context: ./order-history-service/
+      args:
+        baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service
     ports:
       - "8083:8080"
@@ -66,7 +70,6 @@ services:
       SPRING_SLEUTH_ENABLED: "true"
       SPRING_SLEUTH_SAMPLER_PROBABILITY: 1
       SPRING_ZIPKIN_BASE_URL: http://zipkin:9411/
-      JAVA_OPTS: -Xmx64m
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.2.4
