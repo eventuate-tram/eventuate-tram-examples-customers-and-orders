@@ -1,5 +1,3 @@
-FROM openjdk:8u252-slim-buster
-RUN apt-get update && apt-get install -y  curl
-HEALTHCHECK --start-period=30s --interval=5s CMD curl -f http://localhost:8080/actuator/health || exit 1
-CMD java ${JAVA_OPTS} -jar customer-service-*.jar
-COPY build/libs/customer-service-*.jar .
+ARG baseImageVersion
+FROM eventuateio/eventuate-examples-docker-images-java-example-base-image:$baseImageVersion
+COPY build/libs/customer-service-*.jar service.jar
