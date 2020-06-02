@@ -68,7 +68,7 @@ workflows:
           name: build-and-test-all-mysql-maven
           script: ./build-and-test-all-mysql-maven.sh
       - build-and-test/build-and-test:
-          name: publish-docker-images
+          name: deploy-artifacts
           requires:
             -  build-and-test-snapshots
             -  build-and-test-all-mysql-binlog
