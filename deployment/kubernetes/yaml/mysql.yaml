@@ -1,39 +1,39 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ftgo-mysql
+  name: mysql
+  namespace: eventuate-tram-examples-customers-and-orders
   labels:
-    name: ftgo-mysql
+    name: mysql
 spec:
   ports:
   - port: 3306
     targetPort: 3306
   clusterIP: None
   selector:
-    role: ftgo-mysql
+    role: mysql
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ftgo-mysql
+  name: mysql
+  namespace: eventuate-tram-examples-customers-and-orders
 spec:
   selector:
     matchLabels:
-      role: ftgo-mysql
-  serviceName: "ftgo-mysql"
+      role: mysql
+  serviceName: "mysql"
   replicas: 1
   template:
     metadata:
       labels:
-        role: ftgo-mysql
+        role: mysql
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: ftgo-mysql
-          image: msapatterns/mysql:latest
+        - name: mysql
+          image: eventuateio/eventuate-mysql
           imagePullPolicy: IfNotPresent
-          args:
-              - "--ignore-db-dir=lost+found"
           ports:
               - containerPort: 3306
           env:
@@ -44,14 +44,15 @@ spec:
             - name: MYSQL_PASSWORD
               value: mysqlpw
           volumeMounts:
-            - name: ftgo-mysql-persistent-storage
+            - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
-      name: ftgo-mysql-persistent-storage
+      name: mysql-persistent-storage
+      namespace: eventuate-tram-examples-customers-and-orders
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 1Gi
+          storage: 256Mi
 ---

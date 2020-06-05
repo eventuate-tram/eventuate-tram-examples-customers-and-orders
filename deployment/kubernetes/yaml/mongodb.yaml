@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ftgo-mongodb
+  name: mongodb
+  namespace: eventuate-tram-examples-customers-and-orders
 spec:
   selector:
-    app: ftgo-mongodb
+    app: mongodb
   ports:
   - port: 27017
     targetPort: 27017
@@ -12,22 +13,23 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ftgo-mongodb
+  name: mongodb
+  namespace: eventuate-tram-examples-customers-and-orders
 spec:
   selector:
     matchLabels:
-      app: ftgo-mongodb
+      app: mongodb
   replicas: 1
-  serviceName: ftgo-mongodb
+  serviceName: mongodb
   template:
     metadata:
       labels:
-        app: ftgo-mongodb
+        app: mongodb
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-      - name: ftgo-mongodb
-        image: mongo:4.4.0-rc8-bionic
+      - name: mongodb
+        image: mongo:3.0.4
         command: ["bash", "-c", "mongod", "--smallfiles"]
         imagePullPolicy: IfNotPresent
         resources:
@@ -37,14 +39,15 @@ spec:
         ports:
         - containerPort: 27017
         volumeMounts:
-          - name: ftgo-mongo-persistent-storage
+          - name: mongo-persistent-storage
             mountPath: "/data/db"
   volumeClaimTemplates:
   - metadata:
-      name: ftgo-mongo-persistent-storage
+      name: mongo-persistent-storage
+      namespace: eventuate-tram-examples-customers-and-orders
     spec:
       accessModes: ["ReadWriteOnce"]
       resources:
         requests:
-          storage: 1Gi
+          storage: 256Mi
 ---

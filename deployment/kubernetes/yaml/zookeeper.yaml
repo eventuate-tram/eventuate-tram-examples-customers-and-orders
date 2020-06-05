@@ -1,35 +1,37 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ftgo-zookeeper
+  name: zookeeper
+  namespace: eventuate-tram-examples-customers-and-orders
   labels:
-    name: ftgo-zookeeper
+    name: zookeeper
 spec:
   ports:
   - port: 2181
     targetPort: 2181
   clusterIP: None
   selector:
-    role: ftgo-zookeeper
+    role: zookeeper
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ftgo-zookeeper
+  name: zookeeper
+  namespace: eventuate-tram-examples-customers-and-orders
 spec:
   selector:
     matchLabels:
-      role: ftgo-zookeeper
-  serviceName: "ftgo-zookeeper"
+      role: zookeeper
+  serviceName: "zookeeper"
   replicas: 1
   template:
     metadata:
       labels:
-        role: ftgo-zookeeper
+        role: zookeeper
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: ftgo-zookeeper
+        - name: zookeeper
           image: confluentinc/cp-zookeeper:5.2.4
           imagePullPolicy: IfNotPresent
           ports:
@@ -38,11 +40,12 @@ spec:
             - name: ZOOKEEPER_CLIENT_PORT
               value: "2181"
           volumeMounts:
-            - name: ftgo-zookeeper-persistent-storage
+            - name: zookeeper-persistent-storage
               mountPath: /var/lib/kafka/data
   volumeClaimTemplates:
   - metadata:
-      name: ftgo-zookeeper-persistent-storage
+      name: zookeeper-persistent-storage
+      namespace: eventuate-tram-examples-customers-and-orders
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
