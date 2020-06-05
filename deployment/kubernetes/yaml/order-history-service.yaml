@@ -49,13 +49,13 @@ spec:
             value: http://zipkin:9411
         livenessProbe:
           httpGet:
-            path: /actuator
+            path: /actuator/health
             port: 8080
           initialDelaySeconds: 120
           periodSeconds: 30
         readinessProbe:
           httpGet:
-            path: /actuator
+            path: /actuator/health
             port: 8080
           initialDelaySeconds: 120
           periodSeconds: 30
