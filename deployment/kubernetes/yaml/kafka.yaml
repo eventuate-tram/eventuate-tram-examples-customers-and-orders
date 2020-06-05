@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftgo-kafka
+  labels:
+    name: ftgo-kafka
+spec:
+  ports:
+  - port: 9092
+    targetPort: 9092
+  selector:
+    role: ftgo-kafka
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ftgo-kafka
+spec:
+  selector:
+    matchLabels:
+      role: ftgo-kafka
+  serviceName: "ftgo-kafka"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: ftgo-kafka
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: ftgo-kafka
+          image: confluentinc/cp-kafka:5.2.4
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: PLAINTEXT://ftgo-kafka:9092
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: ftgo-zookeeper:2181
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+          ports:
+              - containerPort: 9092
+          volumeMounts:
+            - name: ftgo-kafka-persistent-storage
+              mountPath: /var/lib/zookeeper/data
+  volumeClaimTemplates:
+  - metadata:
+      name: ftgo-kafka-persistent-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+---

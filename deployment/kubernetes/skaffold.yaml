@@ -1,0 +1,9 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+metadata:
+  name: fgto-eventuate-tram-examples-customers-and-orders
+deploy:
+  kubectl:
+    manifests:
+      - yaml/*
+  statusCheckDeadlineSeconds: 180
