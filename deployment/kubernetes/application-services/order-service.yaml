@@ -1,26 +1,26 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: customer-service
+  name: order-service
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
   ports:
-  - port: 8082
+  - port: 8081
     targetPort: 8080
   selector:
-    svc: customer-service
+    svc: order-service
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: customer-service
+  name: order-service
   namespace: eventuate-tram-examples-customers-and-orders
   labels:
-    svc: customer-service
+    svc: order-service
 spec:
   selector:
     matchLabels:
-      svc: customer-service
+      svc: order-service
   replicas: 1
   strategy:
     rollingUpdate:
@@ -28,11 +28,11 @@ spec:
   template:
     metadata:
       labels:
-        svc: customer-service
+        svc: order-service
     spec:
       containers:
-      - name: customer-service
-        image: eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service:latest
+      - name: order-service
+        image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-service:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
@@ -62,12 +62,12 @@ spec:
           httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 140
-          periodSeconds: 20
+          periodSeconds: 10
+          failureThreshold: 14
         readinessProbe:
           httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 140
-          periodSeconds: 20
+          periodSeconds: 10
+          failureThreshold: 14
 ---
