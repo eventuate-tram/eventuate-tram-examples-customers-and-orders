@@ -5,7 +5,7 @@ metadata:
 deploy:
   kubectl:
     manifests:
-      - yaml/*
+      - deployment/kubernetes/yaml/*
     flags:
       apply: [ "--namespace", "eventuate-tram-examples-customers-and-orders" ]
   statusCheckDeadlineSeconds: 180
