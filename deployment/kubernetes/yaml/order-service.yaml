@@ -4,6 +4,7 @@ metadata:
   name: order-service
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
+  type: LoadBalancer
   ports:
   - port: 8081
     targetPort: 8080

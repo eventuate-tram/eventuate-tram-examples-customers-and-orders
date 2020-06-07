@@ -4,6 +4,7 @@ metadata:
   name: order-history-service
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
+  type: LoadBalancer
   selector:
     svc: order-history-service
   ports:
@@ -28,10 +29,6 @@ spec:
       - name: order-history-service
         image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service:latest
         imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            memory: "512Mi"
-            cpu: "1000m"
         ports:
         - containerPort: 8080
         env:

@@ -6,10 +6,10 @@ metadata:
   labels:
     name: mysql
 spec:
+  type: LoadBalancer
   ports:
   - port: 3306
     targetPort: 3306
-  clusterIP: None
   selector:
     role: mysql
 ---
@@ -32,7 +32,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: mysql
-          image: eventuateio/eventuate-mysql
+          image: eventuateio/eventuate-mysql:0.8.0.RELEASE
           imagePullPolicy: IfNotPresent
           ports:
               - containerPort: 3306
@@ -43,9 +43,6 @@ spec:
               value: mysqluser
             - name: MYSQL_PASSWORD
               value: mysqlpw
-          volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
       name: mysql-persistent-storage

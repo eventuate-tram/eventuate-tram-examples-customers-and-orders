@@ -13,9 +13,22 @@ variable "location" {
 
 //aks
 variable "default_node_size" {
-  default = "Standard_B2s"
+  default = "Standard_A4_v2"
 }
 
 variable "client_id" {}
 
 variable "client_secret" {}
+
+variable "node_min_count" {
+  default = 1
+}
+
+variable "node_max_count" {
+  default = 3
+}
+
+variable "enable_auto_scaling" {
+  default = true
+  type    = bool
+}

@@ -14,17 +14,15 @@ resource "azurerm_kubernetes_cluster" "default" {
   }
 
   default_node_pool {
-    name       = "defaultnp"
-    node_count = 1
-    vm_size    = var.default_node_size
+    name                = "defaultnp"
+    min_count           = var.node_min_count
+    max_count           = var.node_max_count
+    vm_size             = var.default_node_size
+    enable_auto_scaling = var.enable_auto_scaling
   }
 
   identity {
     type = "SystemAssigned"
-  }
-  service_principal {
-    client_id     = "msi"
-    client_secret = var.client_secret
   }
 
   addon_profile {
@@ -51,6 +49,17 @@ resource "azurerm_kubernetes_cluster" "default" {
     environment = var.env
   }
 }
+
+# data "azurerm_subscription" "default" {
+#   subscription_id = "542999bf-c144-445a-8159-79184e978e0b"
+# }
+
+# resource "azurerm_role_assignment" "contributor" {
+#   scope                            = data.azurerm_subscription.default.id
+#   role_definition_name             = "Contributor"
+#   principal_id                     = azurerm_kubernetes_cluster.default.kubelet_identity.0.object_id
+#   skip_service_principal_aad_check = true
+# }
 
 resource "azurerm_log_analytics_workspace" "aks_workspace" {
   name                = "${var.project}-law-${var.env}"

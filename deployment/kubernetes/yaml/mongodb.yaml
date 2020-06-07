@@ -4,6 +4,7 @@ metadata:
   name: mongodb
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
+  type: LoadBalancer
   selector:
     app: mongodb
   ports:
@@ -30,7 +31,7 @@ spec:
       containers:
       - name: mongodb
         image: mongo:3.0.4
-        command: ["bash", "-c", "mongod", "--smallfiles"]
+        command: ["mongod", "--smallfiles"]
         imagePullPolicy: IfNotPresent
         resources:
           limits:

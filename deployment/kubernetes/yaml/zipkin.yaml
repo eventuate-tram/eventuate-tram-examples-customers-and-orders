@@ -4,6 +4,7 @@ metadata:
   name: zipkin
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
+  type: LoadBalancer
   ports:
   - port: 9411
     targetPort: 9411
