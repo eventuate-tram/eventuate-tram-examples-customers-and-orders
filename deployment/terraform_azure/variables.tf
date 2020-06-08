@@ -16,10 +16,6 @@ variable "default_node_size" {
   default = "Standard_A4_v2"
 }
 
-variable "client_id" {}
-
-variable "client_secret" {}
-
 variable "node_min_count" {
   default = 1
 }
