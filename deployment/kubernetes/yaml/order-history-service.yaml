@@ -29,6 +29,10 @@ spec:
       - name: order-history-service
         image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service:latest
         imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
         ports:
         - containerPort: 8080
         env:
