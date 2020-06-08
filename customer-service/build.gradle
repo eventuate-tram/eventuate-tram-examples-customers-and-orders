@@ -1,3 +1,7 @@
+plugins {
+  id 'com.google.cloud.tools.jib' version '1.7.0'
+}
+
 apply plugin: ServicePlugin
 
 dependencies {
@@ -9,3 +13,5 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-web"
 }
+
+jib.to.image = "eventuate-tram-examples-customers-and-orders-customer-service:${version}"
