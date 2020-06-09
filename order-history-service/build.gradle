@@ -11,7 +11,7 @@ buildscript {
 apply plugin: ServicePlugin
 
 dependencies {
-    compile project(":order-history-backend")
+    compile project(":order-history-service-backend")
     compile project(":common-swagger")
 
     compile "org.springframework.boot:spring-boot-starter"

@@ -6,8 +6,8 @@ apply plugin: ServicePlugin
 
 dependencies {
     compile project(":common-swagger")
-    compile project(":customer-backend")
-    compile project(":customer-web-api")
+    compile project(":customer-service-backend")
+    compile project(":customer-service-web-api")
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-actuator"

@@ -23,17 +23,17 @@
     <modules>
         <module>common</module>
         <module>common-swagger</module>
-        <module>customer-backend</module>
-        <module>customer-web-api</module>
+        <module>customer-service-backend</module>
+        <module>customer-service-web-api</module>
         <module>customer-service-api-events</module>
         <module>customer-service</module>
-        <module>order-backend</module>
-        <module>order-web-api</module>
+        <module>order-service-backend</module>
+        <module>order-service-web-api</module>
         <module>order-service-api-events</module>
         <module>order-service</module>
-        <module>order-history-common</module>
+        <module>order-history-service-common</module>
         <module>order-history-service</module>
-        <module>order-history-backend</module>
+        <module>order-history-service-backend</module>
         <module>jmeter-service</module>
         <module>end-to-end-tests</module>
     </modules>

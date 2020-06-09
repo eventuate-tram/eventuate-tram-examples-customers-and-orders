@@ -2,8 +2,8 @@ apply plugin: ServicePlugin
 
 dependencies {
     compile project(":common-swagger")
-    compile project(":order-backend")
-    compile project(":order-web-api")
+    compile project(":order-service-backend")
+    compile project(":order-service-web-api")
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-web"
