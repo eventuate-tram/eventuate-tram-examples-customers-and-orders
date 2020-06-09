@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.common;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.OrderView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

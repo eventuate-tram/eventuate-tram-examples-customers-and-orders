@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.webapi;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 
 public class CreateCustomerRequest {
   private String name;

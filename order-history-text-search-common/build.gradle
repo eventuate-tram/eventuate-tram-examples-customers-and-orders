@@ -1,3 +1,4 @@
 dependencies {
-    compile project (":common")
+    compile project (":customer-service-api-events")
+    compile project (":order-service-api-events")
 }

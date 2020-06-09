@@ -1,5 +1,8 @@
 dependencies {
-    compile (project(":common")) {
+    compile (project(":customer-service-api-events")) {
+        exclude module: "spring-boot-starter-data-jpa"
+    }
+    compile (project(":order-service-api-events")) {
         exclude module: "spring-boot-starter-data-jpa"
     }
     compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"

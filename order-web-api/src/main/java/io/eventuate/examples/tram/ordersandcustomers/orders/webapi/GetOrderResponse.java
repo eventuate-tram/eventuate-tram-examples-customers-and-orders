@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.webapi;
 
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
 
 public class GetOrderResponse {
   private Long orderId;

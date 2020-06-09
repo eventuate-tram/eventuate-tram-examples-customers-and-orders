@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderSnapshotEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderSnapshotEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.CustomerEventConsumer;

@@ -1,11 +1,16 @@
 include 'common'
 include 'common-swagger'
+
 include 'customer-backend'
 include 'customer-web-api'
 include 'customer-service'
+include 'customer-service-api-events'
+
 include 'order-backend'
 include 'order-web-api'
 include 'order-service'
+include 'order-service-api-events'
+
 include 'order-history-common'
 include 'order-history-service'
 include 'order-history-backend'

@@ -1,5 +1,6 @@
-package io.eventuate.examples.tram.ordersandcustomers.commondomain;
+package io.eventuate.examples.tram.ordersandcustomers.customers.domain.events;
 
+import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 import io.eventuate.tram.events.common.DomainEvent;
 
 public class CustomerSnapshotEvent implements DomainEvent {

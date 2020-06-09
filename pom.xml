@@ -25,9 +25,11 @@
         <module>common-swagger</module>
         <module>customer-backend</module>
         <module>customer-web-api</module>
+        <module>customer-service-api-events</module>
         <module>customer-service</module>
         <module>order-backend</module>
         <module>order-web-api</module>
+        <module>order-service-api-events</module>
         <module>order-service</module>
         <module>order-history-common</module>
         <module>order-history-service</module>

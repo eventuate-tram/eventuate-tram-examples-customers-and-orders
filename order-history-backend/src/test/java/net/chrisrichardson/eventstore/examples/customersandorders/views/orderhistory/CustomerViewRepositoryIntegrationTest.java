@@ -1,6 +1,6 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.views.orderhistory;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerViewRepository;
 import org.junit.Test;

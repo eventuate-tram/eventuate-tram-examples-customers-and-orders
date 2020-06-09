@@ -1,9 +1,13 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.service;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.*;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerCreditLimitExceededException;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerRepository;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreditReservationFailedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreditReservedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerValidationFailedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCancelledEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCreatedEvent;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;

@@ -66,7 +66,7 @@ workflows:
           script: ./build-and-test-all-postgres-wal.sh
       - build-and-test/build-and-test:
           name: build-and-test-all-mysql-maven
-          script: ./build-and-test-all-mysql-maven.sh
+          script: ./.circleci/build-and-test-all-mysql-maven-circleci.sh
       - build-and-test/build-and-test:
           name: publish-docker-images
           requires:

@@ -1,6 +1,6 @@
-package io.eventuate.examples.tram.ordersandcustomers.commondomain;
+package io.eventuate.examples.tram.ordersandcustomers.customers.domain.events;
 
-import io.eventuate.tram.events.common.DomainEvent;
+import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 
 public class CustomerCreatedEvent implements CustomerEvent {
   private String name;

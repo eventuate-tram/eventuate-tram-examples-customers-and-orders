@@ -1,4 +1,6 @@
-package io.eventuate.examples.tram.ordersandcustomers.commondomain;
+package io.eventuate.examples.tram.ordersandcustomers.orders.domain.events;
+
+import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;

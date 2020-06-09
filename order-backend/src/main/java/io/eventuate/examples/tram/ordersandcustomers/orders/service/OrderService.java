@@ -1,19 +1,17 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.service;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderApprovedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCancelledEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderRejectedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderApprovedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCancelledEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderRejectedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.util.Collections.singletonList;
 
-@Transactional
 public class OrderService {
 
   private final DomainEventPublisher domainEventPublisher;
@@ -25,6 +23,7 @@ public class OrderService {
     this.orderRepository = orderRepository;
   }
 
+  @Transactional
   public Order createOrder(OrderDetails orderDetails) {
     ResultWithEvents<Order> orderWithEvents = Order.createOrder(orderDetails);
     Order order = orderWithEvents.result;
@@ -51,6 +50,7 @@ public class OrderService {
             orderId, singletonList(new OrderRejectedEvent(order.getOrderDetails())));
   }
 
+  @Transactional
   public Order cancelOrder(Long orderId) {
     Order order = orderRepository
             .findById(orderId)

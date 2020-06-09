@@ -1,9 +1,9 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderCreatedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCreatedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 
 import javax.persistence.*;

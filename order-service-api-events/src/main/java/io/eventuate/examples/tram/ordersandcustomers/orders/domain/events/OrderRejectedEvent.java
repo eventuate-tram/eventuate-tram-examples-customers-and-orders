@@ -1,6 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.commondomain;
-
-import io.eventuate.tram.events.common.DomainEvent;
+package io.eventuate.examples.tram.ordersandcustomers.orders.domain.events;
 
 public class OrderRejectedEvent implements OrderEvent {
 

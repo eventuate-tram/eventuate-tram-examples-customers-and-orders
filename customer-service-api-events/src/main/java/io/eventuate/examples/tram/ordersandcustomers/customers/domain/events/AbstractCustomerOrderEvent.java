@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.commondomain;
+package io.eventuate.examples.tram.ordersandcustomers.customers.domain.events;
 
 public abstract class AbstractCustomerOrderEvent implements CustomerEvent {
   protected Long orderId;

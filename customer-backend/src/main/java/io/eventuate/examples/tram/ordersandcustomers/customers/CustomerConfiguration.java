@@ -2,7 +2,7 @@ package io.eventuate.examples.tram.ordersandcustomers.customers;
 
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerRepository;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerSnapshotEvent;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerSnapshotEvent;
 import io.eventuate.examples.tram.ordersandcustomers.customers.service.CustomerService;
 import io.eventuate.examples.tram.ordersandcustomers.customers.service.OrderEventConsumer;
 import io.eventuate.tram.events.common.DomainEvent;

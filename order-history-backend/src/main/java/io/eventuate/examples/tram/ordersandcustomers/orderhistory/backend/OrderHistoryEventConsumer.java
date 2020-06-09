@@ -1,6 +1,10 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.*;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreatedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderApprovedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCancelledEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCreatedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderRejectedEvent;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;

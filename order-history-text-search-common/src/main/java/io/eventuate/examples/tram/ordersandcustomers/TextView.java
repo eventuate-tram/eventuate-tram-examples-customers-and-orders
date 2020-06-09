@@ -1,8 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers;
 
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.CustomerSnapshotEvent;
-
 public abstract class TextView {
 
   private String id;

@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers;
 
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderSnapshotEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderSnapshotEvent;
 
 public class OrderTextView extends TextView {
 

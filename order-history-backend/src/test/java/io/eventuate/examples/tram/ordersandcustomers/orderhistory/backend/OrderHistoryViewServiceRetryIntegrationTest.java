@@ -1,9 +1,8 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.Money;
+import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.web;
 
 import io.eventuate.common.json.mapper.JSonMapper;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderDetails;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
@@ -9,13 +9,10 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderRespo
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
 import io.eventuate.tram.viewsupport.rebuild.DomainSnapshotExportService;
-import io.eventuate.tram.viewsupport.rebuild.TopicPartitionOffset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class OrderController {
@@ -44,7 +41,7 @@ public class OrderController {
   public ResponseEntity<GetOrderResponse> getOrder(@PathVariable Long orderId) {
      return orderRepository
             .findById(orderId)
-            .map(order -> makeSuccessfulResponse(order))
+            .map(this::makeSuccessfulResponse)
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
