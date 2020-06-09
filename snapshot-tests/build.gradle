@@ -3,6 +3,8 @@ dependencies {
     compile project(":order-history-text-search-common")
     compile project(":customer-service-web-api")
     compile project(":order-service-web-api")
+    compile project(":order-service-web-api")
+    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewVersion"
 
     testCompile "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"
     testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"

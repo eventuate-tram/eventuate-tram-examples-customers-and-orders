@@ -1,6 +1,7 @@
 dependencies {
-    compile project(":common")
-    compile project(":order-service-backend")
+    compile (project(":order-service-api-events")) {
+        exclude module: "spring-boot-starter-data-jpa"
+    }
 }
 
 
