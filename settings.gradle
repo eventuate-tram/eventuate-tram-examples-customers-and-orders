@@ -1,7 +1,6 @@
 include 'common'
 include 'common-swagger'
 
-include 'customer-service-backend'
 include 'customer-service-web-api'
 include 'customer-service'
 include 'customer-service-api-events'
