@@ -17,8 +17,8 @@ import org.springframework.context.annotation.Import;
 public class OrderHistoryViewBackendConfiguration {
 
   @Bean
-  public OrderHistoryEventConsumer customerHistoryEventConsumer() {
-    return new OrderHistoryEventConsumer();
+  public OrderHistoryEventConsumer customerHistoryEventConsumer(OrderHistoryViewService orderHistoryViewService) {
+    return new OrderHistoryEventConsumer(orderHistoryViewService);
   }
 
   @Bean("customerHistoryDomainEventDispatcher")

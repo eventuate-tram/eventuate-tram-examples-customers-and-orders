@@ -11,7 +11,6 @@ public class OrderHistoryViewService {
 
   private CustomerViewRepository customerViewRepository;
 
-  @Autowired
   public OrderHistoryViewService(CustomerViewRepository customerViewRepository) {
     this.customerViewRepository = customerViewRepository;
   }

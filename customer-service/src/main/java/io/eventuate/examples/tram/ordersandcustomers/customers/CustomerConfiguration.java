@@ -6,6 +6,7 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.Cus
 import io.eventuate.examples.tram.ordersandcustomers.customers.service.CustomerService;
 import io.eventuate.examples.tram.ordersandcustomers.customers.service.OrderEventConsumer;
 import io.eventuate.tram.events.common.DomainEvent;
+import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.spring.events.publisher.TramEventsPublisherConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
@@ -30,8 +31,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class CustomerConfiguration {
 
   @Bean
-  public OrderEventConsumer orderEventConsumer() {
-    return new OrderEventConsumer();
+  public OrderEventConsumer orderEventConsumer(CustomerService customerService) {
+    return new OrderEventConsumer(customerService);
   }
 
   @Bean
@@ -40,8 +41,8 @@ public class CustomerConfiguration {
   }
 
   @Bean
-  public CustomerService customerService() {
-    return new CustomerService();
+  public CustomerService customerService(CustomerRepository customerRepository, DomainEventPublisher domainEventPublisher) {
+    return new CustomerService(customerRepository, domainEventPublisher);
   }
 
   @Bean

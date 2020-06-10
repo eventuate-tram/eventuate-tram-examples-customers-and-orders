@@ -13,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class OrderHistoryEventConsumer {
 
-  @Autowired
   private OrderHistoryViewService orderHistoryViewService;
+
+  public OrderHistoryEventConsumer(OrderHistoryViewService orderHistoryViewService) {
+    this.orderHistoryViewService = orderHistoryViewService;
+  }
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder
