@@ -1,11 +1,11 @@
 version: '3'
 services:
-  jmeterservice:
+  jmeter-service:
     build:
       context: ./jmeter-service/
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-jmeter-service
     depends_on:
-      - customerservice
+      - customer-service
     ports:
       - "8084:8080"
     environment:
