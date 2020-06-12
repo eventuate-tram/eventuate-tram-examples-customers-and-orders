@@ -1,6 +1,6 @@
 dependencies {
-    compile project(":order-history-service-common")
-    compile project(":customer-service-web-api")
+    compile project(":order-history-service-api-web")
+    compile project(":customer-service-api-web")
     compile project(":order-service-web-api")
 
     testCompile "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"

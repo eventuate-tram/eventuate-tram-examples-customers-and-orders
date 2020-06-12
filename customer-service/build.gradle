@@ -6,10 +6,10 @@ apply plugin: ServicePlugin
 
 dependencies {
     compile project(":common-swagger")
-    compile project(":customer-service-web-api")
+    compile project(":customer-service-api-web")
 
-    compile project(":customer-service-api-events")
-    compile project(":order-service-api-events")
+    compile project(":customer-service-api-messaging")
+    compile project(":order-service-api-messaging")
 
     compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka:$eventuateTramVersion"
     compile "io.eventuate.tram.core:eventuate-tram-spring-events:$eventuateTramVersion"

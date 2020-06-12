@@ -1,15 +1,15 @@
 include 'common'
 include 'common-swagger'
 
-include 'customer-service-web-api'
+include 'customer-service-api-web'
+include 'customer-service-api-messaging'
 include 'customer-service'
-include 'customer-service-api-events'
 
 include 'order-service-web-api'
+include 'order-service-api-messaging'
 include 'order-service'
-include 'order-service-api-events'
 
-include 'order-history-service-common'
+include 'order-history-service-api-web'
 include 'order-history-service'
 
 include 'jmeter-service'

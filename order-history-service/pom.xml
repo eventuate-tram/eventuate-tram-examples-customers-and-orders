@@ -20,7 +20,7 @@
 
         <dependency>
             <groupId>io.eventuate.tram.examples.customers.and.orders</groupId>
-            <artifactId>order-history-service-common</artifactId>
+            <artifactId>order-history-service-api-web</artifactId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
 

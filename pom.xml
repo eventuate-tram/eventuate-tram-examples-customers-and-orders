@@ -23,13 +23,13 @@
     <modules>
         <module>common</module>
         <module>common-swagger</module>
-        <module>customer-service-web-api</module>
-        <module>customer-service-api-events</module>
+        <module>customer-service-api-web</module>
+        <module>customer-service-api-messaging</module>
         <module>customer-service</module>
         <module>order-service-web-api</module>
-        <module>order-service-api-events</module>
+        <module>order-service-api-messaging</module>
         <module>order-service</module>
-        <module>order-history-service-common</module>
+        <module>order-history-service-api-web</module>
         <module>order-history-service</module>
         <module>jmeter-service</module>
         <module>end-to-end-tests</module>
