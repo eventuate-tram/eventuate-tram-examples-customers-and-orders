@@ -5,7 +5,6 @@ include 'customer-service-web-api'
 include 'customer-service'
 include 'customer-service-api-events'
 
-include 'order-service-backend'
 include 'order-service-web-api'
 include 'order-service'
 include 'order-service-api-events'

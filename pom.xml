@@ -15,7 +15,7 @@
         <java.version>1.8</java.version>
         <eventuateTramVersion>0.24.0.RELEASE</eventuateTramVersion>
         <eventuateUtilVersion>0.4.0.RELEASE</eventuateUtilVersion>
-        <springBootVersion>2.3.0.RELEASE</springBootVersion>
+        <springBootVersion>2.2.6.RELEASE</springBootVersion>
         <eventuateTramViewVersion>0.1.0.BUILD-SNAPSHOT</eventuateTramViewVersion>
         <eventuateMessagingKafkaVersion>0.9.0.RELEASE</eventuateMessagingKafkaVersion>
     </properties>
@@ -26,7 +26,6 @@
         <module>customer-service-web-api</module>
         <module>customer-service-api-events</module>
         <module>customer-service</module>
-        <module>order-service-backend</module>
         <module>order-service-web-api</module>
         <module>order-service-api-events</module>
         <module>order-service</module>
