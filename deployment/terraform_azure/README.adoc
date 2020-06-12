@@ -1,0 +1,16 @@
+
+= Deploying this application on Azure
+
+TODO:
+
+* Fix uniqueness of `azurerm_log_analytics_workspace` name
+
+== Steps:
+
+```
+az login
+cd deployment/terraform_azure
+terraform init
+terraform apply
+
+```

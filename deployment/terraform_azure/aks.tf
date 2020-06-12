@@ -70,6 +70,6 @@ resource "azurerm_log_analytics_workspace" "aks_workspace" {
 }
 
 resource "local_file" "aks_config" {
-  filename = "config"
+  filename = "aks_kubectl_config"
   content  = azurerm_kubernetes_cluster.default.kube_config_raw
 }

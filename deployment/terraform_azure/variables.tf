@@ -1,5 +1,5 @@
 variable "project" {
-  default = "eventuate"
+  default = "io-eventuate-cox"
 }
 
 variable "env" {
