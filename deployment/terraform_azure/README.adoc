@@ -3,7 +3,6 @@
 
 TODO:
 
-* Fix uniqueness of `azurerm_log_analytics_workspace` name
 
 == Steps:
 
@@ -14,3 +13,6 @@ terraform init
 terraform apply
 
 ```
+
+Once the applications are deployed to AKS, get LaodBalancer external IP addresses of all services by running -
+`kubectl get svc -n eventuate-tram-examples-customers-and-orders`
