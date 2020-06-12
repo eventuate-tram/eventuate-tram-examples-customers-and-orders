@@ -63,8 +63,14 @@ resource "azurerm_log_analytics_workspace" "aks_workspace" {
 }
 
 resource "local_file" "aks_config" {
-  filename = "aks_kubectl_config"
+  filename = pathexpand("~/.kube/config")
   content  = azurerm_kubernetes_cluster.default.kube_config_raw
+}
+
+resource "kubernetes_namespace" "eventuate" {
+  metadata {
+    name = "eventuate-tram-examples-customers-and-orders"
+  }
 }
 
 resource "kubernetes_config_map" "mongo" {
@@ -76,8 +82,5 @@ resource "kubernetes_config_map" "mongo" {
   data = {
     connection_string  = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
   }
-}
-
-output "mongodb" {
-  value = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
+  depends_on = [local_file.aks_config, kubernetes_namespace.eventuate]
 }

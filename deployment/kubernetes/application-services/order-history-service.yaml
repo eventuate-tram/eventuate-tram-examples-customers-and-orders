@@ -40,7 +40,6 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: mongodb-config
-                # Specify the key associated with the value
                 key: connection_string
           - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
             value: kafka-service:9092

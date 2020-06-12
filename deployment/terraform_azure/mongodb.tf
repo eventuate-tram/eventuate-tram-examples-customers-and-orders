@@ -32,3 +32,7 @@ resource "azurerm_cosmosdb_mongo_database" "default" {
   account_name        = azurerm_cosmosdb_account.db.name
   throughput          = 400
 }
+
+output "mongodb" {
+  value = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
+}
