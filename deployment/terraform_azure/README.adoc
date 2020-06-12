@@ -15,4 +15,5 @@ terraform apply
 ```
 
 Once the applications are deployed to AKS, get LaodBalancer external IP addresses of all services by running -
+
 `kubectl get svc -n eventuate-tram-examples-customers-and-orders`
