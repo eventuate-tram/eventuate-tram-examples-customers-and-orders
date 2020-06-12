@@ -50,19 +50,12 @@ resource "azurerm_kubernetes_cluster" "default" {
   }
 }
 
-# data "azurerm_subscription" "default" {
-#   subscription_id = "542999bf-c144-445a-8159-79184e978e0b"
-# }
-
-# resource "azurerm_role_assignment" "contributor" {
-#   scope                            = data.azurerm_subscription.default.id
-#   role_definition_name             = "Contributor"
-#   principal_id                     = azurerm_kubernetes_cluster.default.kubelet_identity.0.object_id
-#   skip_service_principal_aad_check = true
-# }
+resource "random_id" "random_suffix" {
+  byte_length = 5
+}
 
 resource "azurerm_log_analytics_workspace" "aks_workspace" {
-  name                = "${var.project}-law-${var.env}"
+  name                = "${var.project}-law-${var.env}-${random_id.random_suffix.hex}"
   resource_group_name = azurerm_resource_group.default.name
   location            = azurerm_resource_group.default.location
   sku                 = "PerGB2018"
@@ -72,4 +65,19 @@ resource "azurerm_log_analytics_workspace" "aks_workspace" {
 resource "local_file" "aks_config" {
   filename = "aks_kubectl_config"
   content  = azurerm_kubernetes_cluster.default.kube_config_raw
+}
+
+resource "kubernetes_config_map" "mongo" {
+  metadata {
+    name = "mongodb-config"
+    namespace = "eventuate-tram-examples-customers-and-orders"
+  }
+
+  data = {
+    connection_string  = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
+  }
+}
+
+output "mongodb" {
+  value = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
 }
