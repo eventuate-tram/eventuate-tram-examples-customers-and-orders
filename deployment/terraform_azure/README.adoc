@@ -3,6 +3,7 @@
 
 TODO:
 
+-  +++<del>+++Fix uniqueness of `azurerm_log_analytics_workspace` name+++<del>+++
 
 == Steps:
 
