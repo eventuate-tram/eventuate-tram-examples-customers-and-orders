@@ -31,7 +31,6 @@
         <module>order-service</module>
         <module>order-history-service-common</module>
         <module>order-history-service</module>
-        <module>order-history-service-backend</module>
         <module>jmeter-service</module>
         <module>end-to-end-tests</module>
     </modules>

@@ -11,7 +11,7 @@ include 'order-service-api-events'
 
 include 'order-history-service-common'
 include 'order-history-service'
-include 'order-history-service-backend'
+
 include 'jmeter-service'
 include 'order-history-text-search-common'
 include 'order-history-text-search-backend'
