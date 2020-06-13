@@ -10,4 +10,4 @@ deploy:
       - deployment/kubernetes/application-services/*
     flags:
       apply: [ "--namespace", "eventuate-tram-examples-customers-and-orders" ]
-  statusCheckDeadlineSeconds: 180
+  statusCheckDeadlineSeconds: 300
