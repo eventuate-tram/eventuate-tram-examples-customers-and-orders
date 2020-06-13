@@ -43,6 +43,22 @@ spec:
               value: "1"
           ports:
               - containerPort: 9092
+          livenessProbe:
+            exec:
+              command:
+              - echo 
+              - "EOF |"
+              - "nc localhost 9092"
+            periodSeconds: 10
+            failureThreshold: 25
+          readinessProbe:
+            exec:
+              command:
+              - echo 
+              - "EOF |"
+              - "nc localhost 9092"
+            periodSeconds: 10
+            failureThreshold: 25
           volumeMounts:
             - name: kafka-persistent-storage
               mountPath: /var/lib/zookeeper/data

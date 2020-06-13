@@ -45,6 +45,22 @@ spec:
               value: mysqluser
             - name: MYSQL_PASSWORD
               value: mysqlpw
+          livenessProbe:
+            exec:
+              command:
+              - echo 
+              - "'select * from eventuate.message limit 1' | "
+              - 'mysql -h localhost -u mysqluser --password=mysqlpw'
+            periodSeconds: 10
+            failureThreshold: 25
+          readinessProbe:
+            exec:
+              command:
+              - echo 
+              - "'select * from eventuate.message limit 1' | "
+              - 'mysql -h localhost -u mysqluser --password=mysqlpw'
+            periodSeconds: 10
+            failureThreshold: 25
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
