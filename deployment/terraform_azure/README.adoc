@@ -15,7 +15,7 @@ terraform apply
 
 # deploy services to k8s
 cd ../..
-skaffold deploy
+skaffold deploy -p aks
 ```
 
 Once the applications are deployed to AKS, get LaodBalancer external IP addresses of all services by running -
