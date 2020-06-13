@@ -30,6 +30,7 @@ profiles:
     deploy:
       kubectl:
         manifests:
+          - deployment/kubernetes/infrastructure-services/zipkin.yaml
           - deployment/kubernetes/infrastructure-services/zookeeper.yaml
           - deployment/kubernetes/infrastructure-services/mysql.yaml
   - name: aks-2
