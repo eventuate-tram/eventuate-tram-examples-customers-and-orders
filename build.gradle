@@ -45,7 +45,7 @@ dockerCompose {
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        startedServices = ["cdcservice", "zipkin"]
+        startedServices = ["cdc-service", "zipkin"]
         removeContainers = project.ext.removeContainers
     }
 
@@ -71,7 +71,7 @@ dockerCompose {
     mysqlbinloginfrastructuretextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        startedServices = ["cdcservice"]
+        startedServices = ["cdc-service"]
         removeContainers = project.ext.removeContainers
     }
 
@@ -84,7 +84,7 @@ dockerCompose {
     postgrespollinginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-polling.yml"]
-        startedServices = ["cdcservice"]
+        startedServices = ["cdc-service"]
         removeContainers = project.ext.removeContainers
     }
 
@@ -97,7 +97,7 @@ dockerCompose {
     postgreswalinfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
-        startedServices = ["cdcservice"]
+        startedServices = ["cdc-service"]
         removeContainers = project.ext.removeContainers
     }
 

@@ -8,8 +8,8 @@ echo not resetting databases
 
 ./gradlew $* mysqlbinlogwithjmeterComposeUp
 
-docker stop eventuate-tram-examples-customers-and-orders_cdcservice_1
-docker rm eventuate-tram-examples-customers-and-orders_cdcservice_1
+docker stop eventuate-tram-examples-customers-and-orders_cdc-service_1
+docker rm eventuate-tram-examples-customers-and-orders_cdc-service_1
 
 ./jmeter-service/scripts/run-jmeter.sh
 

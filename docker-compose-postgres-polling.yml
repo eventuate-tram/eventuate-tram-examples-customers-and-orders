@@ -14,7 +14,7 @@ services:
       - postgres
       - kafka
       - zookeeper
-      - cdcservice
+      - cdc-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
       SPRING_DATASOURCE_USERNAME: eventuate
@@ -37,7 +37,7 @@ services:
       - postgres
       - kafka
       - zookeeper
-      - cdcservice
+      - cdc-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
       SPRING_DATASOURCE_USERNAME: eventuate
@@ -104,7 +104,7 @@ services:
     ports:
       - "27017:27017"
 
-  cdcservice:
+  cdc-service:
     image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
     ports:
       - "8099:8080"

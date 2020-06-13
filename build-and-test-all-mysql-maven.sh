@@ -12,7 +12,7 @@ docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d mysql zook
 
 ./wait-for-mysql.sh
 
-docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d cdcservice
+docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d cdc-service
 
 ./wait-for-services.sh ${DOCKER_HOST_IP:-localhost} "8099"
 
