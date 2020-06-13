@@ -1,13 +1,13 @@
 #! /bin/bash -e
 
-if [ -z "$HOST" ] ; then
+if [ -z "$HOST" ] && [ -z "$CUSTOMER_SERVICE_HOST" ] ; then
   HOST=$(terraform output lb_services_dns)
+  if [ -z "$HOST" ] ; then
+    echo lb_services_dns is empty
+    exit 99
+  fi
 fi
 
-if [ -z "$HOST" ] ; then
-  echo lb_services_dns is empty
-  exit 99
-fi
 
 if [ ! -z "$USE_PORTS" ] ; then
   CUSTOMER_SERVICE_PORT=:8082
@@ -15,7 +15,19 @@ if [ ! -z "$USE_PORTS" ] ; then
   ORDER_HISTORY_SERVICE_PORT=:8083
 fi
 
-echo $HOST $CUSTOMER_SERVICE_PORT $ORDER_SERVICE_PORT $ORDER_HISTORY_SERVICE_PORT
+if [ -z "$CUSTOMER_SERVICE_HOST" ] ; then
+  CUSTOMER_SERVICE_HOST=$HOST
+fi
+
+if [ -z "$ORDER_SERVICE_HOST" ] ; then
+  ORDER_SERVICE_HOST=$HOST
+fi
+
+if [ -z "$ORDER_HISTORY_SERVICE_HOST" ] ; then
+  ORDER_HISTORY_SERVICE_HOST=$HOST
+fi
+
+echo $CUSTOMER_SERVICE_HOST:$CUSTOMER_SERVICE_PORT $ORDER_SERVICE_HOST:$ORDER_SERVICE_PORT $ORDER_HISTORY_SERVICE_HOST:$ORDER_HISTORY_SERVICE_PORT
 
 echo Creating customer ...
 
@@ -24,7 +36,7 @@ CREATE_CUSTOMER=$(curl -f -X POST --header "Content-Type: application/json" --he
     \"amount\": 50
   },
   \"name\": \"Chris\"
-}" "http://${HOST}${CUSTOMER_SERVICE_PORT}/customers")
+}" "http://${CUSTOMER_SERVICE_HOST}${CUSTOMER_SERVICE_PORT}/customers")
 
 echo $CREATE_CUSTOMER
 
@@ -39,7 +51,7 @@ CREATE_ORDER_RESPONSE=$(curl -f -X POST --header "Content-Type: application/json
   \"orderTotal\": {
     \"amount\": 23
   }
-}" "http://${HOST}${ORDER_SERVICE_PORT}/orders")
+}" "http://${ORDER_SERVICE_HOST}${ORDER_SERVICE_PORT}/orders")
 
 echo $CREATE_ORDER_RESPONSE
 
@@ -52,8 +64,9 @@ STATE=
 echo Querying view for Order Status ...
 
 until [ "$STATE" = "APPROVED" ] ; do
-  GET_ORDER_RESPONSE=$(curl -X GET --header "Accept: */*" "http://${HOST}${ORDER_HISTORY_SERVICE_PORT}/customers/${CUSTOMER_ID}")
-  echo $GET_ORDER_RESPONSE
+  echo curl -X GET --header "Accept: */*" "http://${ORDER_HISTORY_SERVICE_HOST}${ORDER_HISTORY_SERVICE_PORT}/customers/${CUSTOMER_ID}"
+  GET_ORDER_RESPONSE=$(curl -X GET --header "Accept: */*" "http://${ORDER_HISTORY_SERVICE_HOST}${ORDER_HISTORY_SERVICE_PORT}/customers/${CUSTOMER_ID}")
+  echo gor $GET_ORDER_RESPONSE
 
   STATE=$(echo $GET_ORDER_RESPONSE | jq -r ".orders | .[\"$ORDER_ID\"] | .state" )
 

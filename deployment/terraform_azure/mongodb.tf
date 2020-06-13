@@ -33,6 +33,17 @@ resource "azurerm_cosmosdb_mongo_database" "default" {
   throughput          = 400
 }
 
+resource "azurerm_cosmosdb_mongo_collection" "customerView" {
+  name                = "customerView"
+  resource_group_name = azurerm_resource_group.default.name
+  account_name        = azurerm_cosmosdb_account.db.name
+  database_name       = azurerm_cosmosdb_mongo_database.default.name
+
+  default_ttl_seconds = "777"
+  shard_key           = "_id"
+  throughput          = 400
+}
+
 output "mongodb" {
   value = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
 }
