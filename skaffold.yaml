@@ -26,3 +26,20 @@ profiles:
         manifests:
           - deployment/kubernetes/infrastructure-services/*
           - deployment/kubernetes/application-services/*
+  - name: aks-1
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/infrastructure-services/zookeeper.yaml
+          - deployment/kubernetes/infrastructure-services/mysql.yaml
+  - name: aks-2
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/infrastructure-services/kafka.yaml
+  - name: aks-3
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/infrastructure-services/cdc-service.yaml
+          - deployment/kubernetes/application-services/*

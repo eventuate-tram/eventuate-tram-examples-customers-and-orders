@@ -8,3 +8,4 @@ target/
 terraform.tfstate*
 out
 .DS_Store
+deployment/terraform_azure/aks_kubectl_config
