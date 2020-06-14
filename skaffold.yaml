@@ -26,6 +26,14 @@ profiles:
         manifests:
           - deployment/kubernetes/infrastructure-services/*
           - deployment/kubernetes/application-services/*
+  - name: aks-ingress
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/ingress/namespace.yaml
+          - deployment/kubernetes/ingress/nginx-ingress.yaml
+        flags:
+          apply: [ "--namespace", "nginx-ingress" ]
   - name: aks-1
     deploy:
       kubectl:

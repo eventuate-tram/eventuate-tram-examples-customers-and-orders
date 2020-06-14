@@ -4,7 +4,7 @@ metadata:
   name: order-history-service
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     svc: order-history-service
   ports:
@@ -63,4 +63,21 @@ spec:
             port: 8080
           periodSeconds: 10
           failureThreshold: 25
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: order-history-service-ingress
+  namespace: eventuate-tram-examples-customers-and-orders
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: order-history-service
+          servicePort: 8083
+        path: /customers/.*
 ---

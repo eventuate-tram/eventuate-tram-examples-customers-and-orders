@@ -4,7 +4,7 @@ metadata:
   name: customer-service
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 8082
     targetPort: 8080
@@ -71,4 +71,21 @@ spec:
             port: 8080
           periodSeconds: 10
           failureThreshold: 25
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: customer-service-ingress
+  namespace: eventuate-tram-examples-customers-and-orders
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: customer-service
+          servicePort: 8082
+        path: /customers
 ---
