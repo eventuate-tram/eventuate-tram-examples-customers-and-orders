@@ -15,9 +15,12 @@ terraform apply
 
 # deploy services to k8s
 cd ../..
-skaffold deploy -p aks
+skaffold deploy -p aks-ingress
+skaffold deploy -p aks-1
+skaffold deploy -p aks-2
+skaffold deploy -p aks-3
 ```
 
-Once the applications are deployed to AKS, get LaodBalancer external IP addresses of all services by running -
+Once the applications are deployed to AKS, get LaodBalancer external IP addresses of nginx by running -
 
-`kubectl get svc -n eventuate-tram-examples-customers-and-orders`
+`kubectl get svc -n nginx-ingress`
