@@ -1,7 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch;
 
 import io.eventuate.examples.tram.ordersandcustomers.commonswagger.CommonSwaggerConfiguration;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.backend.OrderHistoryTestSearchConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.elasticsearch.ElasticSearchRestHealthContributorAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

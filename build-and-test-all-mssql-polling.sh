@@ -2,9 +2,9 @@
 
 set -e
 
-export DATABASE=postgres
+export DATABASE=mssql
 export MODE=polling
 
-export SPRING_PROFILES_ACTIVE=postgres
+export SPRING_PROFILES_ACTIVE=mssql
 
 ./_build-and-test-all.sh

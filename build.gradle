@@ -75,15 +75,15 @@ dockerCompose {
         removeContainers = project.ext.removeContainers
     }
 
-    postgrespolling {
+    mssqlpolling {
         projectName = null
-        useComposeFiles = ["docker-compose-postgres-polling.yml"]
+        useComposeFiles = ["docker-compose-mssql-polling.yml"]
         removeContainers = project.ext.removeContainers
     }
 
-    postgrespollinginfrastructure {
+    mssqlpollinginfrastructure {
         projectName = null
-        useComposeFiles = ["docker-compose-postgres-polling.yml"]
+        useComposeFiles = ["docker-compose-mssql-polling.yml"]
         startedServices = ["cdc-service"]
         removeContainers = project.ext.removeContainers
     }

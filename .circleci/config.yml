@@ -59,8 +59,8 @@ workflows:
           name: build-and-test-all-mysql-binlog
           script: ./build-and-test-all-mysql-binlog.sh
       - build-and-test/build-and-test:
-          name: build-and-test-all-postgres-polling
-          script: ./build-and-test-all-postgres-polling.sh
+          name: build-and-test-all-mssql-polling
+          script: ./build-and-test-all-mssql-polling.sh
       - build-and-test/build-and-test:
           name: build-and-test-all-postgres-wal
           script: ./build-and-test-all-postgres-wal.sh
@@ -73,6 +73,6 @@ workflows:
             -  build-and-test-snapshots
             -  build-and-test-all-mysql-binlog
             -  build-and-test-all-postgres-wal
-            -  build-and-test-all-postgres-polling
+            -  build-and-test-all-mssql-polling
             -  build-and-test-all-mysql-maven
           script: ./publish-docker-images.sh

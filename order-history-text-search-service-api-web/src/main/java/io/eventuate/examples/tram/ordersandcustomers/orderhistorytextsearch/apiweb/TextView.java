@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers;
+package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb;
 
 
 public abstract class TextView {

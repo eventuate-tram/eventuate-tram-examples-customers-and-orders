@@ -1,7 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers;
-
-
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderSnapshotEvent;
+package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb;
 
 public class OrderTextView extends TextView {
 
@@ -15,11 +12,11 @@ public class OrderTextView extends TextView {
   public OrderTextView() {
   }
 
-  public OrderTextView(OrderSnapshotEvent orderSnapshotEvent) {
-    super(String.valueOf(orderSnapshotEvent.getId()));
-    customerId = String.valueOf(orderSnapshotEvent.getCustomerId());
-    orderTotal = orderSnapshotEvent.getOrderTotal().getAmount().toString();
-    state = orderSnapshotEvent.getOrderState().toString();
+  public OrderTextView(String id, String customerId, String orderTotal, String state) {
+    super(id);
+    this.customerId = customerId;
+    this.orderTotal = orderTotal;
+    this.state = state;
   }
 
   public String getCustomerId() {

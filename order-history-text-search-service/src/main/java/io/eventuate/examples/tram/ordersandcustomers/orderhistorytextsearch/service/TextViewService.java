@@ -1,8 +1,8 @@
-package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.backend;
+package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.eventuate.examples.tram.ordersandcustomers.TextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.TextView;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;

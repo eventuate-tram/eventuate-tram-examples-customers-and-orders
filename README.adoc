@@ -79,7 +79,7 @@ The application consists of three services: `Customer Service`, `Order Service`,
 === Customer Service
 
 The `Customer Service` implements a REST API for managing customers.
-The service persists the `Customer` JPA entity in a MySQL/Postgres database.
+The service persists the `Customer` JPA entity in a MySQL/MsSQL/Postgres database.
 Using `Eventuate Tram`, it publishes `Customer` domain events that are consumed by the `Order Service`.
 
 For more information, see the link:./customer-service-canvas.adoc[microservice canvas for the `Customer Service`].
@@ -90,7 +90,7 @@ image::./customer-service-canvas.png[width=300]
 === Order Service
 
 The `Order Service` implements REST API for managing orders.
-The service persists the `Order` JPA entity in MySQL/Postgres database.
+The service persists the `Order` JPA entity in MySQL/MsSQL/Postgres database.
 Using `Eventuate Tram`, it publishes `Order` domain events that are consumed by the `Customer Service`.
 
 For more information, see the link:./order-service-canvas.adoc[microservice canvas for the `Order Service`].
@@ -128,7 +128,7 @@ Note:
 If the containers aren't accessible via `localhost` - e.g. you are using Docker Toolbox, you will have to use `${DOCKER_HOST_IP}` instead of localhost.
 See this http://eventuate.io/docs/usingdocker.html[guide to setting `DOCKER_HOST_IP`] for more information.
 
-You can also run the Postgres version using `./gradlew postgrespollingComposeUp` or `./gradlew postgreswalComposeUp`
+You can also run the MsSQL version using `./gradlew mssqlpollingComposeUp` or Postgres version using `./gradlew postgreswalComposeUp`
 
 == Using the application
 

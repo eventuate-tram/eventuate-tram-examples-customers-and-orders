@@ -1,7 +1,10 @@
-package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.backend;
+package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch;
 
-import io.eventuate.examples.tram.ordersandcustomers.CustomerTextView;
-import io.eventuate.examples.tram.ordersandcustomers.OrderTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.CustomerTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.OrderTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.service.CustomerSnapshotEventConsumer;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.service.OrderSnapshotEventConsumer;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.service.TextViewService;
 import io.eventuate.tram.consumer.common.NoopDuplicateMessageDetector;
 import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;

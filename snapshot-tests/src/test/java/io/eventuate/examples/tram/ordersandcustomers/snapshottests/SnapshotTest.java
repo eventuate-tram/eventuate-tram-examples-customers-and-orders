@@ -1,8 +1,8 @@
 package io.eventuate.examples.tram.ordersandcustomers.snapshottests;
 
 import io.eventuate.common.json.mapper.JSonMapper;
-import io.eventuate.examples.tram.ordersandcustomers.CustomerTextView;
-import io.eventuate.examples.tram.ordersandcustomers.OrderTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.CustomerTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.OrderTextView;
 import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerRequest;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerResponse;
