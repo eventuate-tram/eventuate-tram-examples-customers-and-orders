@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>io.eventuate.tram.examples.customers.and.orders</groupId>
-            <artifactId>order-service-web-api</artifactId>
+            <artifactId>order-service-api-web</artifactId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
 

@@ -5,7 +5,7 @@ include 'customer-service-api-web'
 include 'customer-service-api-messaging'
 include 'customer-service'
 
-include 'order-service-web-api'
+include 'order-service-api-web'
 include 'order-service-api-messaging'
 include 'order-service'
 

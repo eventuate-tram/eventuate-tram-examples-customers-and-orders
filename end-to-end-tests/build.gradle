@@ -1,7 +1,7 @@
 dependencies {
     compile project(":order-history-service-api-web")
     compile project(":customer-service-api-web")
-    compile project(":order-service-web-api")
+    compile project(":order-service-api-web")
 
     testCompile "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"
     testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"

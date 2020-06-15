@@ -26,7 +26,7 @@
         <module>customer-service-api-web</module>
         <module>customer-service-api-messaging</module>
         <module>customer-service</module>
-        <module>order-service-web-api</module>
+        <module>order-service-api-web</module>
         <module>order-service-api-messaging</module>
         <module>order-service</module>
         <module>order-history-service-api-web</module>
