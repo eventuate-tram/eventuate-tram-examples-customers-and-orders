@@ -102,7 +102,7 @@ services:
       EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING: ${EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING}
       JAVA_OPTS: -Xmx64m
 
-  orderhistorytextsearchservice:
+  order-history-text-search-service:
     build:
       context: ./order-history-text-search-service/
       args:

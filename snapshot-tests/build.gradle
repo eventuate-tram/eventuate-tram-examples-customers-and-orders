@@ -1,6 +1,6 @@
 dependencies {
     compile project(":order-history-service-api-web")
-    compile project(":order-history-text-search-common")
+    compile project(":order-history-text-search-service-api-web")
     compile project(":customer-service-api-web")
     compile project(":order-service-web-api")
     compile project(":order-service-web-api")
