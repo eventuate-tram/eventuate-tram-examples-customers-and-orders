@@ -1,0 +1,13 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+metadata:
+  name: eventuate-tram-examples-customers-and-orders
+deploy:
+  kubectl:
+    manifests:
+      - deployment/kubernetes/namespace/*
+      - deployment/kubernetes/infrastructure-services/*
+      - deployment/kubernetes/application-services/*
+    flags:
+      apply: [ "--namespace", "eventuate-tram-examples-customers-and-orders" ]
+  statusCheckDeadlineSeconds: 180

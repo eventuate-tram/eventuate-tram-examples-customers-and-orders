@@ -1,0 +1,10 @@
+
+== Testing locally
+
+First, run Skaffold with port forwarding enabled
+
+Second, run this script:
+
+```
+USE_PORTS=1 HOST=localhost ./aws-fargate-terraform/invoke-api.sh
+```

@@ -2,8 +2,23 @@ apply plugin: ServicePlugin
 
 dependencies {
     compile project(":common-swagger")
-    compile project(":order-backend")
-    compile project(":order-web-api")
+    compile project(":order-service-web-api")
+    compile project(":order-service-api-messaging")
+
+    compile project(":customer-service-api-messaging")
+
+    compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-events:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
+
+    compile 'mysql:mysql-connector-java:5.1.36'
+    compile ('org.postgresql:postgresql:9.4-1200-jdbc41') {
+        exclude group: "org.slf4j", module: "slf4j-simple"
+    }
+
+    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewVersion"
+
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-web"

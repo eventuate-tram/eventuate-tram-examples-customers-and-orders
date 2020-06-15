@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.backend;
 
 import io.eventuate.examples.tram.ordersandcustomers.OrderTextView;
-import io.eventuate.examples.tram.ordersandcustomers.commondomain.OrderSnapshotEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderSnapshotEvent;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
 import org.springframework.beans.factory.annotation.Autowired;

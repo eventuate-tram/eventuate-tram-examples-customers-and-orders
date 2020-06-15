@@ -1,11 +1,33 @@
+plugins {
+  id 'com.google.cloud.tools.jib' version '1.7.0'
+}
+
 apply plugin: ServicePlugin
 
 dependencies {
     compile project(":common-swagger")
-    compile project(":customer-backend")
-    compile project(":customer-web-api")
+    compile project(":customer-service-api-web")
+
+    compile project(":customer-service-api-messaging")
+    compile project(":order-service-api-messaging")
+
+    compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-events:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
+
+    compile 'mysql:mysql-connector-java:5.1.36'
+    compile ('org.postgresql:postgresql:9.4-1200-jdbc41') {
+        exclude group: "org.slf4j", module: "slf4j-simple"
+    }
+
+    compile 'org.springframework.retry:spring-retry:1.2.4.RELEASE'
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+
+    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewVersion"
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-web"
 }
+
+jib.to.image = "eventuate-tram-examples-customers-and-orders-customer-service:${version}"
