@@ -1,6 +1,6 @@
 version: '3'
 services:
-  orderservice:
+  order-service:
     build:
       context: ./order-service
       dockerfile: Dockerfile-maven
@@ -13,7 +13,7 @@ services:
       - mysql
       - kafka
       - zookeeper
-      - cdcservice
+      - cdc-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
       SPRING_DATASOURCE_USERNAME: mysqluser
@@ -22,7 +22,7 @@ services:
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
-  customerservice:
+  customer-service:
     build:
       context: ./customer-service
       dockerfile: Dockerfile-maven
@@ -35,7 +35,7 @@ services:
       - mysql
       - kafka
       - zookeeper
-      - cdcservice
+      - cdc-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
       SPRING_DATASOURCE_USERNAME: mysqluser
@@ -44,7 +44,7 @@ services:
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
 
-  orderhistoryservice:
+  order-history-service:
     build:
       context: ./order-history-service
       dockerfile: Dockerfile-maven
@@ -103,7 +103,7 @@ services:
     ports:
       - "27017:27017"
 
-  cdcservice:
+  cdc-service:
     image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
     ports:
       - "8099:8080"

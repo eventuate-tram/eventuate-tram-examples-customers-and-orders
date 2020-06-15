@@ -1,0 +1,7 @@
+dependencies {
+    compile (project(":order-service-api-messaging")) {
+        exclude module: "spring-boot-starter-data-jpa"
+    }
+}
+
+

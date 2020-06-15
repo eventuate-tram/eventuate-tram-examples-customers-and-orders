@@ -1,6 +1,0 @@
-mongodb:
-  image: mongo:3.0.4
-  hostname: mongodb
-  command: mongod --smallfiles
-  ports:
-    - "27017:27017"

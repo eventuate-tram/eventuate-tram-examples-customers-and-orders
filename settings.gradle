@@ -1,17 +1,19 @@
 include 'common'
 include 'common-swagger'
-include 'customer-backend'
-include 'customer-web-api'
+
+include 'customer-service-api-web'
+include 'customer-service-api-messaging'
 include 'customer-service'
-include 'order-backend'
-include 'order-web-api'
+
+include 'order-service-web-api'
+include 'order-service-api-messaging'
 include 'order-service'
-include 'order-history-common'
+
+include 'order-history-service-api-web'
 include 'order-history-service'
-include 'order-history-backend'
+
 include 'jmeter-service'
-include 'order-history-text-search-common'
-include 'order-history-text-search-backend'
+include 'order-history-text-search-service-api-web'
 include 'order-history-text-search-service'
 include 'end-to-end-tests'
 include 'snapshot-tests'

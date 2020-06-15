@@ -31,11 +31,11 @@ subprojects {
 
 dockerCompose {
     environment.put "EVENTUATE_COMMON_VERSION", eventuateCommonImageVersion
-    environment.put "EVENTUATE_KAFKA_VERSION", eventuateMessagingKafkaImageVersion
     environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
     environment.put "EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING", eventuateCdcKafkaEnableBatchProcessing
     environment.put "EVENTUATE_JAVA_BASE_IMAGE_VERSION", eventuateExamplesBaseImageVersion
-
+    removeOrphans = true
+    
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
@@ -45,14 +45,14 @@ dockerCompose {
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        startedServices = ["cdcservice", "zipkin"]
+        startedServices = ["cdc-service", "zipkin"]
         removeContainers = project.ext.removeContainers
     }
 
     mysqlbinlogwithjmeter {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-jmeter-service.yml"]
-        startedServices = ["jmeterservice", "customerservice"]
+        startedServices = ["jmeter-service", "customer-service"]
     }
 
     mysqlbinlogtextsearch {
@@ -64,27 +64,27 @@ dockerCompose {
     mysqlbinlogtextsearchcustomersandorders {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        startedServices = ["orderservice", "customerservice"]
+        startedServices = ["order-service", "customer-service"]
         removeContainers = project.ext.removeContainers
     }
 
     mysqlbinloginfrastructuretextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        startedServices = ["cdcservice"]
+        startedServices = ["cdc-service"]
         removeContainers = project.ext.removeContainers
     }
 
-    postgrespolling {
+    mssqlpolling {
         projectName = null
-        useComposeFiles = ["docker-compose-postgres-polling.yml"]
+        useComposeFiles = ["docker-compose-mssql-polling.yml"]
         removeContainers = project.ext.removeContainers
     }
 
-    postgrespollinginfrastructure {
+    mssqlpollinginfrastructure {
         projectName = null
-        useComposeFiles = ["docker-compose-postgres-polling.yml"]
-        startedServices = ["cdcservice"]
+        useComposeFiles = ["docker-compose-mssql-polling.yml"]
+        startedServices = ["cdc-service"]
         removeContainers = project.ext.removeContainers
     }
 
@@ -97,7 +97,7 @@ dockerCompose {
     postgreswalinfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
-        startedServices = ["cdcservice"]
+        startedServices = ["cdc-service"]
         removeContainers = project.ext.removeContainers
     }
 

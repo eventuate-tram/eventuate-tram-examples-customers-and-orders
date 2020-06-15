@@ -1,9 +1,11 @@
 dependencies {
-    compile project(":order-history-common")
-    compile project(":customer-web-api")
-    compile project(":order-web-api")
+    compile project(":order-history-service-api-web")
+    compile project(":customer-service-api-web")
+    compile project(":order-service-web-api")
 
     testCompile "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"
-    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testCompile "org.springframework.boot:spring-boot-starter-json:$springBootVersion"
+
 }
 

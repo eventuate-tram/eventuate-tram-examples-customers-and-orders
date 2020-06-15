@@ -1,7 +1,7 @@
-FROM openjdk:8u252-slim-buster
+ARG baseImageVersion
+FROM eventuateio/eventuate-examples-docker-images-java-example-base-image:$baseImageVersion
 
 RUN apt-get update && \
-    apt-get install -y curl && \
     apt-get install -y jq && \
     apt-get install -y \
         apt-transport-https \

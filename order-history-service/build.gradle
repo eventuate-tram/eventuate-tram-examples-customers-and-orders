@@ -10,12 +10,45 @@ buildscript {
 
 apply plugin: ServicePlugin
 
+apply plugin: 'docker-compose'
+
+dockerCompose.isRequiredBy(test)
+
+dockerCompose {
+    environment.put "EVENTUATE_COMMON_VERSION", eventuateCommonImageVersion
+    environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
+    environment.put "EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING", eventuateCdcKafkaEnableBatchProcessing
+    environment.put "EVENTUATE_JAVA_BASE_IMAGE_VERSION", eventuateExamplesBaseImageVersion
+
+    projectName = null
+
+    useComposeFiles = ['../docker-compose-mysql-binlog.yml']
+    startedServices = ['mongodb', 'kafka', 'zipkin']
+
+    stopContainers = false
+}
+
 dependencies {
-    compile project(":order-history-backend")
+    compile project(":order-history-service-api-web")
+
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
+
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
+    compile 'org.springframework.retry:spring-retry:1.2.4.RELEASE'
+
     compile project(":common-swagger")
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-actuator"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+
+
 }
 
+test {
+    systemProperty "debug", "true"
+}
