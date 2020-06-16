@@ -1,0 +1,4 @@
+dependencies {
+    compile project (":customer-service-api-messaging")
+    compile project (":order-service-api-messaging")
+}

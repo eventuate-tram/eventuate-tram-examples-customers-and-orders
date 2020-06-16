@@ -3,7 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>eventuate.tram.examples.customers.and.orders</groupId>
+    <groupId>io.eventuate.tram.examples.customers.and.orders</groupId>
     <artifactId>eventuate-tram-examples-customers-and-orders</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -23,15 +23,14 @@
     <modules>
         <module>common</module>
         <module>common-swagger</module>
-        <module>customer-backend</module>
-        <module>customer-web-api</module>
+        <module>customer-service-api-web</module>
+        <module>customer-service-api-messaging</module>
         <module>customer-service</module>
-        <module>order-backend</module>
-        <module>order-web-api</module>
+        <module>order-service-api-web</module>
+        <module>order-service-api-messaging</module>
         <module>order-service</module>
-        <module>order-history-common</module>
+        <module>order-history-service-api-web</module>
         <module>order-history-service</module>
-        <module>order-history-backend</module>
         <module>jmeter-service</module>
         <module>end-to-end-tests</module>
     </modules>

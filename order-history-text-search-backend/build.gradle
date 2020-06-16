@@ -1,7 +1,0 @@
-apply plugin: "io.spring.dependency-management"
-
-dependencies {
-    compile project (":order-history-text-search-common")
-    compile "org.elasticsearch.client:transport:6.8.7"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
-}
