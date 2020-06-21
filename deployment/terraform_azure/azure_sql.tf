@@ -24,8 +24,10 @@ resource "azurerm_sql_database" "eventuate" {
 
   provisioner "local-exec" {
     command = <<EOF
-        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${var.sql_admin_password} -I -i ../../aws-fargate-terraform/1.initialize-database.sql;
-        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${var.sql_admin_password} -I -i ../../aws-fargate-terraform/2.initialize-database.sql;
+        wget --quiet https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/1.setup.sql -O 1.setup.sql
+        wget --quiet https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/2.setup.sql -O 2.setup.sql
+        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${var.sql_admin_password} -I -i 1.setup.sql;
+        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${var.sql_admin_password} -I -i 2.setup.sql;
         EOF
   }
 }

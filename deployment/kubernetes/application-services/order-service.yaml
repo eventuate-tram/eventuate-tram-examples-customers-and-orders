@@ -55,7 +55,10 @@ spec:
                 name: sql-config
                 key: sql_password
           - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
-            value: com.microsoft.sqlserver.jdbc.SQLServerDriver
+            valueFrom:
+              configMapKeyRef:
+                name: sql-config
+                key: sql_driver
           - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
             value: kafka-service:9092
           - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING

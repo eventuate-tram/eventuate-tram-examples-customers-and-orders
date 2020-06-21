@@ -281,7 +281,7 @@ spec:
     matchLabels:
       app: nginx-ingress
       release: nginx-ingress
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 10
   strategy:
     {}
