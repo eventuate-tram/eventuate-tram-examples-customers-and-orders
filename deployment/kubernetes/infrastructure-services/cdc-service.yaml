@@ -33,36 +33,49 @@ spec:
     spec:
       containers:
       - name: cdc-service
-        image: eventuateio/eventuate-cdc-service:0.4.0.RELEASE
+        image: eventuateio/eventuate-cdc-service:0.6.1.RELEASE
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
           name: httpport
         env:
           - name: SPRING_DATASOURCE_URL
-            value: jdbc:mysql://mysql/eventuate
+            valueFrom:
+              configMapKeyRef:
+                name: sql-config
+                key: connection_string
           - name: SPRING_DATASOURCE_USERNAME
-            value: mysqluser
+            valueFrom:
+              configMapKeyRef:
+                name: sql-config
+                key: sql_user
           - name: SPRING_DATASOURCE_PASSWORD
-            value: mysqlpw
+            valueFrom:
+              configMapKeyRef:
+                name: sql-config
+                key: sql_password
           - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
-            value: com.mysql.jdbc.Driver
+            value: com.microsoft.sqlserver.jdbc.SQLServerDriver
           - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
             value: kafka-service:9092
           - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
             value: zookeeper:2181
-          - name: EVENTUATELOCAL_CDC_DB_USER_NAME
-            value: root
-          - name: EVENTUATELOCAL_CDC_DB_PASSWORD
-            value: rootpassword
+          - name: SPRING_DATASOURCE_TEST_ON_BORROW
+            value: "true"
+          - name: SPRING_DATASOURCE_VALIDATION_QUERY
+            value: SELECT 1
+          - name: EVENTUATELOCAL_CDC_POLLING_INTERVAL_IN_MILLISECONDS
+            value: "500"
+          - name: EVENTUATELOCAL_CDC_MAX_EVENTS_PER_POLLING
+            value: "1000"
+          - name: EVENTUATELOCAL_CDC_MAX_ATTEMPTS_FOR_POLLING
+            value: "100"
+          - name: EVENTUATELOCAL_CDC_POLLING_RETRY_INTERVAL_IN_MILLISECONDS
+            value: "500"
           - name: EVENTUATELOCAL_CDC_READER_NAME
-            value: MySqlReader
-          - name: EVENTUATELOCAL_CDC_OFFSET_STORE_KEY
-            value: MySqlBinlog
-          - name: EVENTUATELOCAL_CDC_MYSQL_BINLOG_CLIENT_UNIQUE_ID
-            value: "1234567890"
-          - name: EVENTUATELOCAL_CDC_READ_OLD_DEBEZIUM_DB_OFFSET_STORAGE_TOPIC
-            value: "false"
+            value: MssqlPollingReader
+          - name: SPRING_PROFILES_ACTIVE
+            value: EventuatePolling
           - name: JAVA_OPTS
             value: "-Xmx64m"
         livenessProbe:

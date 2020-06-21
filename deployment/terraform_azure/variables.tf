@@ -28,3 +28,11 @@ variable "enable_auto_scaling" {
   default = true
   type    = bool
 }
+
+//sql
+variable "sql_admin_user" {
+  default = "sql_admin"
+}
+
+variable "sql_admin_password" {
+}

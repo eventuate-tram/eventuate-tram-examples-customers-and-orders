@@ -40,13 +40,22 @@ spec:
           name: httpport
         env:
           - name: SPRING_DATASOURCE_URL
-            value: jdbc:mysql://mysql/eventuate
+            valueFrom:
+              configMapKeyRef:
+                name: sql-config
+                key: connection_string
           - name: SPRING_DATASOURCE_USERNAME
-            value: mysqluser
+            valueFrom:
+              configMapKeyRef:
+                name: sql-config
+                key: sql_user
           - name: SPRING_DATASOURCE_PASSWORD
-            value: mysqlpw
+            valueFrom:
+              configMapKeyRef:
+                name: sql-config
+                key: sql_password
           - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
-            value: com.mysql.jdbc.Driver
+            value: com.microsoft.sqlserver.jdbc.SQLServerDriver
           - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
             value: kafka-service:9092
           - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
