@@ -4,11 +4,16 @@ resource "azurerm_sql_server" "eventuate_server" {
   location                     = azurerm_resource_group.default.location
   version                      = "12.0"
   administrator_login          = var.sql_admin_user
-  administrator_login_password = var.sql_admin_password
+  administrator_login_password = random_password.sql_password.result
 
   tags = {
     environment = var.env
   }
+}
+
+resource "random_password" "sql_password" {
+  length = 12
+  special = true
 }
 
 resource "azurerm_sql_database" "eventuate" {
@@ -24,10 +29,10 @@ resource "azurerm_sql_database" "eventuate" {
 
   provisioner "local-exec" {
     command = <<EOF
-        wget --quiet https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/1.setup.sql -O 1.setup.sql
-        wget --quiet https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/2.setup.sql -O 2.setup.sql
-        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${var.sql_admin_password} -I -i 1.setup.sql;
-        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${var.sql_admin_password} -I -i 2.setup.sql;
+        curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/1.setup.sql > 1.setup.sql
+        curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/2.setup.sql > 2.setup.sql
+        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${random_password.sql_password.result} -I -i 1.setup.sql;
+        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${random_password.sql_password.result} -I -i 2.setup.sql;
         EOF
   }
 }
@@ -41,5 +46,5 @@ resource "azurerm_sql_firewall_rule" "public" {
 }
 
 output "connection_string" {
-    value = "jdbc:sqlserver://${azurerm_sql_server.eventuate_server.fully_qualified_domain_name}:1433;database=${azurerm_sql_database.eventuate.name};user=${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name};password=${var.sql_admin_password};encrypt=true;trustServerCertificate=false;"
+    value = "jdbc:sqlserver://${azurerm_sql_server.eventuate_server.fully_qualified_domain_name}:1433;database=${azurerm_sql_database.eventuate.name};user=${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name};password=${random_password.sql_password.result};encrypt=true;trustServerCertificate=false;"
 }

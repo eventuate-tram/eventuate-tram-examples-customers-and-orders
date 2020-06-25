@@ -34,5 +34,3 @@ variable "sql_admin_user" {
   default = "sql_admin"
 }
 
-variable "sql_admin_password" {
-}

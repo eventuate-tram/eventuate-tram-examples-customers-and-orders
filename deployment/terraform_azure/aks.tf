@@ -91,7 +91,7 @@ resource "kubernetes_config_map" "sql_server" {
   }
   data = {
     connection_string  = "jdbc:sqlserver://${azurerm_sql_server.eventuate_server.fully_qualified_domain_name}:1433;databaseName=eventuate"
-    sql_password = var.sql_admin_password
+    sql_password = random_password.sql_password.result
     sql_user = "${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name}"
     sql_driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
   }
