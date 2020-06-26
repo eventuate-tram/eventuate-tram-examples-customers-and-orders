@@ -1,7 +1,7 @@
 
-# Deploying this application on Azure
+= Deploying this application on Azure
 
-## Installing local tools (remove this)
+== Installing local tools (remove this)
 
 ```
 # install sqlcmd
@@ -11,8 +11,9 @@ sudo apt-get update
 sudo apt-get install mssql-tools unixodbc-dev -y
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
+```
 
-## Running Terraform
+== Running Terraform
 
 ```
 az login
@@ -21,7 +22,7 @@ terraform init
 terraform apply
 ```
 
-## Deploying services to k8s
+== Deploying services to k8s
 
 ```
 cd ../..
@@ -31,7 +32,7 @@ KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p ak
 KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-3
 ```
 
-## Getting the public IP address
+== Getting the public IP address
 
 Once the applications are deployed to AKS, get LoadBalancer external IP addresses of nginx by running -
 
@@ -39,7 +40,7 @@ Once the applications are deployed to AKS, get LoadBalancer external IP addresse
 KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config kubectl get svc -n nginx-ingress
 ```
 
-## Testing the deployment
+== Testing the deployment
 
 You can test by running:
 
