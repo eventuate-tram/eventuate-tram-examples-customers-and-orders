@@ -75,25 +75,47 @@ resource "kubernetes_namespace" "eventuate" {
 
 resource "kubernetes_config_map" "mongo" {
   metadata {
-    name = "mongodb-config"
+    name      = "mongodb-config"
     namespace = "eventuate-tram-examples-customers-and-orders"
   }
   data = {
-    connection_string  = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
+    connection_string = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
   }
   depends_on = [local_file.aks_config, kubernetes_namespace.eventuate]
 }
 
 resource "kubernetes_config_map" "sql_server" {
   metadata {
-    name = "sql-config"
+    name      = "sql-config"
     namespace = "eventuate-tram-examples-customers-and-orders"
   }
   data = {
-    connection_string  = "jdbc:sqlserver://${azurerm_sql_server.eventuate_server.fully_qualified_domain_name}:1433;databaseName=eventuate"
-    sql_password = random_password.sql_password.result
-    sql_user = "${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name}"
-    sql_driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+    connection_string = "jdbc:sqlserver://${azurerm_sql_server.eventuate_server.fully_qualified_domain_name}:1433;databaseName=eventuate"
+    sql_password      = random_password.sql_password.result
+    sql_user          = "${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name}"
+    sql_driver        = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
   }
   depends_on = [local_file.aks_config, kubernetes_namespace.eventuate]
+}
+
+resource "kubernetes_job" "initialize_db" {
+  metadata {
+    name = "initialize-db"
+  }
+
+  spec {
+    template {
+      metadata {}
+      spec {
+        container {
+          name    = "mssql-sqlcmd"
+          image   = "mcr.microsoft.com/mssql-tools"
+          command = ["/bin/bash", "-c"]
+          args    = ["curl --fail -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/1.setup.sql > 1.setup.sql; curl --fail -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/2.setup.sql > 2.setup.sql; /opt/mssql-tools/bin/sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P '${random_password.sql_password.result}' -I -i 1.setup.sql; /opt/mssql-tools/bin/sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P '${random_password.sql_password.result}' -I -i 2.setup.sql;"]
+        }
+        restart_policy = "Never"
+      }
+    }
+    backoff_limit = 2
+  }
 }
