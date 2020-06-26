@@ -1,34 +1,48 @@
 
 = Deploying this application on Azure
 
-TODO:
-
--  +++<del>+++Fix uniqueness of `azurerm_log_analytics_workspace` name+++<del>+++
-
-== Steps:
+== Installing local tools (remove this)
 
 ```
 # install sqlcmd
 curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
-sudo apt-get update 
+sudo apt-get update
 sudo apt-get install mssql-tools unixodbc-dev -y
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
 
+== Running Terraform
+
+```
 az login
 cd deployment/terraform_azure
 terraform init
 terraform apply
-
-# deploy services to k8s
-cd ../..
-skaffold deploy -p aks-ingress
-skaffold deploy -p aks-1
-skaffold deploy -p aks-2
-skaffold deploy -p aks-3
 ```
 
-Once the applications are deployed to AKS, get LaodBalancer external IP addresses of nginx by running -
+== Deploying services to k8s
 
-`kubectl get svc -n nginx-ingress`
+```
+cd ../..
+KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-ingress
+KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-1
+KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-2
+KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-3
+```
+
+== Getting the public IP address
+
+Once the applications are deployed to AKS, get LoadBalancer external IP addresses of nginx by running -
+
+```
+KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config kubectl get svc -n nginx-ingress
+```
+
+== Testing the deployment
+
+You can test by running:
+
+```
+./deployment/terraform_azure/invoke-api.sh
+```

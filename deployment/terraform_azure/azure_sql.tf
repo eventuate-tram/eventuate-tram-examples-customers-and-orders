@@ -29,10 +29,11 @@ resource "azurerm_sql_database" "eventuate" {
 
   provisioner "local-exec" {
     command = <<EOF
-        curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/1.setup.sql > 1.setup.sql
-        curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/2.setup.sql > 2.setup.sql
-        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${random_password.sql_password.result} -I -i 1.setup.sql;
-        sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P ${random_password.sql_password.result} -I -i 2.setup.sql;
+        set -e
+        curl --fail -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/1.setup.sql > 1.setup.sql
+        curl --fail -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/0.10.0.RELEASE/mssql/2.setup.sql > 2.setup.sql
+        docker run -v $(pwd):/scripts -i mcr.microsoft.com/mssql-tools  bash -c "/opt/mssql-tools/bin/sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P '${random_password.sql_password.result}' -I -i /scripts/1.setup.sql;"
+        docker run -v $(pwd):/scripts -i mcr.microsoft.com/mssql-tools  bash -c "/opt/mssql-tools/bin/sqlcmd -S ${azurerm_sql_server.eventuate_server.fully_qualified_domain_name} -d ${azurerm_sql_database.eventuate.name} -U ${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name} -P '${random_password.sql_password.result}' -I -i /scripts/2.setup.sql;"
         EOF
   }
 }
