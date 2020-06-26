@@ -69,14 +69,14 @@ resource "local_file" "aks_config" {
 
 resource "kubernetes_namespace" "eventuate" {
   metadata {
-    name = "eventuate-tram-examples-customers-and-orders"
+    name = var.namespace
   }
 }
 
 resource "kubernetes_config_map" "mongo" {
   metadata {
     name      = "mongodb-config"
-    namespace = "eventuate-tram-examples-customers-and-orders"
+    namespace = var.namespace
   }
   data = {
     connection_string = "${join("/", slice(split("/", azurerm_cosmosdb_account.db.connection_strings[0]), 0, 3))}/customers_and_orders?ssl=true"
@@ -87,10 +87,10 @@ resource "kubernetes_config_map" "mongo" {
 resource "kubernetes_config_map" "sql_server" {
   metadata {
     name      = "sql-config"
-    namespace = "eventuate-tram-examples-customers-and-orders"
+    namespace = var.namespace
   }
   data = {
-    connection_string = "jdbc:sqlserver://${azurerm_sql_server.eventuate_server.fully_qualified_domain_name}:1433;databaseName=eventuate"
+    connection_string = "jdbc:sqlserver://${azurerm_sql_server.eventuate_server.fully_qualified_domain_name}:1433;databaseName=${azurerm_sql_database.eventuate.name}"
     sql_password      = random_password.sql_password.result
     sql_user          = "${var.sql_admin_user}@${azurerm_sql_server.eventuate_server.name}"
     sql_driver        = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
@@ -100,7 +100,8 @@ resource "kubernetes_config_map" "sql_server" {
 
 resource "kubernetes_job" "initialize_db" {
   metadata {
-    name = "initialize-db"
+    name      = "initialize-db"
+    namespace = var.namespace
   }
 
   spec {
@@ -118,4 +119,5 @@ resource "kubernetes_job" "initialize_db" {
     }
     backoff_limit = 2
   }
+  depends_on = [azurerm_sql_database.eventuate, kubernetes_namespace.eventuate]
 }
