@@ -1,36 +1,27 @@
 
 = Deploying this application on Azure
 
-== Installing local tools (remove this)
-
-```
-# install sqlcmd
-curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
-sudo apt-get update
-sudo apt-get install mssql-tools unixodbc-dev -y
-echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-source ~/.bashrc
-```
-
 == Running Terraform
 
+Login to Azure":
+
 ```
-az login
-cd deployment/terraform_azure
-terraform init
-terraform apply
+az login # or equivalent
+```
+
+Run Terraform:
+
+```
+deployment/terraform_azure/terraform_azure-apply.sh
 ```
 
 == Deploying services to k8s
 
 ```
-cd ../..
-KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-ingress
-KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-1
-KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-2
-KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config skaffold deploy -p aks-3
+./deployment/terraform_azure/terraform_azure-k8s-deploy.sh
 ```
+
+This script starts the services, incrementally and waits for pods to be come ready in order to avoid restarts.
 
 == Getting the public IP address
 
@@ -46,4 +37,24 @@ You can test by running:
 
 ```
 ./deployment/terraform_azure/invoke-api.sh
+```
+
+=== Cleaning up
+
+Delete the main Kubernetes resources:
+
+```
+./deployment/terraform_azure/terraform_azure-k8s-delete.sh
+```
+
+Delete the Ingress Controller
+
+```
+ ./deployment/terraform_azure/terraform_azure-k8s-delete-ingress-controller.sh
+```
+
+Destroy the Terraform resources
+
+```
+ ./deployment/terraform_azure/terraform_azure-destroy.sh
 ```

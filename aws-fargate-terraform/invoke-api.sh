@@ -29,14 +29,16 @@ fi
 
 echo $CUSTOMER_SERVICE_HOST:$CUSTOMER_SERVICE_PORT $ORDER_SERVICE_HOST:$ORDER_SERVICE_PORT $ORDER_HISTORY_SERVICE_HOST:$ORDER_HISTORY_SERVICE_PORT
 
-echo Creating customer ...
+CUSTOMER_URL="http://${CUSTOMER_SERVICE_HOST}${CUSTOMER_SERVICE_PORT}/customers"
+
+echo Creating customer ... $CUSTOMER_URL
 
 CREATE_CUSTOMER=$(curl -f -X POST --header "Content-Type: application/json" --header "Accept: */*" -d "{
   \"creditLimit\": {
     \"amount\": 50
   },
   \"name\": \"Chris\"
-}" "http://${CUSTOMER_SERVICE_HOST}${CUSTOMER_SERVICE_PORT}/customers")
+}" $CUSTOMER_URL)
 
 echo $CREATE_CUSTOMER
 
@@ -66,7 +68,7 @@ echo Querying view for Order Status ...
 until [ "$STATE" = "APPROVED" ] ; do
   echo curl -X GET --header "Accept: */*" "http://${ORDER_HISTORY_SERVICE_HOST}${ORDER_HISTORY_SERVICE_PORT}/customers/${CUSTOMER_ID}"
   GET_ORDER_RESPONSE=$(curl -X GET --header "Accept: */*" "http://${ORDER_HISTORY_SERVICE_HOST}${ORDER_HISTORY_SERVICE_PORT}/customers/${CUSTOMER_ID}")
-  echo gor $GET_ORDER_RESPONSE
+  echo got $GET_ORDER_RESPONSE
 
   STATE=$(echo $GET_ORDER_RESPONSE | jq -r ".orders | .[\"$ORDER_ID\"] | .state" )
 
