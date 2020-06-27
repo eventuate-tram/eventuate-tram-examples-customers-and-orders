@@ -29,6 +29,10 @@ variable "enable_auto_scaling" {
   type    = bool
 }
 
+variable "namespace" {
+  default = "eventuate-tram-examples-customers-and-orders"
+}
+
 //sql
 variable "sql_admin_user" {
   default = "sql_admin"
