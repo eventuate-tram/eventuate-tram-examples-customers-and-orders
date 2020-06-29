@@ -22,7 +22,7 @@ class ServicePlugin implements Plugin<Project> {
             compile 'org.springframework.cloud:spring-cloud-starter-zipkin'
             compile 'io.zipkin.brave:brave-bom:4.17.1'
 
-            compile "io.eventuate.tram.core:eventuate-tram-spring-cloud-sleuth-integration:${project.ext.eventuateTramVersion}"
+            compile "io.eventuate.tram.core:eventuate-tram-spring-cloud-sleuth-integration"
         }
 
     }
