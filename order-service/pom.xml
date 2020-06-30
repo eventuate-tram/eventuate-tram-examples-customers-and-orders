@@ -62,11 +62,6 @@
 
         <dependency>
             <groupId>io.eventuate.tram.core</groupId>
-            <artifactId>eventuate-tram-spring-messaging-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.eventuate.tram.core</groupId>
             <artifactId>eventuate-tram-spring-events-starter</artifactId>
         </dependency>
 

@@ -14,7 +14,6 @@ dependencies {
     compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
     compile "io.eventuate.tram.core:eventuate-tram-spring-events"
     compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-messaging-starter"
     compile "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
 
     compile 'mysql:mysql-connector-java:5.1.36'
