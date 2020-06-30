@@ -60,6 +60,16 @@
         </dependency>
 
         <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-messaging-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-events-starter</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.36</version>

@@ -29,6 +29,15 @@
             <artifactId>eventuate-tram-spring-consumer-kafka</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-messaging-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-events-subscriber-starter</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

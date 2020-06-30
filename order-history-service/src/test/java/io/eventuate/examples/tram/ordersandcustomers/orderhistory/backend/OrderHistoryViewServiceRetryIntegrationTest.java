@@ -1,6 +1,8 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
 import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
+import io.eventuate.tram.spring.events.autoconfigure.TramEventsSubscriberAutoConfiguration;
+import io.eventuate.tram.spring.messaging.autoconfigure.EventuateTramKafkaMessageConsumerAutoConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,10 @@ public class OrderHistoryViewServiceRetryIntegrationTest {
   private CustomerViewRepository customerViewRepository;
 
   @Configuration
-  @EnableAutoConfiguration(exclude = io.eventuate.util.spring.swagger.CommonSwaggerConfiguration.class)
-  @Import(OrderHistoryViewMongoConfiguration.class)
+  @EnableAutoConfiguration(exclude = {io.eventuate.util.spring.swagger.CommonSwaggerConfiguration.class,
+          EventuateTramKafkaMessageConsumerAutoConfiguration.class,
+          TramEventsSubscriberAutoConfiguration.class})
+  @Import({OrderHistoryViewMongoConfiguration.class})
   public static class Config {
     @Bean
     public OrderHistoryViewService orderHistoryViewService(CustomerViewRepository customerViewRepository) {

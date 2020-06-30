@@ -7,4 +7,6 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.elasticsearch.client:transport:6.8.7"
     compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-messaging-starter"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-events-subscriber-starter"
 }
