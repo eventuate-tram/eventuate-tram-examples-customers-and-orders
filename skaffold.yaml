@@ -18,6 +18,7 @@ profiles:
         manifests:
           - deployment/kubernetes/namespace/*
           - deployment/kubernetes/secrets/*
+          - deployment/kubernetes/ingress/local-nginx-ingress.yaml
           - deployment/kubernetes/infrastructure-services/*
           - deployment/kubernetes/application-services/*
   - name: aks
