@@ -13,11 +13,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <eventuateBomVersion>1.0.0-SNAPSHOT</eventuateBomVersion>
-        <eventuateUtilVersion>0.4.0.RELEASE</eventuateUtilVersion>
+        <eventuatePlatformVersion>2020.2.RELEASE</eventuatePlatformVersion>
+        <eventuateUtilVersion>0.7.0.RELEASE</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
-        <eventuateTramViewSupportVersion>0.1.0.RELEASE</eventuateTramViewSupportVersion>
-        <eventuateMessagingKafkaVersion>0.9.0.RELEASE</eventuateMessagingKafkaVersion>
+        <eventuateTramViewSupportVersion>0.2.0.RELEASE</eventuateTramViewSupportVersion>
+        <eventuateMessagingKafkaVersion>0.12.0.RELEASE</eventuateMessagingKafkaVersion>
     </properties>
 
     <modules>
@@ -39,8 +39,8 @@
         <dependencies>
             <dependency>
                 <groupId>io.eventuate.platform</groupId>
-                <artifactId>platform-dependencies</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <artifactId>eventuate-platform-dependencies</artifactId>
+                <version>${eventuatePlatformVersion}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
