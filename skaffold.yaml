@@ -12,12 +12,17 @@ deploy:
   statusCheckDeadlineSeconds: 600
 
 profiles:
-  - name: local
+  - name: local1
     deploy:
       kubectl:
         manifests:
           - deployment/kubernetes/namespace/*
           - deployment/kubernetes/secrets/*
+          - deployment/kubernetes/ingress/local-nginx-ingress.yaml
+  - name: local2
+    deploy:
+      kubectl:
+        manifests:
           - deployment/kubernetes/infrastructure-services/*
           - deployment/kubernetes/application-services/*
   - name: aks
