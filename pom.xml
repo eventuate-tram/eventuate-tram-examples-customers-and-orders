@@ -13,11 +13,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <eventuateTramVersion>0.24.0.RELEASE</eventuateTramVersion>
-        <eventuateUtilVersion>0.4.0.RELEASE</eventuateUtilVersion>
+        <eventuatePlatformVersion>2020.3.RELEASE</eventuatePlatformVersion>
+        <eventuateUtilVersion>0.7.0.RELEASE</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
-        <eventuateTramViewVersion>0.1.0.BUILD-SNAPSHOT</eventuateTramViewVersion>
-        <eventuateMessagingKafkaVersion>0.9.0.RELEASE</eventuateMessagingKafkaVersion>
+        <eventuateTramViewSupportVersion>0.2.0.RELEASE</eventuateTramViewSupportVersion>
+        <eventuateMessagingKafkaVersion>0.12.0.RELEASE</eventuateMessagingKafkaVersion>
     </properties>
 
     <modules>
@@ -34,6 +34,18 @@
         <module>jmeter-service</module>
         <module>end-to-end-tests</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.eventuate.platform</groupId>
+                <artifactId>eventuate-platform-dependencies</artifactId>
+                <version>${eventuatePlatformVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -102,7 +114,6 @@
             </snapshots>
         </repository>
 
-        <!--
         <repository>
             <id>testdeploy</id>
             <url>file:///Users/cer/.m2/testdeploy</url>
@@ -113,6 +124,5 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-      -->
     </repositories>
 </project>

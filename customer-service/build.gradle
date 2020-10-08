@@ -11,9 +11,10 @@ dependencies {
     compile project(":customer-service-api-messaging")
     compile project(":order-service-api-messaging")
 
-    compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka:$eventuateTramVersion"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-events:$eventuateTramVersion"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-events"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
 
     compile 'mysql:mysql-connector-java:5.1.36'
     compile ('org.postgresql:postgresql:9.4-1200-jdbc41') {
@@ -23,7 +24,7 @@ dependencies {
     compile 'org.springframework.retry:spring-retry:1.2.4.RELEASE'
     compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
-    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewVersion"
+    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-actuator"

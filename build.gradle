@@ -27,6 +27,10 @@ subprojects {
         eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
     }
 
+    dependencies {
+        implementation(platform("io.eventuate.platform:eventuate-platform-dependencies:$eventuatePlatformVersion"))
+    }
+
 }
 
 dockerCompose {
@@ -35,7 +39,7 @@ dockerCompose {
     environment.put "EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING", eventuateCdcKafkaEnableBatchProcessing
     environment.put "EVENTUATE_JAVA_BASE_IMAGE_VERSION", eventuateExamplesBaseImageVersion
     removeOrphans = true
-    
+
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]

@@ -7,11 +7,8 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.service.CustomerEven
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
 import io.eventuate.tram.events.common.DomainEvent;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
-import io.eventuate.tram.spring.events.publisher.TramEventsPublisherConfiguration;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
-import io.eventuate.tram.spring.events.subscriber.TramEventSubscriberConfiguration;
-import io.eventuate.tram.spring.jdbckafka.TramJdbcKafkaConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 import io.eventuate.tram.viewsupport.rebuild.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,10 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories
 @EnableAutoConfiguration
-@Import({TramJdbcKafkaConfiguration.class,
-        TramEventsPublisherConfiguration.class,
-        TramEventSubscriberConfiguration.class,
-        OptimisticLockingDecoratorConfiguration.class,
+@Import({OptimisticLockingDecoratorConfiguration.class,
         SnapshotConfiguration.class})
 public class OrderConfiguration {
 

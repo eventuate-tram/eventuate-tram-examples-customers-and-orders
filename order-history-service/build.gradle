@@ -31,7 +31,8 @@ dockerCompose {
 dependencies {
     compile project(":order-history-service-api-web")
 
-    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-events-subscriber-starter"
 
     compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
