@@ -1,10 +1,28 @@
 
 == Testing locally
 
-First, run Skaffold with port forwarding enabled
+First, run https://skaffold.dev/[Skaffold] to create the `nginx-ingress`
 
-Second, run this script:
+```
+skaffold run --profile=local1
+```
+
+Second, run Skaffold to create the remaining Kubernetes resources
+
+```
+skaffold run --profile=local2
+```
+
+Third, run this test script:
 
 ```
 USE_PORTS=1 HOST=localhost ./aws-fargate-terraform/invoke-api.sh
+```
+
+== Shutting down
+
+Fourth, run Skaffold to delete the resources:
+
+```
+skaffold delete --profile=local2,local1
 ```
