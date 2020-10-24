@@ -97,7 +97,7 @@ services:
       - MYSQL_PASSWORD=mysqlpw
 
   mongodb:
-    image: mongo:3.0.4
+    image: mongo:3.6
     hostname: mongodb
     command: mongod --smallfiles
     ports:
