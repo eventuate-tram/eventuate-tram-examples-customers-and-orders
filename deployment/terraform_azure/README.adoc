@@ -1,0 +1,60 @@
+
+= Deploying this application on Azure
+
+== Running Terraform
+
+Login to Azure":
+
+```
+az login # or equivalent
+```
+
+Run Terraform:
+
+```
+deployment/terraform_azure/terraform_azure-apply.sh
+```
+
+== Deploying services to k8s
+
+```
+./deployment/terraform_azure/terraform_azure-k8s-deploy.sh
+```
+
+This script starts the services, incrementally and waits for pods to be come ready in order to avoid restarts.
+
+== Getting the public IP address
+
+Once the applications are deployed to AKS, get LoadBalancer external IP addresses of nginx by running -
+
+```
+KUBECONFIG=./deployment/terraform_azure/aks_kubectl_config kubectl get svc -n nginx-ingress
+```
+
+== Testing the deployment
+
+You can test by running:
+
+```
+./deployment/terraform_azure/invoke-api.sh
+```
+
+=== Cleaning up
+
+Delete the main Kubernetes resources:
+
+```
+./deployment/terraform_azure/terraform_azure-k8s-delete.sh
+```
+
+Delete the Ingress Controller
+
+```
+ ./deployment/terraform_azure/terraform_azure-k8s-delete-ingress-controller.sh
+```
+
+Destroy the Terraform resources
+
+```
+ ./deployment/terraform_azure/terraform_azure-destroy.sh
+```

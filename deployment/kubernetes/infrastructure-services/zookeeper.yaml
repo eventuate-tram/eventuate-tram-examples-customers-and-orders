@@ -9,7 +9,7 @@ spec:
   ports:
   - port: 2181
     targetPort: 2181
-  clusterIP: None
+  type: LoadBalancer
   selector:
     role: zookeeper
 ---
@@ -39,6 +39,26 @@ spec:
           env:
             - name: ZOOKEEPER_CLIENT_PORT
               value: "2181"
+          livenessProbe:
+            exec:
+              command:
+              - echo
+              - ruok |
+              - nc
+              - localhost
+              - "2181"
+            periodSeconds: 10
+            failureThreshold: 25
+          readinessProbe:
+            exec:
+              command:
+              - echo
+              - ruok |
+              - nc
+              - localhost
+              - "2181"
+            periodSeconds: 10
+            failureThreshold: 25
           volumeMounts:
             - name: zookeeper-persistent-storage
               mountPath: /var/lib/kafka/data

@@ -4,6 +4,7 @@ metadata:
   name: order-history-service
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
+  type: ClusterIP
   selector:
     svc: order-history-service
   ports:
@@ -36,7 +37,10 @@ spec:
         - containerPort: 8080
         env:
           - name: SPRING_DATA_MONGODB_URI
-            value: mongodb://mongodb/customers_and_orders
+            valueFrom:
+              configMapKeyRef:
+                name: mongodb-config
+                key: connection_string
           - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
             value: kafka-service:9092
           - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
@@ -52,11 +56,29 @@ spec:
             path: /actuator/health
             port: 8080
           periodSeconds: 10
-          failureThreshold: 14
+          failureThreshold: 25
         readinessProbe:
           httpGet:
             path: /actuator/health
             port: 8080
           periodSeconds: 10
-          failureThreshold: 14
+          failureThreshold: 25
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: order-history-service-ingress
+  namespace: eventuate-tram-examples-customers-and-orders
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: order-history-service
+          servicePort: 8083
+        path: /customers/(.+)
 ---

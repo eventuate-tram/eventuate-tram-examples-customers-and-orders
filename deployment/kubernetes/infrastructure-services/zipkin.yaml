@@ -4,6 +4,7 @@ metadata:
   name: zipkin
   namespace: eventuate-tram-examples-customers-and-orders
 spec:
+  type: LoadBalancer
   ports:
   - port: 9411
     targetPort: 9411
@@ -33,7 +34,7 @@ spec:
       containers:
       - name: zipkin
         image: openzipkin/zipkin:2.21
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9411
           name: httpport

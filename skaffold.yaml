@@ -5,9 +5,54 @@ metadata:
 deploy:
   kubectl:
     manifests:
-      - deployment/kubernetes/namespace/*
       - deployment/kubernetes/infrastructure-services/*
       - deployment/kubernetes/application-services/*
     flags:
       apply: [ "--namespace", "eventuate-tram-examples-customers-and-orders" ]
-  statusCheckDeadlineSeconds: 180
+  statusCheckDeadlineSeconds: 600
+
+profiles:
+  - name: local1
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/namespace/*
+          - deployment/kubernetes/secrets/*
+          - deployment/kubernetes/ingress/local-nginx-ingress.yaml
+  - name: local2
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/infrastructure-services/*
+          - deployment/kubernetes/application-services/*
+  - name: aks
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/infrastructure-services/*
+          - deployment/kubernetes/application-services/*
+  - name: aks-ingress
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/ingress/namespace.yaml
+          - deployment/kubernetes/ingress/nginx-ingress.yaml
+        flags:
+          apply: [ "--namespace", "nginx-ingress" ]
+  - name: aks-1
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/infrastructure-services/zipkin.yaml
+          - deployment/kubernetes/infrastructure-services/zookeeper.yaml
+  - name: aks-2
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/infrastructure-services/kafka.yaml
+  - name: aks-3
+    deploy:
+      kubectl:
+        manifests:
+          - deployment/kubernetes/infrastructure-services/cdc-service.yaml
+          - deployment/kubernetes/application-services/*

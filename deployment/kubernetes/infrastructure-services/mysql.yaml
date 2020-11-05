@@ -6,10 +6,10 @@ metadata:
   labels:
     name: mysql
 spec:
+  type: LoadBalancer
   ports:
   - port: 3306
     targetPort: 3306
-  clusterIP: None
   selector:
     role: mysql
 ---
@@ -32,7 +32,9 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: mysql
-          image: eventuateio/eventuate-mysql
+          image: eventuateio/eventuate-mysql:0.8.0.RELEASE
+          args:
+            - "--ignore-db-dir=lost+found"
           imagePullPolicy: IfNotPresent
           ports:
               - containerPort: 3306
@@ -43,6 +45,22 @@ spec:
               value: mysqluser
             - name: MYSQL_PASSWORD
               value: mysqlpw
+          livenessProbe:
+            exec:
+              command:
+              - echo 
+              - "'select * from eventuate.message limit 1' | "
+              - 'mysql -h localhost -u mysqluser --password=mysqlpw'
+            periodSeconds: 10
+            failureThreshold: 25
+          readinessProbe:
+            exec:
+              command:
+              - echo 
+              - "'select * from eventuate.message limit 1' | "
+              - 'mysql -h localhost -u mysqluser --password=mysqlpw'
+            periodSeconds: 10
+            failureThreshold: 25
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
