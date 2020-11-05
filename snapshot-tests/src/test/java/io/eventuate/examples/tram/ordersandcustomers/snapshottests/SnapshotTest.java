@@ -8,7 +8,7 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCust
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
-import io.eventuate.tram.viewsupport.rebuild.TopicPartitionOffset;
+import io.eventuate.tram.viewsupport.rebuild.SnapshotMetadata;
 import io.eventuate.util.test.async.Eventually;
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,9 +48,9 @@ public class SnapshotTest {
   @Test
   public void testCustomers() {
     Long id = createCustomer("john", new Money("200.00"));
-    List<TopicPartitionOffset> topicPartitionOffsets = exportCustomerSnapshots();
+    List<SnapshotMetadata> snapshotMetadata = exportCustomerSnapshots();
 
-    setTopicPartitionOffset("customerTextSearchServiceEvents", topicPartitionOffsets);
+    setTopicPartitionOffsetMessageId("customerTextSearchServiceEvents", snapshotMetadata);
     execConsoleCommand("./gradlew", "mysqlbinlogtextsearchComposeUp");
 
     Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
@@ -68,9 +68,9 @@ public class SnapshotTest {
     Long customerId = createCustomer("jack", new Money("300.00"));
     Long orderId = createOrder(customerId, new Money("100.00"));
 
-    List<TopicPartitionOffset> topicPartitionOffsets = exportOrderSnapshots();
+    List<SnapshotMetadata> snapshotMetadata = exportOrderSnapshots();
 
-    setTopicPartitionOffset("orderTextSearchServiceEvents", topicPartitionOffsets);
+    setTopicPartitionOffsetMessageId("orderTextSearchServiceEvents", snapshotMetadata);
     execConsoleCommand("./gradlew", "mysqlbinlogtextsearchComposeUp");
 
     Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
@@ -83,13 +83,13 @@ public class SnapshotTest {
     });
   }
 
-  public void setTopicPartitionOffset(String group, List<TopicPartitionOffset> topicPartitionOffsets) {
-    for (TopicPartitionOffset topicPartitionOffset : topicPartitionOffsets) {
+  public void setTopicPartitionOffsetMessageId(String group, List<SnapshotMetadata> snapshotMetadata) {
+    for (SnapshotMetadata metadata : snapshotMetadata) {
         execConsoleCommand("sh",
                 "set-consumer-group-offset.sh",
                 group,
-                topicPartitionOffset.getTopic(),
-                String.valueOf(topicPartitionOffset.getOffset()));
+                metadata.getTopic(),
+                String.valueOf(metadata.getOffset()));
     }
   }
 
@@ -108,12 +108,14 @@ public class SnapshotTest {
   }
 
 
-  private List<TopicPartitionOffset> exportCustomerSnapshots() {
-    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(baseUrlCustomers("customers/make-snapshot"), null,  String.class), TopicPartitionOffset[].class));
+  private List<SnapshotMetadata> exportCustomerSnapshots() {
+    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(baseUrlCustomers("customers/make-snapshot"),
+            null,  String.class), SnapshotMetadata[].class));
   }
 
-  private List<TopicPartitionOffset> exportOrderSnapshots() {
-    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(baseUrlOrders("orders/make-snapshot"), null,  String.class), TopicPartitionOffset[].class));
+  private List<SnapshotMetadata> exportOrderSnapshots() {
+    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(baseUrlOrders("orders/make-snapshot"),
+            null,  String.class), SnapshotMetadata[].class));
   }
 
   private Long createCustomer(String name, Money credit) {

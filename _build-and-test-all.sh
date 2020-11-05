@@ -24,11 +24,24 @@ else
   exit 99
 fi
 
+
 ${dockerall}Build
 ${dockerall}Up
 
 #Testing mongo cli
 echo 'show dbs' |  ./mongodb-cli.sh -i
+
+./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
+
+cat "add-database-id-support-to-eventuate-mysql.migration.sql" | ./mysql-cli.sh -i
+
+manual_compose="docker-compose -f docker-compose-mysql-binlog.yml"
+services_to_restart="order-service customer-service order-history-service"
+
+${manual_compose} stop ${services_to_restart}
+${manual_compose} rm --force ${services_to_restart}
+
+${dockerall}Up -P envFile=dbid.env
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 

@@ -72,6 +72,7 @@ services:
     image: "confluentinc/cp-kafka:5.2.4"
     ports:
       - 9092:9092
+      - 29092:29092
     depends_on:
       - zookeeper
     environment:
@@ -120,4 +121,5 @@ services:
       EVENTUATELOCAL_CDC_READER_NAME: MySqlReader
       EVENTUATELOCAL_CDC_MYSQL_BINLOG_CLIENT_UNIQUE_ID: 1234567890
       EVENTUATELOCAL_CDC_READ_OLD_DEBEZIUM_DB_OFFSET_STORAGE_TOPIC: "false"
+      EVENTUATE_OUTBOX_ID: 1
       JAVA_OPTS: -Xmx64m
