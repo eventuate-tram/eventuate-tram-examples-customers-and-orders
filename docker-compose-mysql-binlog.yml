@@ -2,7 +2,7 @@ version: '3'
 services:
   order-service:
     env_file:
-      - ${ENV_FILE:-empty.env}
+      - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
       context: ./order-service/
       args:
@@ -28,7 +28,7 @@ services:
 
   customer-service:
     env_file:
-      - ${ENV_FILE:-empty.env}
+      - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
       context: ./customer-service/
       args:
@@ -54,7 +54,7 @@ services:
 
   order-history-service:
     env_file:
-      - ${ENV_FILE:-empty.env}
+      - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
       context: ./order-history-service/
       args:

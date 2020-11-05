@@ -33,7 +33,9 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 
-cat "add-database-id-support-to-eventuate-mysql.migration.sql" | ./mysql-cli.sh -i
+if [ "${DATABASE}" == "mysql" ]; then
+  cat "add-database-id-support-to-eventuate-mysql.migration.sql" | ./mysql-cli.sh -i
+fi
 
 manual_compose="docker-compose -f docker-compose-mysql-binlog.yml"
 services_to_restart="order-service customer-service order-history-service"
@@ -41,7 +43,7 @@ services_to_restart="order-service customer-service order-history-service"
 ${manual_compose} stop ${services_to_restart}
 ${manual_compose} rm --force ${services_to_restart}
 
-${dockerall}Up -P envFile=dbid.env
+${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 
