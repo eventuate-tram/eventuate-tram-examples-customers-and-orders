@@ -35,10 +35,11 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 if [ "${DATABASE}" == "mysql" ]; then
   cat "add-database-id-support-to-eventuate-mysql.migration.sql" | ./mysql-cli.sh -i
+
+  ${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
+
+  ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 fi
 
-${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
-
-./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
-
 ${dockerall}Down -P removeContainers=true
+
