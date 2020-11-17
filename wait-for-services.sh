@@ -2,6 +2,8 @@
 
 done=false
 
+echo waiting for: $*
+
 host=$1
 shift
 health_url=$1
