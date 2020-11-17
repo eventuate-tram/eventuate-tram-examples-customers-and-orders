@@ -1,6 +1,8 @@
 version: '3'
 services:
   order-service:
+    env_file:
+      - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
       context: ./order-service/
       args:
@@ -23,6 +25,8 @@ services:
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
   customer-service:
+    env_file:
+      - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
       context: ./customer-service/
       args:
@@ -45,6 +49,8 @@ services:
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
   order-history-service:
+    env_file:
+      - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
       context: ./order-history-service/
       args:
