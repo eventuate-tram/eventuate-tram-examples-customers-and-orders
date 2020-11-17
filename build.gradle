@@ -90,6 +90,13 @@ dockerCompose {
         projectName = null
         useComposeFiles = ["docker-compose-mssql-polling.yml"]
         removeContainers = project.ext.removeContainers
+        removeOrphans = true
+    }
+
+    mssqlpollingmigration {
+        projectName = null
+        useComposeFiles = ["docker-compose-mssql-polling.yml", "docker-compose-mssql-migration-tool.yml"]
+        startedServices = ["mssql-migration"]
     }
 
     mssqlpollinginfrastructure {
