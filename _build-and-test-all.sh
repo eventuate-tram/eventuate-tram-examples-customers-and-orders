@@ -34,6 +34,8 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 
 if [ "${DATABASE}" == "mysql" ]; then
+  ./wait-for-services.sh localhost readers/${READER}/finished "8099"
+
   cat "add-database-id-support-to-eventuate-mysql.migration.sql" | ./mysql-cli.sh -i
 
   ${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
