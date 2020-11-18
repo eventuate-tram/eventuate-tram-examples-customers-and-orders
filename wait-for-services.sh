@@ -4,11 +4,16 @@ done=false
 
 echo waiting for: $*
 
-host=$1
+host=${1?}
 shift
-health_url=$1
+health_url=${1?}
 shift
 ports=$*
+
+if [ -z "$ports" ] ; then
+	echo no ports
+	exit 99
+fi
 
 while [[ "$done" = false ]]; do
 	for port in $ports; do
