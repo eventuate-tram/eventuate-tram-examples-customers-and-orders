@@ -1,0 +1,15 @@
+version: '3'
+services:
+  mssql-migration:
+    image: mcr.microsoft.com/mssql-tools@sha256:62556500522072535cb3df2bb5965333dded9be47000473e9e0f84118e248642
+    depends_on:
+      - mssql
+    environment:
+      TRAM_DB_SERVER: "mssql"
+      TRAM_SA_PASSWORD: "Eventuate123!"
+      TRAM_DB: "eventuate"
+      TRAM_SCHEMA: "eventuate"
+    volumes:
+      - ./migration_scripts/mssql:/scripts
+    working_dir: /scripts
+    entrypoint: [ "bash", "./entrypoint.sh"]

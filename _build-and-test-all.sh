@@ -33,21 +33,26 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 
-if [ "${DATABASE}" == "mysql" ] || [ "${DATABASE}" = "postgres" ]; then
-  ./wait-for-services.sh localhost readers/${READER}/finished "8099"
+./wait-for-services.sh localhost readers/${READER}/finished "8099"
 
-  migration_file="add-database-id-support-to-eventuate-${DATABASE}.migration.sql"
+migration_file="migration_scripts/add-database-id-support-to-eventuate-${DATABASE}.migration.sql"
 
-  if [ "${DATABASE}" == "mysql" ]; then
-    cat $migration_file | ./mysql-cli.sh -i
-  elif [ "${DATABASE}" == "postgres" ]; then
-    cat $migration_file | ./postgres-cli.sh -i
-  fi
-
-  ${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
-
-  ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
+if [ "${DATABASE}" == "mysql" ]; then
+  cat $migration_file | ./mysql-cli.sh -i
+elif [ "${DATABASE}" == "postgres" ]; then
+  cat $migration_file | ./postgres-cli.sh -i
+elif [ "${DATABASE}" == "mssql" ]; then
+  ./gradlew mssqlpollingmigrationComposeUp
+  sleep 10 # looks like there is no any healthcheck to wait that scrips are executed.
+  ./gradlew mssqlpollingmigrationComposeDown # also, for some reason removeOrphans=true does not work and it is necessary to do explicit removal
+else
+  echo "Unknown Database"
+  exit 99
 fi
 
-${dockerall}Down -P removeContainers=true
 
+${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
+
+./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
+
+${dockerall}Down -P removeContainers=true
