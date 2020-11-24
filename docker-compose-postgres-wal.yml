@@ -60,7 +60,6 @@ services:
       - "8083:8080"
     depends_on:
       - mongodb
-      - postgres
       - kafka
       - zookeeper
     environment:
@@ -106,7 +105,7 @@ services:
     command: mongod --smallfiles
     ports:
       - "27017:27017"
-  
+
   cdc-service:
     image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
     ports:

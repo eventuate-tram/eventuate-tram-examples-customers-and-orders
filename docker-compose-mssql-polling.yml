@@ -60,7 +60,6 @@ services:
       - "8083:8080"
     depends_on:
       - mongodb
-      - mssql
       - kafka
       - zookeeper
     environment:
