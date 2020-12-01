@@ -28,6 +28,6 @@ docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d
 
 ./wait-for-services.sh ${DOCKER_HOST_IP:-localhost} "8081 8082 8083"
 
-./mvnw -pl end-to-end-tests test
+./mvnw -am -pl end-to-end-tests test
 
 docker-compose -f docker-compose-mysql-binlog-maven.yml down
