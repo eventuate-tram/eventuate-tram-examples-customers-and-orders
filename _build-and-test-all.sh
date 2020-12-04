@@ -37,17 +37,15 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 migration_file="migration_scripts/${DATABASE}/migration.sql"
 
-#TODO: change curl urls to eventuate-foundation
-
 rm -f $migration_file
 if [ "${DATABASE}" == "mysql" ]; then
-  curl https://raw.githubusercontent.com/dartartem/eventuate-common-1/wip-new-id-generation/mysql/4.initialize-database-db-id.sql --output $migration_file --create-dirs
+  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/mysql/4.initialize-database-db-id.sql --output $migration_file --create-dirs
   cat $migration_file | ./mysql-cli.sh -i
 elif [ "${DATABASE}" == "postgres" ]; then
-  curl https://raw.githubusercontent.com/dartartem/eventuate-common-1/wip-new-id-generation/postgres/5.initialize-database-db-id.sql --output $migration_file --create-dirs
+  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/postgres/5.initialize-database-db-id.sql --output $migration_file --create-dirs
   cat $migration_file | ./postgres-cli.sh -i
 elif [ "${DATABASE}" == "mssql" ]; then
-  curl https://raw.githubusercontent.com/dartartem/eventuate-common-1/wip-new-id-generation/mssql/4.setup-db-id.sql --output $migration_file --create-dirs
+  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/mssql/4.setup-db-id.sql --output $migration_file --create-dirs
   docker-compose -f docker-compose-mssql-polling.yml -f docker-compose-mssql-migration-tool.yml up --build --no-deps mssql-migration
 else
   echo "Unknown Database"
