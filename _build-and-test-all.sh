@@ -35,24 +35,28 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 ./wait-for-services.sh localhost readers/${READER}/finished "8099"
 
-migration_file="migration_scripts/add-database-id-support-to-eventuate-${DATABASE}.migration.sql"
+migration_file="migration_scripts/${DATABASE}/migration.sql"
 
+rm -f $migration_file
 if [ "${DATABASE}" == "mysql" ]; then
+  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/mysql/4.initialize-database-db-id.sql --output $migration_file --create-dirs
   cat $migration_file | ./mysql-cli.sh -i
 elif [ "${DATABASE}" == "postgres" ]; then
+  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/postgres/5.initialize-database-db-id.sql --output $migration_file --create-dirs
   cat $migration_file | ./postgres-cli.sh -i
 elif [ "${DATABASE}" == "mssql" ]; then
-  ./gradlew mssqlpollingmigrationComposeUp
-  sleep 10 # looks like there is no any healthcheck to wait that scrips are executed.
-  ./gradlew mssqlpollingmigrationComposeDown # also, for some reason removeOrphans=true does not work and it is necessary to do explicit removal
+  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/mssql/4.setup-db-id.sql --output $migration_file --create-dirs
+  docker-compose -f docker-compose-mssql-polling.yml -f docker-compose-mssql-migration-tool.yml up --build --no-deps mssql-migration
 else
   echo "Unknown Database"
   exit 99
 fi
-
+rm -f $migration_file
 
 ${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
+
+./gradlew -P verifyDbIdMigration=true :migration-tests:cleanTest migration-tests:test
 
 ${dockerall}Down -P removeContainers=true
