@@ -47,6 +47,8 @@ elif [ "${DATABASE}" == "postgres" ]; then
 elif [ "${DATABASE}" == "mssql" ]; then
   curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/mssql/4.setup-db-id.sql --output $migration_file --create-dirs
   docker-compose -f docker-compose-mssql-polling.yml -f docker-compose-mssql-migration-tool.yml up --build --no-deps mssql-migration
+  docker-compose -f docker-compose-mssql-polling.yml -f docker-compose-mssql-migration-tool.yml stop mssql-migration
+  docker-compose -f docker-compose-mssql-polling.yml -f docker-compose-mssql-migration-tool.yml rm -f mssql-migration
 else
   echo "Unknown Database"
   exit 99

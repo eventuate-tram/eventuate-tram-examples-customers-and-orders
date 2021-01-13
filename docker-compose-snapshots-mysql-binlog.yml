@@ -128,3 +128,10 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+
+  zipkin:
+    image: openzipkin/zipkin:2.21
+    ports:
+      - "9411:9411"
+    environment:
+      JAVA_OPTS: -Xmx64m
