@@ -124,3 +124,10 @@ services:
       SPRING_PROFILES_ACTIVE: EventuatePolling
       EVENTUATE_OUTBOX_ID: 1
       JAVA_OPTS: -Xmx64m
+
+  zipkin:
+    image: openzipkin/zipkin:2.21
+    ports:
+      - "9411:9411"
+    environment:
+      JAVA_OPTS: -Xmx64m
