@@ -35,25 +35,10 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 ./wait-for-services.sh localhost readers/${READER}/finished "8099"
 
-migration_file="migration_scripts/${DATABASE}/migration.sql"
 
-rm -f $migration_file
-if [ "${DATABASE}" == "mysql" ]; then
-  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/mysql/4.initialize-database-db-id.sql --output $migration_file --create-dirs
-  cat $migration_file | ./mysql-cli.sh -i
-elif [ "${DATABASE}" == "postgres" ]; then
-  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/postgres/5.initialize-database-db-id.sql --output $migration_file --create-dirs
-  cat $migration_file | ./postgres-cli.sh -i
-elif [ "${DATABASE}" == "mssql" ]; then
-  curl https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/wip-db-id-gen/mssql/4.setup-db-id.sql --output $migration_file --create-dirs
-  docker-compose -f docker-compose-mssql-polling.yml -f docker-compose-mssql-migration-tool.yml up --build --no-deps mssql-migration
-  docker-compose -f docker-compose-mssql-polling.yml -f docker-compose-mssql-migration-tool.yml stop mssql-migration
-  docker-compose -f docker-compose-mssql-polling.yml -f docker-compose-mssql-migration-tool.yml rm -f mssql-migration
-else
-  echo "Unknown Database"
-  exit 99
-fi
-rm -f $migration_file
+export db_id_migration_repository=https://raw.githubusercontent.com/eventuate-foundation/eventuate-common
+curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/master/migration/db-id/mssql/migration.sh &> /dev/stdout | bash
+
 
 ${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
 

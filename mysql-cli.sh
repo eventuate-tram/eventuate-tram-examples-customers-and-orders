@@ -1,6 +1,6 @@
 #! /bin/bash -e
 
-docker run ${1:--it} \
+docker run $* \
    --name mysqlterm --network=${PWD##*/}_default --rm \
    -e MYSQL_HOST=mysql \
    mysql:5.7.13 \
