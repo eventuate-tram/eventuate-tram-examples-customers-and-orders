@@ -36,8 +36,7 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 ./wait-for-services.sh localhost readers/${READER}/finished "8099"
 
 
-export db_id_migration_repository=https://raw.githubusercontent.com/eventuate-foundation/eventuate-common
-curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/master/migration/db-id/mssql/migration.sh &> /dev/stdout | bash
+curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/master/migration/db-id/migration.sh &> /dev/stdout | bash
 
 
 ${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
