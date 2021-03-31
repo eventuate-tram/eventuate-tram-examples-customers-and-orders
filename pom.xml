@@ -13,11 +13,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <eventuatePlatformVersion>2020.4.BUILD-SNAPSHOT</eventuatePlatformVersion>
-        <eventuateUtilVersion>0.8.0.BUILD-SNAPSHOT</eventuateUtilVersion>
+        <eventuatePlatformVersion>2021.1.RELEASE</eventuatePlatformVersion>
+        <eventuateUtilVersion>0.9.0.RELEASE</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
-        <eventuateTramViewSupportVersion>0.3.0.BUILD-SNAPSHOT</eventuateTramViewSupportVersion>
-        <eventuateMessagingKafkaVersion>0.13.0.BUILD-SNAPSHOT</eventuateMessagingKafkaVersion>
+        <eventuateTramViewSupportVersion>0.4.0.RELEASE</eventuateTramViewSupportVersion>
+        <eventuateMessagingKafkaVersion>0.13.0.RELEASE</eventuateMessagingKafkaVersion>
     </properties>
 
     <modules>
