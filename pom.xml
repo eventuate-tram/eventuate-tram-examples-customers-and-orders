@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <eventuatePlatformVersion>2021.1.RELEASE</eventuatePlatformVersion>
+        <eventuatePlatformVersion>2021.2.BUILD-SNAPSHOT</eventuatePlatformVersion>
         <eventuateUtilVersion>0.9.0.RELEASE</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
         <eventuateTramViewSupportVersion>0.4.0.RELEASE</eventuateTramViewSupportVersion>
