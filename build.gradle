@@ -82,7 +82,7 @@ dockerCompose {
     mysqlbinloginfrastructuretextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        startedServices = ["cdc-service"]
+        startedServices = ["cdc-service", "elasticsearch"]
         removeContainers = project.ext.removeContainers
     }
 
