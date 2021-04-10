@@ -101,7 +101,7 @@ public class SnapshotTest {
       processBuilder.inheritIO();
       processBuilder
               .start()
-              .waitFor(1, TimeUnit.MINUTES);
+              .waitFor(5, TimeUnit.MINUTES);
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
