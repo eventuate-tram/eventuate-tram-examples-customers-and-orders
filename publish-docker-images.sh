@@ -8,6 +8,6 @@ docker login -u ${DOCKER_USER_ID?} -p ${DOCKER_PASSWORD?}
 
 ./gradlew assemble mysqlbinlogComposeBuild mysqlbinlogwithjmeterComposeBuild mysqlbinlogwithjmeterComposePush
 
-./gradlew javaDevelopmentComposePull || echo no image to pull
+./gradlew javaDevelopmentImageComposePull || echo no image to pull
 
 ./gradlew javaDevelopmentImageComposeBuild javaDevelopmentImageComposePush

@@ -3,7 +3,7 @@ services:
   jmeter-service:
     build:
       context: ./jmeter-service/
-    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-jmeter-service
+    image: eventuateexamples/eventuate-tram-examples-customers-and-orders-jmeter-service:${DOCKER_IMAGE_TAG:-latest}
     depends_on:
       - customer-service
     ports:
