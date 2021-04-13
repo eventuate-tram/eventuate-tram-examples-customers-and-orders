@@ -2,12 +2,7 @@
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-if [ "$BRANCH" != "master" ] ; then
-  echo Not master - not publishing
-  exit 0
-fi
-
-export DOCKER_IMAGE_TAG=latest
+export DOCKER_IMAGE_TAG="${BRANCH}-$(date +"%Y%m%d%H%M")"
 
 docker login -u ${DOCKER_USER_ID?} -p ${DOCKER_PASSWORD?}
 
