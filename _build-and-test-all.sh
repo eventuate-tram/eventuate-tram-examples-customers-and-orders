@@ -10,7 +10,7 @@ dockerinfrastructure="./gradlew ${DATABASE?}${MODE?}infrastructureCompose"
 ${dockerall}Down -P removeContainers=true
 ${dockerinfrastructure}Up
 
-./gradlew -x :end-to-end-tests:test -x :snapshot-tests:test build
+./gradlew -x :end-to-end-tests:test build
 
 #Testing db cli
 if [ "${DATABASE}" == "mysql" ]; then

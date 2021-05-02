@@ -65,7 +65,7 @@
         <dependency>
             <groupId>io.eventuate.tram.view.support</groupId>
             <artifactId>eventuate-tram-view-support-rebuild</artifactId>
-            <version>${eventuateTramViewVersion}</version>
+            <version>${eventuateTramViewSupportVersion}</version>
         </dependency>
 
     </dependencies>

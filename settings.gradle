@@ -14,5 +14,3 @@ include 'order-history-text-search-common'
 include 'order-history-text-search-backend'
 include 'order-history-text-search-service'
 include 'end-to-end-tests'
-include 'snapshot-tests'
-

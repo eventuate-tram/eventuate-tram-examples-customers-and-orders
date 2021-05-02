@@ -9,7 +9,6 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderRespo
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
 import io.eventuate.tram.viewsupport.rebuild.DomainSnapshotExportService;
-import io.eventuate.tram.viewsupport.rebuild.TopicPartitionOffset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
