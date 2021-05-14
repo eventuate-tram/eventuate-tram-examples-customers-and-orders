@@ -21,6 +21,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -116,6 +119,23 @@ public class CustomersAndOrdersEndToEndTest {
       assertThat(orders.get(order1Id).getState(), is(OrderState.APPROVED));
       assertThat(orders.get(order2Id).getState(), is(OrderState.REJECTED));
     });
+  }
+
+  @Test
+  public void testSwaggerUiUrls() throws IOException {
+    testSwaggerUiUrl(8081, "swagger-ui/index.html");
+    testSwaggerUiUrl(8082, "swagger-ui/index.html");
+    testSwaggerUiUrl(8083, "swagger-ui/index.html");
+  }
+
+  private void testSwaggerUiUrl(int port, String relativeUrl) throws IOException {
+    assertUrlStatusIsOk(String.format("http://%s:%s/%s", hostName, port, relativeUrl));
+  }
+
+  private void assertUrlStatusIsOk(String url) throws IOException {
+    HttpURLConnection connection = (HttpURLConnection)new URL(url).openConnection();
+
+    Assert.assertEquals(200, connection.getResponseCode());
   }
 
   private CustomerView getCustomerView(Long customerId) {
