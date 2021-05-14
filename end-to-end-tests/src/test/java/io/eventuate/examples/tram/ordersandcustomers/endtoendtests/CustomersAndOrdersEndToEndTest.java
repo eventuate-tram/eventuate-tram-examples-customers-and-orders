@@ -123,13 +123,13 @@ public class CustomersAndOrdersEndToEndTest {
 
   @Test
   public void testSwaggerUiUrls() throws IOException {
-    testSwaggerUiUrl(8081, "swagger-ui/index.html");
-    testSwaggerUiUrl(8082, "swagger-ui/index.html");
-    testSwaggerUiUrl(8083, "swagger-ui/index.html");
+    testSwaggerUiUrl(8081);
+    testSwaggerUiUrl(8082);
+    testSwaggerUiUrl(8083);
   }
 
-  private void testSwaggerUiUrl(int port, String relativeUrl) throws IOException {
-    assertUrlStatusIsOk(String.format("http://%s:%s/%s", hostName, port, relativeUrl));
+  private void testSwaggerUiUrl(int port) throws IOException {
+    assertUrlStatusIsOk(String.format("http://%s:%s/swagger-ui/index.html", hostName, port));
   }
 
   private void assertUrlStatusIsOk(String url) throws IOException {
