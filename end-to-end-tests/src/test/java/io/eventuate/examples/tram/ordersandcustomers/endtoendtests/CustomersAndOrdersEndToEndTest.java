@@ -10,6 +10,7 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRe
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.util.test.async.Eventually;
+import io.eventuate.util.test.async.UrlTesting;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -129,7 +130,7 @@ public class CustomersAndOrdersEndToEndTest {
   }
 
   private void testSwaggerUiUrl(int port) throws IOException {
-    assertUrlStatusIsOk(String.format("http://%s:%s/swagger-ui/index.html", hostName, port));
+    UrlTesting.assertUrlStatusIsOk("localhost", port, "/swagger-ui/index.html");
   }
 
   private void assertUrlStatusIsOk(String url) throws IOException {
