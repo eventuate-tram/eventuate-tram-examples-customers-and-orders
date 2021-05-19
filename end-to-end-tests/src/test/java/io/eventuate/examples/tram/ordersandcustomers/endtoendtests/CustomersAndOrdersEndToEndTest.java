@@ -23,8 +23,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -131,12 +129,6 @@ public class CustomersAndOrdersEndToEndTest {
 
   private void testSwaggerUiUrl(int port) throws IOException {
     UrlTesting.assertUrlStatusIsOk("localhost", port, "/swagger-ui/index.html");
-  }
-
-  private void assertUrlStatusIsOk(String url) throws IOException {
-    HttpURLConnection connection = (HttpURLConnection)new URL(url).openConnection();
-
-    Assert.assertEquals(200, connection.getResponseCode());
   }
 
   private CustomerView getCustomerView(Long customerId) {
