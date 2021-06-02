@@ -125,4 +125,21 @@
             </snapshots>
         </repository>
     </repositories>
+
+
+    <dependencyManagement>
+        <dependencies>
+          <dependency>
+              <groupId>org.springframework.retry</groupId>
+              <artifactId>spring-retry</artifactId>
+              <version>1.2.4.RELEASE</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>spring-core</artifactId>
+                </exclusion>
+              </exclusions>
+          </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
