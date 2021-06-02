@@ -8,13 +8,15 @@ export EVENTUATE_JAVA_BASE_IMAGE_VERSION=BUILD-5
 
 docker-compose -f docker-compose-mysql-binlog-maven.yml down
 
+docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d mysql
+
 ./wait-for-mysql.sh
 
 docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d cdc-service
 
 ./wait-for-services.sh ${DOCKER_HOST_IP:-localhost} /actuator/health 8099
 
-./mvnw -am -pl '!end-to-end-tests' package
+./mvnw -am -pl '!end-to-end-tests' package -DskipTests
 
 docker-compose -f docker-compose-mysql-binlog-maven.yml up --build -d
 
