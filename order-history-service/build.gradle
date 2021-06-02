@@ -36,7 +36,7 @@ dependencies {
 
     compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
-    compile 'org.springframework.retry:spring-retry:1.2.4.RELEASE'
+    compile "org.springframework.retry:spring-retry:$springRetryVersion"
 
     compile project(":common-swagger")
 
