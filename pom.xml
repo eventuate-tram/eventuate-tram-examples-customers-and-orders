@@ -13,11 +13,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <eventuatePlatformVersion>2021.3.RELEASE</eventuatePlatformVersion>
-        <eventuateUtilVersion>0.10.0.RELEASE</eventuateUtilVersion>
+        <eventuatePlatformVersion>2021.4-SNAPSHOT</eventuatePlatformVersion>
+        <eventuateUtilVersion>0.14.0.BUILD-SNAPSHOT</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
-        <eventuateTramViewSupportVersion>0.5.0.RELEASE</eventuateTramViewSupportVersion>
-        <eventuateMessagingKafkaVersion>0.14.0.RELEASE</eventuateMessagingKafkaVersion>
+        <eventuateTramViewSupportVersion>0.6.0.BUILD-SNAPSHOT</eventuateTramViewSupportVersion>
+        <eventuateMessagingKafkaVersion>0.15.0.BUILD-SNAPSHOT</eventuateMessagingKafkaVersion>
     </properties>
 
     <modules>
@@ -87,26 +87,6 @@
         <repository>
             <id>central</id>
             <url>https://repo1.maven.org/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>eventuate-tram-rc</id>
-            <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-rc</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>eventuate-tram-release</id>
-            <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-release</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
