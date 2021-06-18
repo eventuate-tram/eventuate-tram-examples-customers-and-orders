@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@EnableAutoConfiguration(exclude = io.eventuate.util.spring.swagger.CommonSwaggerConfiguration.class)
+@EnableAutoConfiguration
 @Import(OrderHistoryViewBackendConfiguration.class)
 public class OrderHistoryViewServiceIntegrationTestConfiguration {
 }

@@ -28,7 +28,7 @@ public class OrderHistoryViewServiceRetryIntegrationTest {
   private CustomerViewRepository customerViewRepository;
 
   @Configuration
-  @EnableAutoConfiguration(exclude = {io.eventuate.util.spring.swagger.CommonSwaggerConfiguration.class,
+  @EnableAutoConfiguration(exclude = {
           EventuateTramKafkaMessageConsumerAutoConfiguration.class,
           TramEventsSubscriberAutoConfiguration.class})
   @Import({OrderHistoryViewMongoConfiguration.class})
