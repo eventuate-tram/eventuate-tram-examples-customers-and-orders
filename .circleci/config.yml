@@ -19,8 +19,8 @@ orbs:
               command: |
                 ./.circleci/upgrade-docker-compose.sh
                 . ./.circleci/setenv-circle-ci.sh
-                ./gradlew testClasses
-                ./mvnw package test-compile -DskipTests
+                ./gradlew --refresh-dependencies testClasses
+                ./mvnw --update-snapshots package test-compile -DskipTests
           - save_cache:
               paths:
                 - ~/.gradle
