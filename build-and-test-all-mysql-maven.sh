@@ -4,8 +4,12 @@ set -e
 
 java -version
 
-if  -z "$SKIP_INSTALL_JDK_14" ; then
+echo SKIP_INSTALL_JDK_14=$SKIP_INSTALL_JDK_14
+
+if [ -z "$SKIP_INSTALL_JDK_14" ] ; then
   source ./.circleci/install-jdk-14.sh
+else
+  echo skipped
 fi
 
 java -version
