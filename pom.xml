@@ -13,12 +13,76 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <eventuateTramVersion>0.29.0.RELEASE</eventuateTramVersion>
+        <eventuatePlatformVersion>2021.3.RELEASE</eventuatePlatformVersion>
         <eventuateUtilVersion>0.12.0.RELEASE</eventuateUtilVersion>
         <springBootVersion>2.2.6.RELEASE</springBootVersion>
-        <eventuateTramViewSupportVersion>0.1.0.BUILD-SNAPSHOT</eventuateTramViewSupportVersion>
+        <eventuateTramViewSupportVersion>0.5.0.RELEASE</eventuateTramViewSupportVersion>
         <eventuateMessagingKafkaVersion>0.14.0.RELEASE</eventuateMessagingKafkaVersion>
+        <springCloudVersion>2021.0.0</springCloudVersion>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.eventuate.platform</groupId>
+                <artifactId>eventuate-platform-dependencies</artifactId>
+                <version>${eventuatePlatformVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+
+                  <exclusion>
+                    <groupId>org.apache.kafka</groupId>
+                  </exclusion>
+                  <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                  </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springBootVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springCloudVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.9</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>1.2.9</version>
+            </dependency>
+
+          <!--
+          <dependency>
+              <groupId>org.springframework.retry</groupId>
+              <artifactId>spring-retry</artifactId>
+              <version>1.2.4.RELEASE</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>spring-core</artifactId>
+                </exclusion>
+              </exclusions>
+          </dependency>
+        -->
+        </dependencies>
+    </dependencyManagement>
 
     <modules>
         <module>common</module>
@@ -52,39 +116,8 @@
 
     <repositories>
         <repository>
-            <id>jcenter</id>
-            <name>jcenter</name>
-            <url>https://jcenter.bintray.com/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
             <id>central</id>
             <url>https://repo1.maven.org/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>eventuate-tram-rc</id>
-            <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-rc</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>eventuate-tram-release</id>
-            <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-release</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -102,18 +135,5 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-
-        <!--
-        <repository>
-            <id>testdeploy</id>
-            <url>file:///Users/cer/.m2/testdeploy</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-      -->
     </repositories>
 </project>

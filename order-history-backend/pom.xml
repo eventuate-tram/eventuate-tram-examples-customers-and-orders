@@ -20,7 +20,6 @@
         <dependency>
             <groupId>io.eventuate.tram.core</groupId>
             <artifactId>eventuate-tram-spring-consumer-kafka</artifactId>
-            <version>${eventuateTramVersion}</version>
         </dependency>
 
         <dependency>

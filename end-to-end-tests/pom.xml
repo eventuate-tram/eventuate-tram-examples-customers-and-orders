@@ -51,6 +51,12 @@
             <version>${springBootVersion}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.eventuate.util</groupId>
+            <artifactId>eventuate-util-test</artifactId>
+            <version>${eventuateUtilVersion}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
