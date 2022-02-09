@@ -44,6 +44,8 @@ dockerCompose {
 
     removeOrphans = true
 
+    dockerComposeStopTimeout = java.time.Duration.ofSeconds(1)
+
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]

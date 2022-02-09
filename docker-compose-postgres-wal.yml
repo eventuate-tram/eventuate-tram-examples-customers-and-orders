@@ -75,7 +75,7 @@ services:
       KAFKA_HEAP_OPTS: -Xmx64m
 
   kafka:
-    image: "confluentinc/cp-kafka:5.2.4"
+    image: "eventuateio/eventuate-kafka:wip-multi-arch-135"
     ports:
       - 9092:9092
       - 29092:29092
@@ -107,7 +107,7 @@ services:
       - "27017:27017"
 
   cdc-service:
-    image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
+    image: eventuateio/eventuate-cdc-service:wip-multi-arch-2412
     ports:
       - "8099:8080"
     depends_on:
@@ -127,7 +127,7 @@ services:
       JAVA_OPTS: -Xmx64m
 
   zipkin:
-    image: openzipkin/zipkin:2.21
+    image: openzipkin/zipkin:2.23
     ports:
       - "9411:9411"
     environment:

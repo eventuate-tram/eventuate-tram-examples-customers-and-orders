@@ -19,7 +19,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
       SPRING_DATASOURCE_USERNAME: mysqluser
       SPRING_DATASOURCE_PASSWORD: mysqlpw
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       CDC_SERVICE_URL: http://cdc-service:8080
       SPRING_SLEUTH_ENABLED: "true"
@@ -45,7 +45,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
       SPRING_DATASOURCE_USERNAME: mysqluser
       SPRING_DATASOURCE_PASSWORD: mysqlpw
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       CDC_SERVICE_URL: http://cdc-service:8080
       SPRING_SLEUTH_ENABLED: "true"
@@ -74,7 +74,7 @@ services:
       SPRING_ZIPKIN_BASE_URL: http://zipkin:9411/
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.2.4
+    image: eventuateio/eventuate-zookeeper:wip-multi-arch-docker-part-3-circleci-buildx-554
     ports:
       - 2181:2181
     environment:
@@ -82,7 +82,7 @@ services:
       KAFKA_HEAP_OPTS: -Xmx64m
 
   kafka:
-    image: "confluentinc/cp-kafka:5.2.4"
+    image: "eventuateio/eventuate-kafka:wip-multi-arch-135"
     ports:
       - 9092:9092
       - 29092:29092
@@ -99,7 +99,7 @@ services:
 
 
   mysql:
-    image: eventuateio/eventuate-mysql:$EVENTUATE_COMMON_VERSION
+    image: eventuateio/eventuate-mysql8:wip-multi-arch-docker-part-3-circleci-buildx-554
     ports:
       - 3306:3306
     environment:
@@ -115,7 +115,7 @@ services:
       - "27017:27017"
 
   cdc-service:
-    image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
+    image: eventuateio/eventuate-cdc-service:wip-multi-arch-2412
     ports:
       - "8099:8080"
     depends_on:
@@ -126,7 +126,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
       SPRING_DATASOURCE_USERNAME: mysqluser
       SPRING_DATASOURCE_PASSWORD: mysqlpw
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
       EVENTUATELOCAL_CDC_DB_USER_NAME: root
@@ -139,7 +139,7 @@ services:
       JAVA_OPTS: -Xmx64m
 
   zipkin:
-    image: openzipkin/zipkin:2.21
+    image: openzipkin/zipkin:2.23
     ports:
       - "9411:9411"
     environment:

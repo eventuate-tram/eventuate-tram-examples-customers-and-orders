@@ -1,5 +1,5 @@
 ARG baseImageVersion
-FROM eventuateio/eventuate-examples-docker-images-java-example-base-image:$baseImageVersion
+FROM eventuateio/eventuate-examples-docker-images-spring-example-base-image:$baseImageVersion
 
 RUN apt-get update && \
     apt-get install -y jq && \

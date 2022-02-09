@@ -7,7 +7,13 @@ orbs:
           script:
             description: the script to execute
             type: string
-        machine: true
+          resource_class:
+            description: the resource class
+            type: string
+            default: 'medium'
+        machine:
+          image: ubuntu-2004:202101-01
+        resource_class: <<parameters.resource_class>>
         working_directory: ~/eventuate-tram-examples-customers-and-orders
         steps:
           - checkout
@@ -56,7 +62,11 @@ workflows:
           name: build-and-test-snapshots
           script: ./build-and-test-snapshots.sh
       - build-and-test/build-and-test:
-          name: build-and-test-all-mysql-binlog
+          name: build-and-test-all-mysql-binlog-intel
+          script: ./build-and-test-all-mysql-binlog.sh
+      - build-and-test/build-and-test:
+          name: build-and-test-all-mysql-binlog-arm
+          resource_class: arm.medium
           script: ./build-and-test-all-mysql-binlog.sh
       - build-and-test/build-and-test:
           name: build-and-test-all-mssql-polling
@@ -71,7 +81,8 @@ workflows:
           name: deploy-artifacts
           requires:
             -  build-and-test-snapshots
-            -  build-and-test-all-mysql-binlog
+            -  build-and-test-all-mysql-binlog-intel
+            -  build-and-test-all-mysql-binlog-arm
             -  build-and-test-all-postgres-wal
             -  build-and-test-all-mssql-polling
             -  build-and-test-all-mysql-maven
