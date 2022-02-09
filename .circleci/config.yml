@@ -23,7 +23,6 @@ orbs:
                 - eventuate-tram-examples-customers-and-orders-j8-
           - run:
               command: |
-                ./.circleci/upgrade-docker-compose.sh
                 . ./.circleci/setenv-circle-ci.sh
                 ./gradlew --refresh-dependencies testClasses
                 ./mvnw --update-snapshots package test-compile -DskipTests
