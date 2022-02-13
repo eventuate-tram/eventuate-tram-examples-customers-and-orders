@@ -33,11 +33,18 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 
+echo Testing migration
+
 ./wait-for-services.sh localhost readers/${READER}/finished "8099"
 
 compose="docker-compose -f docker-compose-${DATABASE}-${MODE}.yml "
 
+export EVENTUATE_MESSAGING_KAFKA_IMAGE_VERSION=$(sed -e '/^eventuateMessagingKafkaImageVersion=/!d' -e 's/eventuateMessagingKafkaImageVersion=//' < gradle.properties)
+export EVENTUATE_COMMON_VERSION=$(sed -e '/^eventuateCommonImageVersion=/!d' -e 's/eventuateCommonImageVersion=//' < gradle.properties)
+export EVENTUATE_CDC_VERSION=$(sed -e '/^eventuateCdcImageVersion=/!d' -e 's/eventuateCdcImageVersion=//' < gradle.properties)
+
 $compose stop cdc-service
+
 curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/master/migration/db-id/migration.sh &> /dev/stdout | bash
 $compose start cdc-service
 

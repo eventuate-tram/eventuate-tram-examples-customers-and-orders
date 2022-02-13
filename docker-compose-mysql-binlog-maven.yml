@@ -68,7 +68,7 @@ services:
       KAFKA_HEAP_OPTS: -Xmx64m
 
   kafka:
-    image: "eventuateio/eventuate-kafka:wip-multi-arch-135"
+    image: "eventuateio/eventuate-kafka:${EVENTUATE_MESSAGING_KAFKA_IMAGE_VERSION?}"
     ports:
       - 9092:9092
       - 29092:29092
@@ -101,7 +101,7 @@ services:
       - "27017:27017"
 
   cdc-service:
-    image: eventuateio/eventuate-cdc-service:wip-multi-arch-2412
+    image: eventuateio/eventuate-cdc-service:${EVENTUATE_CDC_VERSION?}
     ports:
       - "8099:8080"
     depends_on:

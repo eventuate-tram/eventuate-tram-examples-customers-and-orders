@@ -32,7 +32,7 @@ spec:
       terminationGracePeriodSeconds: 120
       containers:
         - name: kafka-service
-          image: eventuateio/eventuate-kafka:wip-multi-arch-135
+          image: eventuateio/eventuate-kafka:${EVENTUATE_MESSAGING_KAFKA_IMAGE_VERSION?}
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_ADVERTISED_LISTENERS
