@@ -1,8 +1,6 @@
 #! /bin/bash -e
 
-export EVENTUATE_COMMON_VERSION=$(grep eventuateCommonImageVersion= gradle.properties  | sed -e 's/.*=//')
-export EVENTUATE_CDC_VERSION=$(grep eventuateCdcImageVersion= gradle.properties  | sed -e 's/.*=//')
-export EVENTUATE_JAVA_BASE_IMAGE_VERSION=BUILD-5
+. ./_set-image-version-env-vars.sh
 
 ./mvnw test-compile package -DskipTests
 

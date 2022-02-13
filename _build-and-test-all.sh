@@ -35,13 +35,11 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 echo Testing migration
 
-./wait-for-services.sh localhost readers/${READER}/finished "8099"
+./wait-for-services.sh localhost /readers/${READER}/finished "8099"
 
 compose="docker-compose -f docker-compose-${DATABASE}-${MODE}.yml "
 
-export EVENTUATE_MESSAGING_KAFKA_IMAGE_VERSION=$(sed -e '/^eventuateMessagingKafkaImageVersion=/!d' -e 's/eventuateMessagingKafkaImageVersion=//' < gradle.properties)
-export EVENTUATE_COMMON_VERSION=$(sed -e '/^eventuateCommonImageVersion=/!d' -e 's/eventuateCommonImageVersion=//' < gradle.properties)
-export EVENTUATE_CDC_VERSION=$(sed -e '/^eventuateCdcImageVersion=/!d' -e 's/eventuateCdcImageVersion=//' < gradle.properties)
+. ./_set-image-version-env-vars.sh
 
 $compose stop cdc-service
 
