@@ -15,6 +15,8 @@ if [ -z "$ports" ] ; then
 	exit 99
 fi
 
+iterations=0
+
 while [[ "$done" = false ]]; do
 	for port in $ports; do
 		curl --fail http://${host}:${port}${health_path} >& /dev/null
@@ -22,6 +24,14 @@ while [[ "$done" = false ]]; do
 			done=true
 		else
 			done=false
+
+			if [ "$iterations" == "300" ] ; then
+			  echo Too many iterations
+			  exit 1
+			else
+			  let "iterations=$iterations + 1"
+			  echo $iterations
+			fi
 			break
 		fi
 	done
