@@ -30,7 +30,6 @@ while [[ "$done" = false ]]; do
 			  exit 1
 			else
 			  let "iterations=$iterations + 1"
-			  echo $iterations
 			fi
 			break
 		fi
