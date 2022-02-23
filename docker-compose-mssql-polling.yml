@@ -99,9 +99,7 @@ services:
       ACCEPT_EULA: Y
 
   mongodb:
-    image: mongo:3.6
-    hostname: mongodb
-    command: mongod --smallfiles
+    image: mongo:5.0.6
     ports:
       - "27017:27017"
 
