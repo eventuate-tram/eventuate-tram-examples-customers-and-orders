@@ -56,7 +56,7 @@ dockerCompose {
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        startedServices = ["cdc-service", "zipkin"]
+        startedServices = ["cdc-service", "zipkin", "zookeeper", "mysql"]
         removeContainers = project.ext.removeContainers
     }
 
