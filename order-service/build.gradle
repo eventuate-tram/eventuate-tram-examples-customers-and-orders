@@ -12,11 +12,6 @@ dependencies {
     compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
     compile "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
 
-    compile 'mysql:mysql-connector-java:5.1.36'
-    compile ('org.postgresql:postgresql:9.4-1200-jdbc41') {
-        exclude group: "org.slf4j", module: "slf4j-simple"
-    }
-
     compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
     compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
@@ -25,5 +20,3 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-actuator"
 }
-
-

@@ -32,7 +32,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: zookeeper
-          image: confluentinc/cp-zookeeper:5.2.4
+          image: eventuateio/eventuate-zookeeper:${EVENTUATE_COMMON_VERSION?}
           imagePullPolicy: IfNotPresent
           ports:
               - containerPort: 2181

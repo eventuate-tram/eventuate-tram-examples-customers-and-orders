@@ -32,7 +32,7 @@ spec:
       terminationGracePeriodSeconds: 120
       containers:
         - name: kafka-service
-          image: confluentinc/cp-kafka:5.2.4
+          image: eventuateio/eventuate-kafka:${EVENTUATE_MESSAGING_KAFKA_IMAGE_VERSION?}
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_ADVERTISED_LISTENERS
@@ -46,7 +46,7 @@ spec:
           livenessProbe:
             exec:
               command:
-              - echo 
+              - echo
               - "EOF |"
               - "nc localhost 9092"
             periodSeconds: 10
@@ -54,7 +54,7 @@ spec:
           readinessProbe:
             exec:
               command:
-              - echo 
+              - echo
               - "EOF |"
               - "nc localhost 9092"
             periodSeconds: 10

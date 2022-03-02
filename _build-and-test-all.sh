@@ -33,11 +33,16 @@ echo 'show dbs' |  ./mongodb-cli.sh -i
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
 
-./wait-for-services.sh localhost readers/${READER}/finished "8099"
+echo Testing migration
+
+./wait-for-services.sh localhost /readers/${READER}/finished "8099"
 
 compose="docker-compose -f docker-compose-${DATABASE}-${MODE}.yml "
 
+. ./_set-image-version-env-vars.sh
+
 $compose stop cdc-service
+
 curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/master/migration/db-id/migration.sh &> /dev/stdout | bash
 $compose start cdc-service
 

@@ -37,12 +37,15 @@ dockerCompose {
     environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
     environment.put "EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING", eventuateCdcKafkaEnableBatchProcessing
     environment.put "EVENTUATE_JAVA_BASE_IMAGE_VERSION", eventuateExamplesBaseImageVersion
+    environment.put "EVENTUATE_MESSAGING_KAFKA_IMAGE_VERSION", eventuateMessagingKafkaImageVersion
 
     if (project.ext.has("envFile")) {
         environment.put "ENV_FILE", project.ext.envFile
     }
 
     removeOrphans = true
+
+    dockerComposeStopTimeout = java.time.Duration.ofSeconds(1)
 
     mysqlbinlog {
         projectName = null
@@ -53,7 +56,7 @@ dockerCompose {
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        startedServices = ["cdc-service", "zipkin"]
+        startedServices = ["cdc-service", "zipkin", "zookeeper", "mysql"]
         removeContainers = project.ext.removeContainers
     }
 
