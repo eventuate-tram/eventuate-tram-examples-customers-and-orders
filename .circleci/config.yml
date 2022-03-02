@@ -61,28 +61,28 @@ workflows:
           name: build-and-test-snapshots
           script: ./build-and-test-snapshots.sh
       - build-and-test/build-and-test:
-          name: build-and-test-all-mysql-binlog-intel
+          name: mysql-binlog-intel
           script: ./build-and-test-all-mysql-binlog.sh
       - build-and-test/build-and-test:
-          name: build-and-test-all-mysql-binlog-arm
+          name: mysql-binlog-arm
           resource_class: arm.medium
           script: ./build-and-test-all-mysql-binlog.sh
       - build-and-test/build-and-test:
-          name: build-and-test-all-mssql-polling
+          name: mssql-polling
           script: ./build-and-test-all-mssql-polling.sh
       - build-and-test/build-and-test:
-          name: build-and-test-all-postgres-wal
+          name: postgres-wal
           script: ./build-and-test-all-postgres-wal.sh
       - build-and-test/build-and-test:
-          name: build-and-test-all-mysql-maven
+          name: mysql-maven
           script: ./.circleci/build-and-test-all-mysql-maven-circleci.sh
       - build-and-test/build-and-test:
           name: deploy-artifacts
           requires:
             -  build-and-test-snapshots
-            -  build-and-test-all-mysql-binlog-intel
-            -  build-and-test-all-mysql-binlog-arm
-            -  build-and-test-all-postgres-wal
-            -  build-and-test-all-mssql-polling
-            -  build-and-test-all-mysql-maven
+            -  mysql-binlog-intel
+            -  mysql-binlog-arm
+            -  postgres-wal
+            -  mssql-polling
+            -  mysql-maven
           script: ./publish-docker-images.sh
