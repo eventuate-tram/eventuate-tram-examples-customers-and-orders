@@ -11,6 +11,10 @@ orbs:
             description: the resource class
             type: string
             default: 'medium'
+          maven_cache_command:
+            description: maven command to run
+            type: string
+            default: ''
         machine:
           image: ubuntu-2004:202101-01
         resource_class: <<parameters.resource_class>>
@@ -19,18 +23,18 @@ orbs:
           - checkout
           - restore_cache:
               keys:
-                - eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+                - eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "pom.xml" }}
                 - eventuate-tram-examples-customers-and-orders-j8-
           - run:
               command: |
                 . ./.circleci/setenv-circle-ci.sh
                 ./gradlew --refresh-dependencies testClasses
-                ./mvnw --update-snapshots package test-compile -DskipTests
+                <<parameters.maven_cache_command>>
           - save_cache:
               paths:
                 - ~/.gradle
                 - ~/.m2
-              key: eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "pom.xml" }}
+              key: eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "pom.xml" }}
           - run:
               command: |
                 . ./.circleci/setenv-circle-ci.sh
@@ -76,6 +80,7 @@ workflows:
       - build-and-test/build-and-test:
           name: mysql-maven
           script: ./.circleci/build-and-test-all-mysql-maven-circleci.sh
+          maven_cache_command: "./mvnw --update-snapshots package test-compile -DskipTests"
       - build-and-test/build-and-test:
           name: deploy-artifacts
           requires:
