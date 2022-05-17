@@ -2,7 +2,6 @@ apply plugin: 'org.springframework.boot'
 apply plugin: "io.spring.dependency-management"
 
 dependencies {
-    compile project(":common-swagger")
 
     compile "commons-io:commons-io:2.6"
 

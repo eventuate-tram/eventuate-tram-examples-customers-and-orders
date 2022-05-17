@@ -4,8 +4,8 @@ dependencies {
     compile project(":order-service-api-web")
 
     testCompile "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"
-    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
-    testCompile "org.springframework.boot:spring-boot-starter-json:$springBootVersion"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.springframework.boot:spring-boot-starter-json"
 
 }
 

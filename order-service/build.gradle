@@ -1,7 +1,6 @@
 apply plugin: ServicePlugin
 
 dependencies {
-    compile project(":common-swagger")
     compile project(":order-service-api-web")
     compile project(":order-service-api-messaging")
 
@@ -14,7 +13,7 @@ dependencies {
 
     compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-web"

@@ -5,5 +5,5 @@ dependencies {
     compile (project(":order-service-api-messaging")) {
         exclude module: "spring-boot-starter-data-jpa"
     }
-    compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
 }

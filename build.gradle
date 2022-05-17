@@ -1,12 +1,10 @@
 buildscript {
     repositories {
-        jcenter()
         mavenCentral()
-        mavenLocal()
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "com.avast.gradle:gradle-docker-compose-plugin:0.12.0"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "com.avast.gradle:gradle-docker-compose-plugin:$dockerComposePluginVersion"
     }
 }
 
@@ -20,14 +18,21 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
-        mavenLocal()
         mavenCentral()
-        jcenter()
         eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
     }
 
     dependencies {
         implementation(platform("io.eventuate.platform:eventuate-platform-dependencies:$eventuatePlatformVersion"))
+        implementation(platform("io.eventuate.tram.springcloudsleuth:eventuate-tram-spring-cloud-sleuth-bom:$eventuateTramSpringCloudSleuthVersion"))
+
+        implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
+        testImplementation "junit:junit:4.13.2"
+
+        constraints {
+            implementation "org.springdoc:springdoc-openapi-ui:$springDocOpenApiUiVersion"
+        }
     }
 
 }
@@ -44,20 +49,19 @@ dockerCompose {
     }
 
     removeOrphans = true
+    retainContainersOnStartupFailure = true
 
     dockerComposeStopTimeout = java.time.Duration.ofSeconds(1)
 
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        removeContainers = project.ext.removeContainers
     }
 
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
         startedServices = ["cdc-service", "zipkin", "zookeeper", "mysql"]
-        removeContainers = project.ext.removeContainers
     }
 
     mysqlbinlogwithjmeter {
@@ -69,27 +73,23 @@ dockerCompose {
     mysqlbinlogtextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        removeContainers = project.ext.removeContainers
     }
 
     mysqlbinlogtextsearchcustomersandorders {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
         startedServices = ["order-service", "customer-service"]
-        removeContainers = project.ext.removeContainers
     }
 
     mysqlbinloginfrastructuretextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
         startedServices = ["cdc-service", "elasticsearch"]
-        removeContainers = project.ext.removeContainers
     }
 
     mssqlpolling {
         projectName = null
         useComposeFiles = ["docker-compose-mssql-polling.yml"]
-        removeContainers = project.ext.removeContainers
         removeOrphans = true
     }
 
@@ -97,20 +97,17 @@ dockerCompose {
         projectName = null
         useComposeFiles = ["docker-compose-mssql-polling.yml"]
         startedServices = ["cdc-service"]
-        removeContainers = project.ext.removeContainers
     }
 
     postgreswal {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
-        removeContainers = project.ext.removeContainers
     }
 
     postgreswalinfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
         startedServices = ["cdc-service"]
-        removeContainers = project.ext.removeContainers
     }
 
     javaDevelopment {

@@ -1,11 +1,11 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.service;
 
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderApprovedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCancelledEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderRejectedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +25,7 @@ public class OrderService {
 
   @Transactional
   public Order createOrder(OrderDetails orderDetails) {
+    new RuntimeException().printStackTrace();
     ResultWithEvents<Order> orderWithEvents = Order.createOrder(orderDetails);
     Order order = orderWithEvents.result;
     orderRepository.save(order);

@@ -1,13 +1,3 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-    }
-}
-
 apply plugin: ServicePlugin
 
 apply plugin: 'docker-compose'
@@ -35,18 +25,17 @@ dependencies {
     compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"
     compile "io.eventuate.tram.core:eventuate-tram-spring-events-subscriber-starter"
 
-    compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
-    compile "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
+    compile "org.springframework.boot:spring-boot-starter-aop"
     compile "org.springframework.retry:spring-retry:$springRetryVersion"
 
-    compile project(":common-swagger")
 
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-actuator"
 
     testCompile "junit:junit:4.12"
-    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
 
 
 }

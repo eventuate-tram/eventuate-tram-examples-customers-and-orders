@@ -1,6 +1,6 @@
 dependencies {
-    testCompile "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
-    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testCompile "org.springframework.boot:spring-boot-starter-jdbc"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile 'mysql:mysql-connector-java:8.0.21'
     testCompile ('org.postgresql:postgresql:42.1.4') {
         exclude group: "org.slf4j", module: "slf4j-simple"

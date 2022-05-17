@@ -5,7 +5,6 @@ plugins {
 apply plugin: ServicePlugin
 
 dependencies {
-    compile project(":common-swagger")
     compile project(":customer-service-api-web")
 
     compile project(":customer-service-api-messaging")
@@ -18,7 +17,7 @@ dependencies {
 
     compile "org.springframework.retry:spring-retry:$springRetryVersion"
 
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
 
     compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
