@@ -7,6 +7,7 @@ services:
       context: ./order-service/
       args:
         jarDir: ${JAR_DIR:-build/libs}
+        serviceImageVersion: ${SERVICE_IMAGE_VERSION}
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-service:${DOCKER_IMAGE_TAG:-latest}
     ports:
@@ -34,6 +35,7 @@ services:
       context: ./customer-service/
       args:
         jarDir: ${JAR_DIR:-build/libs}
+        serviceImageVersion: ${SERVICE_IMAGE_VERSION}
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service:${DOCKER_IMAGE_TAG:-latest}
     ports:
@@ -61,6 +63,7 @@ services:
       context: ./order-history-service/
       args:
         jarDir: ${JAR_DIR:-build/libs}
+        serviceImageVersion: ${SERVICE_IMAGE_VERSION}
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service:${DOCKER_IMAGE_TAG:-latest}
     ports:

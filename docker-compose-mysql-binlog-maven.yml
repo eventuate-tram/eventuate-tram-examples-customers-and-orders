@@ -5,6 +5,7 @@ services:
       context: ./order-service
       dockerfile: Dockerfile-maven
       args:
+        serviceImageVersion: ${SERVICE_IMAGE_VERSION}
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-service
     ports:
@@ -26,6 +27,7 @@ services:
       context: ./customer-service
       args:
         jarDir: target
+        serviceImageVersion: ${SERVICE_IMAGE_VERSION}
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-customer-service
     ports:
@@ -47,6 +49,7 @@ services:
       context: ./order-history-service
       dockerfile: Dockerfile-maven
       args:
+        serviceImageVersion: ${SERVICE_IMAGE_VERSION}
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-order-history-service
     ports:
