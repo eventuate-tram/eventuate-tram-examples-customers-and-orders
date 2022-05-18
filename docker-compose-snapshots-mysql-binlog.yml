@@ -64,13 +64,14 @@ services:
       KAFKA_ADVERTISED_LISTENERS: LC://kafka:29092,LX://${DOCKER_HOST_IP:-localhost}:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LC:PLAINTEXT,LX:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: LC
+      
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_HEAP_OPTS: -Xmx192m
 
 
   mysql:
-    image: eventuateio/eventuate-mysql:$EVENTUATE_COMMON_VERSION
+    image: eventuateio/eventuate-mysql8:${EVENTUATE_COMMON_VERSION?}
     ports:
       - 3306:3306
     environment:
@@ -121,7 +122,7 @@ services:
       ELASTICSEARCH_PORT: 9300
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.3
+    image: elasticsearch:8.2.0
     environment:
       - http.host=0.0.0.0
       - network.publish_host=0.0.0.0
