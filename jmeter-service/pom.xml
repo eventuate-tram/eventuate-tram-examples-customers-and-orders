@@ -12,9 +12,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.eventuate.tram.examples.customers.and.orders</groupId>
-            <artifactId>common-swagger</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
         </dependency>
 
         <dependency>

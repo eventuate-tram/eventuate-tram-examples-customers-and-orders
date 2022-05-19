@@ -122,13 +122,13 @@ services:
       ELASTICSEARCH_PORT: 9300
 
   elasticsearch:
-    image: elasticsearch:8.2.0
+    image: elasticsearch:7.17.3
     environment:
       - http.host=0.0.0.0
       - network.publish_host=0.0.0.0
       - discovery.type=single-node
       - xpack.security.enabled=false
-      - "ES_JAVA_OPTS=-Xms64m -Xmx64m"
+      - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
     ports:
       - "9200:9200"
       - "9300:9300"

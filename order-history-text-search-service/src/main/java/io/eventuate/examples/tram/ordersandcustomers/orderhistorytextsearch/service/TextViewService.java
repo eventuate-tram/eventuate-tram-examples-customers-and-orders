@@ -9,6 +9,8 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class TextViewService<T extends TextView> {
+
+  private final Logger logger = LoggerFactory.getLogger(getClass());
+
   private ObjectMapper objectMapper = new ObjectMapper();
 
   private TransportClient transportClient;
@@ -32,7 +37,10 @@ public class TextViewService<T extends TextView> {
 
   public List<T> search(String value) {
 
+    logger.info("Searching for {}", value);
+
     if (!transportClient.admin().indices().prepareExists(index).execute().actionGet().isExists()) {
+      logger.info("No index {}", value);
       return Collections.emptyList();
     }
 
@@ -52,10 +60,13 @@ public class TextViewService<T extends TextView> {
       }
     }
 
+    logger.info("Got result {} {}", value, result);
+
     return result;
   }
 
   public void index(TextView textView) {
+    logger.info("Indexing: {}", textView);
     try {
       IndexResponse ir = transportClient
           .prepareIndex(index, type, textView.getId())

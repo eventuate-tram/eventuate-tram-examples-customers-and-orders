@@ -24,7 +24,6 @@ subprojects {
 
     dependencies {
         implementation(platform("io.eventuate.platform:eventuate-platform-dependencies:$eventuatePlatformVersion"))
-        implementation(platform("io.eventuate.tram.springcloudsleuth:eventuate-tram-spring-cloud-sleuth-bom:$eventuateTramSpringCloudSleuthVersion"))
 
         implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"))
         implementation(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))

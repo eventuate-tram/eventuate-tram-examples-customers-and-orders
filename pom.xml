@@ -15,14 +15,15 @@
         <java.version>1.8</java.version>
         <eventuatePlatformVersion>2021.4.BUILD-SNAPSHOT</eventuatePlatformVersion>
         <eventuateUtilVersion>0.14.0.BUILD-SNAPSHOT</eventuateUtilVersion>
-        <springBootVersion>2.2.6.RELEASE</springBootVersion>
+        <springBootVersion>2.6.7</springBootVersion>
         <eventuateTramViewSupportVersion>0.6.0.BUILD-SNAPSHOT</eventuateTramViewSupportVersion>
         <eventuateMessagingKafkaVersion>0.15.0.BUILD-SNAPSHOT</eventuateMessagingKafkaVersion>
+        <springCloudVersion>2021.0.2</springCloudVersion>
+        <springDocOpenApiUiVersion>1.6.6</springDocOpenApiUiVersion>
     </properties>
 
     <modules>
         <module>common</module>
-        <module>common-swagger</module>
         <module>customer-service-api-web</module>
         <module>customer-service-api-messaging</module>
         <module>customer-service</module>
@@ -43,6 +44,25 @@
                 <version>${eventuatePlatformVersion}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springCloudVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springBootVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springDocOpenApiUiVersion}</version>
             </dependency>
           <dependency>
               <groupId>org.springframework.retry</groupId>
@@ -73,17 +93,6 @@
     </build>
 
     <repositories>
-        <repository>
-            <id>jcenter</id>
-            <name>jcenter</name>
-            <url>https://jcenter.bintray.com/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
         <repository>
             <id>central</id>
             <url>https://repo1.maven.org/maven2</url>
