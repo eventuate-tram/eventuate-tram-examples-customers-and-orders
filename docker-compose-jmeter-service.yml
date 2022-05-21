@@ -3,6 +3,8 @@ services:
   jmeter-service:
     build:
       context: ./jmeter-service/
+      args:
+        serviceImageVersion: ${SERVICE_IMAGE_VERSION}
     image: eventuateexamples/eventuate-tram-examples-customers-and-orders-jmeter-service:${DOCKER_IMAGE_TAG:-latest}
     depends_on:
       - customer-service
