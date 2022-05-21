@@ -1,6 +1,6 @@
-#! /bin/bash
+#! /bin/bash -e
 
-set -e
+. ./_set-image-version-env-vars.sh
 
 dockerall="./gradlew  mysqlbinlogtextsearchCompose"
 dockerinfrastructure="./gradlew mysqlbinloginfrastructuretextsearchCompose"

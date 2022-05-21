@@ -1,11 +1,11 @@
 package io.eventuate.examples.tram.ordersandcustomers.snapshottests;
 
 import io.eventuate.common.json.mapper.JSonMapper;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.CustomerTextView;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.OrderTextView;
 import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerRequest;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerResponse;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.CustomerTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.OrderTextView;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
 import io.eventuate.tram.viewsupport.rebuild.SnapshotMetadata;
@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = SnapshotTestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -99,9 +102,9 @@ public class SnapshotTest {
       processBuilder.directory(new File(".."));
       processBuilder.command(command);
       processBuilder.inheritIO();
-      processBuilder
-              .start()
-              .waitFor(5, TimeUnit.MINUTES);
+      Process process = processBuilder.start();
+      assertTrue(process.waitFor(5, TimeUnit.MINUTES));
+      assertEquals(0, process.exitValue());
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
@@ -109,13 +112,16 @@ public class SnapshotTest {
 
 
   private List<SnapshotMetadata> exportCustomerSnapshots() {
-    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(baseUrlCustomers("customers/make-snapshot"),
-            null,  String.class), SnapshotMetadata[].class));
+    return exportSnapshots(baseUrlCustomers("customers/make-snapshot"));
   }
 
   private List<SnapshotMetadata> exportOrderSnapshots() {
-    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(baseUrlOrders("orders/make-snapshot"),
-            null,  String.class), SnapshotMetadata[].class));
+    return exportSnapshots(baseUrlOrders("orders/make-snapshot"));
+  }
+
+  private List<SnapshotMetadata> exportSnapshots(String url) {
+    return Arrays.asList(JSonMapper.fromJson(restTemplate.postForObject(url,
+            null, String.class), SnapshotMetadata[].class));
   }
 
   private Long createCustomer(String name, Money credit) {
