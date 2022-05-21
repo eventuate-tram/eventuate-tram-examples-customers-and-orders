@@ -1,4 +1,8 @@
 version: 2.1
+parameters:
+  disable_restore_cache:
+    type: string
+    default: ""
 orbs:
   build-and-test:
     jobs:
@@ -23,8 +27,8 @@ orbs:
           - checkout
           - restore_cache:
               keys:
-                - eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "pom.xml" }}
-                - eventuate-tram-examples-customers-and-orders-j8-
+                - << pipeline.parameters.disable_restore_cache >>eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "pom.xml" }}
+                - << pipeline.parameters.disable_restore_cache >>eventuate-tram-examples-customers-and-orders-j8-
           - run:
               command: |
                 . ./.circleci/setenv-circle-ci.sh
