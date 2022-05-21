@@ -1,8 +1,9 @@
 version: 2.1
 parameters:
-  disable_restore_cache:
+  restore_cache_prefix:
+    description: set to random value to disable cache restoration
     type: string
-    default: ""
+    default: ''
 orbs:
   build-and-test:
     jobs:
@@ -19,6 +20,10 @@ orbs:
             description: maven command to run
             type: string
             default: ''
+          restore_cache_prefix:
+            description: set to random value to disable cache restoration
+            type: string
+            default: ''
         machine:
           image: ubuntu-2004:202101-01
         resource_class: <<parameters.resource_class>>
@@ -27,8 +32,8 @@ orbs:
           - checkout
           - restore_cache:
               keys:
-                - << pipeline.parameters.disable_restore_cache >>eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "pom.xml" }}
-                - << pipeline.parameters.disable_restore_cache >>eventuate-tram-examples-customers-and-orders-j8-
+                - << parameters.restore_cache_prefix >>eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "pom.xml" }}
+                - << parameters.restore_cache_prefix >>eventuate-tram-examples-customers-and-orders-j8-
           - run:
               command: |
                 . ./.circleci/setenv-circle-ci.sh
@@ -68,20 +73,25 @@ workflows:
       - build-and-test/build-and-test:
           name: mysql-binlog-intel
           script: ./build-and-test-all-mysql-binlog.sh
+          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
       - build-and-test/build-and-test:
           name: mysql-binlog-arm
           resource_class: arm.medium
           script: ./build-and-test-all-mysql-binlog.sh
+          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
       - build-and-test/build-and-test:
           name: mssql-polling
           script: ./build-and-test-all-mssql-polling.sh
+          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
       - build-and-test/build-and-test:
           name: postgres-wal
           script: ./build-and-test-all-postgres-wal.sh
+          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
       - build-and-test/build-and-test:
           name: mysql-maven
           script: ./.circleci/build-and-test-all-mysql-maven-circleci.sh
           maven_cache_command: "./mvnw --update-snapshots package test-compile -DskipTests"
+          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
       - build-and-test/build-and-test:
           name: deploy-artifacts
           requires:
@@ -91,3 +101,4 @@ workflows:
             -  mssql-polling
             -  mysql-maven
           script: ./publish-docker-images.sh
+          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
