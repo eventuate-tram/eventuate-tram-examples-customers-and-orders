@@ -16,7 +16,6 @@ public class CustomersAndOrdersEndToEndTestConfiguration {
   @Bean
   public RestTemplate restTemplate(HttpMessageConverters converters) {
     RestTemplate restTemplate = new RestTemplate();
-    HttpMessageConverter<?> httpMessageConverter = converters.getConverters().get(0);
     List<? extends HttpMessageConverter<?>> httpMessageConverters = Arrays.asList(new MappingJackson2HttpMessageConverter());
     restTemplate.setMessageConverters((List<HttpMessageConverter<?>>) httpMessageConverters);
     return restTemplate;

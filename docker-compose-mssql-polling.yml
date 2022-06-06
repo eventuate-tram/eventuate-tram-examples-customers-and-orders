@@ -3,6 +3,7 @@ services:
   order-service:
     env_file:
       - ${ENV_FILE:-docker-compose-env-files/empty.env}
+      - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
       context: ./order-service/
       args:
