@@ -1,98 +1,28 @@
 version: 2.1
-parameters:
-  restore_cache_prefix:
-    description: set to random value to disable cache restoration
-    type: string
-    default: ''
 orbs:
-  build-and-test:
-    jobs:
-      build-and-test:
-        parameters:
-          script:
-            description: the script to execute
-            type: string
-          resource_class:
-            description: the resource class
-            type: string
-            default: 'medium'
-          maven_cache_command:
-            description: maven command to run
-            type: string
-            default: ''
-          restore_cache_prefix:
-            description: set to random value to disable cache restoration
-            type: string
-            default: ''
-        machine:
-          image: ubuntu-2004:202101-01
-        resource_class: <<parameters.resource_class>>
-        working_directory: ~/eventuate-tram-examples-customers-and-orders
-        steps:
-          - checkout
-          - restore_cache:
-              keys:
-                - << parameters.restore_cache_prefix >>eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "pom.xml" }}
-                - << parameters.restore_cache_prefix >>eventuate-tram-examples-customers-and-orders-j8-
-          - run:
-              command: |
-                . ./.circleci/setenv-circle-ci.sh
-                ./gradlew --refresh-dependencies testClasses
-                <<parameters.maven_cache_command>>
-          - save_cache:
-              paths:
-                - ~/.gradle
-                - ~/.m2
-              key: eventuate-tram-examples-customers-and-orders-j8-{{ checksum "gradle.properties" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "pom.xml" }}
-          - run:
-              command: |
-                . ./.circleci/setenv-circle-ci.sh
-                <<parameters.script>>
-          - run:
-              name: Save test results
-              command: |
-                mkdir -p ~/junit
-                find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
-              when: always
-          - run:
-              name: Print container logs
-              command: |
-                export TERM=dumb
-                ./.circleci/print-container-logs.sh
-              when: always
-          - store_test_results:
-              path: ~/junit
-          - store_artifacts:
-              path: ~/junit
-          - store_artifacts:
-              path: ~/container-logs
+  eventuate-gradle-build-and-test: "eventuate_io/eventuate-gradle-build-and-test@0.1.0"
 workflows:
   version: 2.1
   build-test-and-deploy:
     jobs:
-      - build-and-test/build-and-test:
+      - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-binlog-intel
           script: ./build-and-test-all-mysql-binlog.sh
-          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
-      - build-and-test/build-and-test:
+      - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-binlog-arm
           resource_class: arm.medium
           script: ./build-and-test-all-mysql-binlog.sh
-          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
-      - build-and-test/build-and-test:
+      - eventuate-gradle-build-and-test/build-and-test:
           name: mssql-polling
           script: ./build-and-test-all-mssql-polling.sh
-          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
-      - build-and-test/build-and-test:
+      - eventuate-gradle-build-and-test/build-and-test:
           name: postgres-wal
           script: ./build-and-test-all-postgres-wal.sh
-          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
-      - build-and-test/build-and-test:
+      - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-maven
           script: ./.circleci/build-and-test-all-mysql-maven-circleci.sh
           maven_cache_command: "./mvnw --update-snapshots package test-compile -DskipTests"
-          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
-      - build-and-test/build-and-test:
+      - eventuate-gradle-build-and-test/build-and-test:
           name: deploy-artifacts
           requires:
             -  mysql-binlog-intel
@@ -101,4 +31,3 @@ workflows:
             -  mssql-polling
             -  mysql-maven
           script: ./publish-docker-images.sh
-          restore_cache_prefix: "<<pipeline.parameters.restore_cache_prefix>>"
