@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  eventuate-gradle-build-and-test: "eventuate_io/eventuate-gradle-build-and-test@0.1.0"
+  eventuate-gradle-build-and-test: "eventuate_io/eventuate-gradle-build-and-test@0.2.0"
 workflows:
   version: 2.1
   build-test-and-deploy:
@@ -20,7 +20,7 @@ workflows:
           script: ./build-and-test-all-postgres-wal.sh
       - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-maven
-          script: ./.circleci/build-and-test-all-mysql-maven-circleci.sh
+          script: ./build-and-test-all-mysql-maven.sh
           maven_cache_command: "./mvnw --update-snapshots package test-compile -DskipTests"
       - eventuate-gradle-build-and-test/build-and-test:
           name: deploy-artifacts
