@@ -6,7 +6,7 @@ dependencies {
     compile project(":order-service-api-web")
     compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
-    testCompile "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"
+    testCompile "io.eventuate.util:eventuate-util-test"
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "org.springframework.boot:spring-boot-starter-web"
 }
