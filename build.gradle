@@ -110,21 +110,7 @@ dockerCompose {
         startedServices = ["cdc-service"]
     }
 
-    javaDevelopment {
-        projectName = null
-        useComposeFiles = ["docker-compose-java-development-build.yml"]
-    }
-    javaDevelopmentImage {
-        projectName = null
-        useComposeFiles = ["java-development/docker-compose-java-development-build.yml"]
-    }
 }
-
-task prepareJavaDevelopmentDockerImage(type:Exec) {
-    commandLine './prepare-java-development-docker-image.sh'
-}
-
-javaDevelopmentImageComposeBuild.dependsOn(prepareJavaDevelopmentDockerImage)
 
 subprojects.each {
   if (it.name.endsWith("-service") || it.name.endsWith("-gateway")) {

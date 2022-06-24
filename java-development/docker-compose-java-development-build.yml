@@ -1,9 +1,0 @@
-version: '3'
-services:
-
-  java-development:
-    build:
-      context: .
-      args:
-        baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
-    image: eventuateio/eventuate-tram-examples-customers-and-orders-java-development:${DOCKER_IMAGE_TAG:-latest}
