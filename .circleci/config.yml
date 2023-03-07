@@ -31,3 +31,5 @@ workflows:
             -  mssql-polling
             -  mysql-maven
           script: ./publish-docker-images.sh
+          context:
+            - publish
