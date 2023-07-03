@@ -31,3 +31,7 @@ workflows:
             -  mssql-polling
             -  mysql-maven
           script: ./publish-docker-images.sh
+          filters:
+            branches:
+              only:
+                - /master|development/
