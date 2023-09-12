@@ -32,7 +32,6 @@
         <module>order-service</module>
         <module>order-history-service-api-web</module>
         <module>order-history-service</module>
-        <module>jmeter-service</module>
         <module>end-to-end-tests</module>
     </modules>
 

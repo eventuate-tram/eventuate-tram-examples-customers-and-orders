@@ -64,12 +64,6 @@ dockerCompose {
         startedServices = ["cdc-service", "zipkin", "zookeeper", "mysql"]
     }
 
-    mysqlbinlogwithjmeter {
-        projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml", "docker-compose-jmeter-service.yml"]
-        startedServices = ["jmeter-service", "customer-service"]
-    }
-
     mysqlbinlogtextsearch {
         projectName = null
         useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
