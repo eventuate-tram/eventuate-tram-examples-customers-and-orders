@@ -12,3 +12,4 @@ deployment/terraform_azure/aks_kubectl_config
 deployment/terraform_azure/1.setup.sql
 deployment/terraform_azure/2.setup.sql
 tmp-migration
+bin
