@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.endtoendtests;
 
-import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
+import io.eventuate.examples.common.money.Money;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerRequest;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;

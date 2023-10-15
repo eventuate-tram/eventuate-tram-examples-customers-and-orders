@@ -1,9 +1,10 @@
 dependencies {
-    compile (project(":customer-service-api-messaging")) {
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    api (project(":customer-service-api-messaging")) {
         exclude module: "spring-boot-starter-data-jpa"
     }
-    compile (project(":order-service-api-messaging")) {
+    api (project(":order-service-api-messaging")) {
         exclude module: "spring-boot-starter-data-jpa"
     }
-    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
 }

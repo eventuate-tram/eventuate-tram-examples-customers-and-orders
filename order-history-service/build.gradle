@@ -20,22 +20,23 @@ dockerCompose {
 }
 
 dependencies {
-    compile project(":order-history-service-api-web")
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    implementation project(":order-history-service-api-web")
 
-    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-events-subscriber-starter"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-events-subscriber-starter"
 
-    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
-    compile "org.springframework.boot:spring-boot-starter-aop"
-    compile "org.springframework.retry:spring-retry:$springRetryVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation "org.springframework.retry:spring-retry:$springRetryVersion"
 
 
-    compile "org.springframework.boot:spring-boot-starter"
-    compile "org.springframework.boot:spring-boot-starter-web"
-    compile "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
 
-    testCompile "junit:junit:4.12"
-    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "junit:junit:4.12"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 
 
 }

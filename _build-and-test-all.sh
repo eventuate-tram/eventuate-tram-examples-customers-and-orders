@@ -37,7 +37,7 @@ echo Testing migration
 
 ./wait-for-services.sh localhost /readers/${READER}/finished "8099"
 
-compose="docker-compose -f docker-compose-${DATABASE}-${MODE}.yml "
+compose="docker compose -f docker-compose-${DATABASE}-${MODE}.yml "
 
 . ./_set-image-version-env-vars.sh
 

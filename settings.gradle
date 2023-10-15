@@ -1,4 +1,3 @@
-include 'common'
 
 include 'customer-service-api-web'
 include 'customer-service-api-messaging'

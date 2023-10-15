@@ -1,12 +1,14 @@
 dependencies {
-    compile project(":order-history-service-api-web")
-    compile project(":order-history-text-search-service-api-web")
-    compile project(":customer-service-api-web")
-    compile project(":order-service-api-web")
-    compile project(":order-service-api-web")
-    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-events"
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    implementation project(":order-history-service-api-web")
+    implementation project(":order-history-text-search-service-api-web")
+    implementation project(":customer-service-api-web")
+    implementation project(":order-service-api-web")
+    implementation project(":order-service-api-web")
+    implementation "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
-    testCompile "io.eventuate.util:eventuate-util-test"
-    testCompile "org.springframework.boot:spring-boot-starter-test"
-    testCompile "org.springframework.boot:spring-boot-starter-web"
+    testImplementation "io.eventuate.util:eventuate-util-test"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.boot:spring-boot-starter-web"
 }

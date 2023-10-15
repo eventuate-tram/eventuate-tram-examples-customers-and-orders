@@ -5,25 +5,26 @@ plugins {
 apply plugin: ServicePlugin
 
 dependencies {
-    compile project(":customer-service-api-web")
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    implementation project(":customer-service-api-web")
 
-    compile project(":customer-service-api-messaging")
-    compile project(":order-service-api-messaging")
+    implementation project(":customer-service-api-messaging")
+    implementation project(":order-service-api-messaging")
 
-    compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-events"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-events"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
 
-    compile "org.springframework.retry:spring-retry:$springRetryVersion"
+    implementation "org.springframework.retry:spring-retry:$springRetryVersion"
 
-    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 
-    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
+    implementation "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
-    compile "org.springframework.boot:spring-boot-starter"
-    compile "org.springframework.boot:spring-boot-starter-actuator"
-    compile "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-web"
 }
 
 jib.to.image = "eventuate-tram-examples-customers-and-orders-customer-service:${version}"

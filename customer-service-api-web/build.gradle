@@ -1,3 +1,3 @@
 dependencies {
-    compile project(":common")
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
 }

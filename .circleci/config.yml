@@ -7,23 +7,29 @@ workflows:
     jobs:
       - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-binlog-intel
+          machine_image: ubuntu-2204:2023.07.2
           script: ./build-and-test-all-mysql-binlog.sh
       - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-binlog-arm
+          machine_image: ubuntu-2204:2023.07.2
           resource_class: arm.medium
           script: ./build-and-test-all-mysql-binlog.sh
       - eventuate-gradle-build-and-test/build-and-test:
           name: mssql-polling
+          machine_image: ubuntu-2204:2023.07.2
           script: ./build-and-test-all-mssql-polling.sh
       - eventuate-gradle-build-and-test/build-and-test:
           name: postgres-wal
+          machine_image: ubuntu-2204:2023.07.2
           script: ./build-and-test-all-postgres-wal.sh
       - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-maven
+          machine_image: ubuntu-2204:2023.07.2
           script: ./build-and-test-all-mysql-maven.sh
           maven_cache_command: "./mvnw --update-snapshots package test-compile -DskipTests"
       - eventuate-gradle-build-and-test/build-and-test:
           name: deploy-artifacts
+          machine_image: ubuntu-2204:2023.07.2
           requires:
             -  mysql-binlog-intel
             -  mysql-binlog-arm

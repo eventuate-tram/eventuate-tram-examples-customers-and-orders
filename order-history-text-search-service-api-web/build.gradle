@@ -1,4 +1,4 @@
 dependencies {
-    compile project (":customer-service-api-messaging")
-    compile project (":order-service-api-messaging")
+    api project (":customer-service-api-messaging")
+    api project (":order-service-api-messaging")
 }
