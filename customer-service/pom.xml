@@ -11,6 +11,10 @@
     <name>customer-service</name>
 
     <dependencies>
+        <dependency>
+            <groupId>io.eventuate.examples.common</groupId>
+            <artifactId>eventuate-examples-common-money</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.eventuate.messaging.kafka</groupId>

@@ -12,11 +12,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.eventuate.tram.examples.customers.and.orders</groupId>
-            <artifactId>common</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <groupId>io.eventuate.examples.common</groupId>
+            <artifactId>eventuate-examples-common-money</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-events</artifactId>
+        </dependency>
+        
     </dependencies>
 
     <build>

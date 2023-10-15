@@ -20,10 +20,10 @@
         <eventuateMessagingKafkaVersion>0.18.0.RELEASE</eventuateMessagingKafkaVersion>
         <springCloudVersion>2021.0.2</springCloudVersion>
         <springDocOpenApiUiVersion>1.6.6</springDocOpenApiUiVersion>
+        <eventuateCommonExamplesVersion>0.2.0.RELEASE</eventuateCommonExamplesVersion>
     </properties>
 
     <modules>
-        <module>common</module>
         <module>customer-service-api-web</module>
         <module>customer-service-api-messaging</module>
         <module>customer-service</module>
@@ -73,6 +73,11 @@
                   <artifactId>spring-core</artifactId>
                 </exclusion>
               </exclusions>
+          </dependency>
+          <dependency>
+            <groupId>io.eventuate.examples.common</groupId>
+            <artifactId>eventuate-examples-common-money</artifactId>
+            <version>${eventuateCommonExamplesVersion}</version>
           </dependency>
         </dependencies>
     </dependencyManagement>
