@@ -11,9 +11,8 @@ import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -42,7 +41,7 @@ public class CustomerService {
 
     Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
 
-    if (!possibleCustomer.isPresent()) {
+    if (possibleCustomer.isEmpty()) {
       logger.info("Non-existent customer: {}", customerId);
       domainEventPublisher.publish(Customer.class,
               customerId,

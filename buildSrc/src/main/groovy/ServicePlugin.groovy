@@ -13,7 +13,7 @@ class ServicePlugin implements Plugin<Project> {
             implementation "org.springframework.cloud:spring-cloud-starter-sleuth"
             implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin"
             implementation "io.eventuate.tram.springcloudsleuth:eventuate-tram-spring-cloud-sleuth-tram-starter"
-            implementation "org.springdoc:springdoc-openapi-ui"
+            implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui"
         }
 
     }

@@ -1,13 +1,11 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.elasticsearch.ElasticSearchRestHealthContributorAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication(exclude = {
-        ElasticSearchRestHealthContributorAutoConfiguration.class,
         DataSourceAutoConfiguration.class
 })
 @Import({OrderHistoryTestSearchConfiguration.class})

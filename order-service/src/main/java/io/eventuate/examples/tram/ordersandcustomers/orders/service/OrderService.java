@@ -36,7 +36,7 @@ public class OrderService {
   public void approveOrder(Long orderId) {
     Order order = orderRepository
             .findById(orderId)
-            .orElseThrow(() -> new IllegalArgumentException(String.format("order with id %s not found", orderId)));
+            .orElseThrow(() -> new IllegalArgumentException("order with id %s not found".formatted(orderId)));
     order.noteCreditReserved();
     domainEventPublisher.publish(Order.class,
             orderId, singletonList(new OrderApprovedEvent(order.getOrderDetails())));
@@ -45,7 +45,7 @@ public class OrderService {
   public void rejectOrder(Long orderId) {
     Order order = orderRepository
             .findById(orderId)
-            .orElseThrow(() -> new IllegalArgumentException(String.format("order with id %s not found", orderId)));
+            .orElseThrow(() -> new IllegalArgumentException("order with id %s not found".formatted(orderId)));
     order.noteCreditReservationFailed();
     domainEventPublisher.publish(Order.class,
             orderId, singletonList(new OrderRejectedEvent(order.getOrderDetails())));
@@ -55,7 +55,7 @@ public class OrderService {
   public Order cancelOrder(Long orderId) {
     Order order = orderRepository
             .findById(orderId)
-            .orElseThrow(() -> new IllegalArgumentException(String.format("order with id %s not found", orderId)));
+            .orElseThrow(() -> new IllegalArgumentException("order with id %s not found".formatted(orderId)));
     order.cancel();
     domainEventPublisher.publish(Order.class,
             orderId, singletonList(new OrderCancelledEvent(order.getOrderDetails())));

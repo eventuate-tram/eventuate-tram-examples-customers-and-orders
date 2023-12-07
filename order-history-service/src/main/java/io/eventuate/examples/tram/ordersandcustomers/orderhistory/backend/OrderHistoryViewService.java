@@ -2,7 +2,6 @@ package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
 import io.eventuate.examples.common.money.Money;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;

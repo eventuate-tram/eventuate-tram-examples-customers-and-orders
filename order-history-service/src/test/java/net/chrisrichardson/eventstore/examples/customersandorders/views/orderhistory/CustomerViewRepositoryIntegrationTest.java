@@ -2,25 +2,22 @@ package net.chrisrichardson.eventstore.examples.customersandorders.views.orderhi
 
 import io.eventuate.examples.common.money.Money;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
+import org.junit.jupiter.api.Test;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerViewRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = OrderHistoryViewServiceIntegrationTestConfiguration.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class CustomerViewRepositoryIntegrationTest {
+class CustomerViewRepositoryIntegrationTest {
 
   @Autowired
   private CustomerViewRepository customerViewRepository;
 
   @Test
-  public void shouldCreateAndFindCustomer() {
+  void shouldCreateAndFindCustomer() {
 
     Long customerId = System.nanoTime();
     Money creditLimit = new Money(2000);

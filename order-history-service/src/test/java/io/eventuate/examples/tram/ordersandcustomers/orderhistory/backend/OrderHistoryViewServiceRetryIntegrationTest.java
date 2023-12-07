@@ -3,8 +3,7 @@ package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 import io.eventuate.examples.common.money.Money;
 import io.eventuate.tram.spring.events.autoconfigure.TramEventsSubscriberAutoConfiguration;
 import io.eventuate.tram.spring.messaging.autoconfigure.EventuateTramKafkaMessageConsumerAutoConfiguration;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,13 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = OrderHistoryViewServiceRetryIntegrationTest.Config.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class OrderHistoryViewServiceRetryIntegrationTest {
+class OrderHistoryViewServiceRetryIntegrationTest {
 
   @Autowired
   private OrderHistoryViewService orderHistoryService;
@@ -41,7 +38,7 @@ public class OrderHistoryViewServiceRetryIntegrationTest {
   }
 
   @Test
-  public void shouldRetry() {
+  void shouldRetry() {
     long customerId = 99L;
     long orderId = 101L;
      doThrow(new DuplicateKeyException("By test")).doNothing().when(customerViewRepository).addOrder(customerId, orderId, Money.ZERO);

@@ -8,14 +8,30 @@ buildscript {
     }
 }
 
+plugins {
+    id("org.openrewrite.rewrite") version("6.5.10")
+}
+
+rewrite {
+    activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_0")
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    rewrite("org.openrewrite.recipe:rewrite-spring:5.1.5")
+}
+
 apply plugin: 'docker-compose'
 
 subprojects {
 
     apply plugin: "java-library"
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 17
+    targetCompatibility = 17
 
     repositories {
         mavenCentral()
@@ -30,7 +46,7 @@ subprojects {
         testImplementation "junit:junit:4.13.2"
 
         constraints {
-            implementation "org.springdoc:springdoc-openapi-ui:$springDocOpenApiUiVersion"
+                implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenApiUiVersion")
         }
     }
 

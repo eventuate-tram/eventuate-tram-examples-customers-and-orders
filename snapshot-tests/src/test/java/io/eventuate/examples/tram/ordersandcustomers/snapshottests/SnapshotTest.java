@@ -10,12 +10,9 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRe
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
 import io.eventuate.tram.viewsupport.rebuild.SnapshotMetadata;
 import io.eventuate.util.test.async.Eventually;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
@@ -24,10 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = SnapshotTestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class SnapshotTest {
 
@@ -49,7 +45,7 @@ public class SnapshotTest {
   RestTemplate restTemplate;
 
   @Test
-  public void testCustomers() {
+  void customers() {
     Long id = createCustomer("john", new Money("200.00"));
     List<SnapshotMetadata> snapshotMetadata = exportCustomerSnapshots();
 
@@ -59,15 +55,15 @@ public class SnapshotTest {
     Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
       List<CustomerTextView> customerTextViews = Arrays.asList(restTemplate.getForEntity(baseUrlOrderHistoryTextSearch("customers?search=john"), CustomerTextView[].class).getBody());
 
-      Assert.assertEquals(1, customerTextViews.size());
-      Assert.assertEquals("john", customerTextViews.get(0).getName());
-      Assert.assertEquals("200.00", customerTextViews.get(0).getCreditLimit());
-      Assert.assertEquals(id.toString(), customerTextViews.get(0).getId());
+      assertEquals(1, customerTextViews.size());
+      assertEquals("john", customerTextViews.get(0).getName());
+      assertEquals("200.00", customerTextViews.get(0).getCreditLimit());
+      assertEquals(id.toString(), customerTextViews.get(0).getId());
     });
   }
 
   @Test
-  public void testOrders() {
+  void orders() {
     Long customerId = createCustomer("jack", new Money("300.00"));
     Long orderId = createOrder(customerId, new Money("100.00"));
 
@@ -79,10 +75,10 @@ public class SnapshotTest {
     Eventually.eventually(100, 400, TimeUnit.MILLISECONDS, () -> {
       List<OrderTextView> orderTextViews = Arrays.asList(restTemplate.getForEntity(baseUrlOrderHistoryTextSearch("orders?search=100.00"), OrderTextView[].class).getBody());
 
-      Assert.assertEquals(1, orderTextViews.size());
-      Assert.assertEquals(orderId.toString(), orderTextViews.get(0).getId());
-      Assert.assertEquals(customerId.toString(), orderTextViews.get(0).getCustomerId());
-      Assert.assertEquals("100.00", orderTextViews.get(0).getOrderTotal());
+      assertEquals(1, orderTextViews.size());
+      assertEquals(orderId.toString(), orderTextViews.get(0).getId());
+      assertEquals(customerId.toString(), orderTextViews.get(0).getCustomerId());
+      assertEquals("100.00", orderTextViews.get(0).getOrderTotal());
     });
   }
 

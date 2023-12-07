@@ -1,18 +1,17 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.service;
 
 import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.OrderTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.repositories.OrderTextViewRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderSnapshotEvent;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 public class OrderSnapshotEventConsumer {
 
   @Autowired
-  @Qualifier("orderTextViewService")
-  private TextViewService<OrderTextView> orderTextViewService;
+  private OrderTextViewRepository orderTextViewService;
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder
@@ -30,6 +29,6 @@ public class OrderSnapshotEventConsumer {
     String orderTotal = orderSnapshotEvent.getOrderTotal().getAmount().toString();
     String state = orderSnapshotEvent.getOrderState().toString();
 
-    orderTextViewService.index(new OrderTextView(id, customerId, orderTotal, state));
+    orderTextViewService.save(new OrderTextView(id, customerId, orderTotal, state));
   }
 }

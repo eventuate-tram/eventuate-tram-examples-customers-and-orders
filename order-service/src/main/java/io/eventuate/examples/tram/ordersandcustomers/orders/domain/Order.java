@@ -5,8 +5,7 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderC
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import static java.util.Collections.singletonList;
 

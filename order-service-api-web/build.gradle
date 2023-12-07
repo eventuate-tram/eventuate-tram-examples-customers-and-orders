@@ -1,5 +1,5 @@
 dependencies {
-    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
     implementation (project(":order-service-api-messaging")) {
         exclude module: "spring-boot-starter-data-jpa"
     }

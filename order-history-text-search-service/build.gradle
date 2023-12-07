@@ -2,10 +2,10 @@ apply plugin: 'org.springframework.boot'
 apply plugin: "io.spring.dependency-management"
 
 dependencies {
-    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
     implementation project (":order-history-text-search-service-api-web")
     implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation "org.elasticsearch.client:transport"
+    implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events-subscriber-starter"
     implementation "org.springframework.boot:spring-boot-starter-web"

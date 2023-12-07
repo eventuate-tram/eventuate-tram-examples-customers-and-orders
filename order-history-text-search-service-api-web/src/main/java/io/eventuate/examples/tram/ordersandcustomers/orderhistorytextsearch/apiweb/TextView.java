@@ -1,8 +1,11 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb;
 
 
+import org.springframework.data.annotation.Id;
+
 public abstract class TextView {
 
+  @Id
   private String id;
 
   public TextView() {

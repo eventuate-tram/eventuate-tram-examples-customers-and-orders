@@ -9,7 +9,6 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderRespo
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
 import io.eventuate.tram.viewsupport.rebuild.DomainSnapshotExportService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ public class OrderController {
   private OrderRepository orderRepository;
   private DomainSnapshotExportService<Order> domainSnapshotExportService;
 
-  @Autowired
   public OrderController(OrderService orderService,
                          OrderRepository orderRepository,
                          DomainSnapshotExportService<Order> domainSnapshotExportService) {
@@ -31,13 +29,13 @@ public class OrderController {
     this.domainSnapshotExportService = domainSnapshotExportService;
   }
 
-  @RequestMapping(value = "/orders", method = RequestMethod.POST)
+  @PostMapping("/orders")
   public CreateOrderResponse createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
     Order order = orderService.createOrder(new OrderDetails(createOrderRequest.getCustomerId(), createOrderRequest.getOrderTotal()));
     return new CreateOrderResponse(order.getId());
   }
 
-  @RequestMapping(value="/orders/{orderId}", method= RequestMethod.GET)
+  @GetMapping("/orders/{orderId}")
   public ResponseEntity<GetOrderResponse> getOrder(@PathVariable Long orderId) {
      return orderRepository
             .findById(orderId)
@@ -45,13 +43,13 @@ public class OrderController {
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
-  @RequestMapping(value="/orders/{orderId}/cancel", method= RequestMethod.POST)
+  @PostMapping("/orders/{orderId}/cancel")
   public ResponseEntity<GetOrderResponse> cancelOrder(@PathVariable Long orderId) {
      Order order = orderService.cancelOrder(orderId);
      return makeSuccessfulResponse(order);
   }
 
-  @RequestMapping(value = "/orders/make-snapshot", method = RequestMethod.POST)
+  @PostMapping("/orders/make-snapshot")
   public String makeSnapshot() {
     return JSonMapper.toJson(domainSnapshotExportService.exportSnapshots());
   }

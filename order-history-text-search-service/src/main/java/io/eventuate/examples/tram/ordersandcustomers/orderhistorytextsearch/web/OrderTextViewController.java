@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.web;
 
-import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.service.TextViewService;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.OrderTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.repositories.OrderTextViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +14,15 @@ public class OrderTextViewController {
 
   @Qualifier("orderTextViewService")
   @Autowired
-  private TextViewService<OrderTextView> orderTextViewService;
+  private OrderTextViewRepository orderTextViewService;
 
-  @RequestMapping(method = RequestMethod.GET)
+  @GetMapping
   public List<OrderTextView> search(@RequestParam String search) {
-    return orderTextViewService.search(search);
+    return orderTextViewService.findAllByCustomQuery(search);
   }
 
-  @RequestMapping(method = RequestMethod.POST)
+  @PostMapping
   public void createOrderTextView(@RequestBody OrderTextView orderTextView) {
-    orderTextViewService.index(orderTextView);
+    orderTextViewService.save(orderTextView);
   }
 }

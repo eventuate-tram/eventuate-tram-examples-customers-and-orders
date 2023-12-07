@@ -4,7 +4,7 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.Cus
 import io.eventuate.examples.common.money.Money;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Collections;
 import java.util.Map;
 

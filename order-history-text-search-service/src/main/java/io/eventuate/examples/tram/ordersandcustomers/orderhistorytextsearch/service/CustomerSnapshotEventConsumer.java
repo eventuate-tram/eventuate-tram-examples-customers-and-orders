@@ -2,17 +2,16 @@ package io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.ser
 
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerSnapshotEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.apiweb.CustomerTextView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistorytextsearch.repositories.CustomerTextViewRepository;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 public class CustomerSnapshotEventConsumer {
 
-  @Qualifier("customerTextViewService")
   @Autowired
-  private TextViewService<CustomerTextView> customerTextViewService;
+  private CustomerTextViewRepository customerTextViewService;
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder
@@ -28,6 +27,6 @@ public class CustomerSnapshotEventConsumer {
     String name = customerSnapshotEvent.getName();
     String creditLimit = customerSnapshotEvent.getCreditLimit().getAmount().toString();
 
-    customerTextViewService.index(new CustomerTextView(id, name, creditLimit));
+    customerTextViewService.save(new CustomerTextView(id, name, creditLimit));
   }
 }

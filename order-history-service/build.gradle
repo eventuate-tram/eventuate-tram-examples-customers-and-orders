@@ -20,7 +20,7 @@ dockerCompose {
 }
 
 dependencies {
-    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
     implementation project(":order-history-service-api-web")
 
     implementation "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"

@@ -1,7 +1,7 @@
 apply plugin: ServicePlugin
 
 dependencies {
-    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
     implementation project(":order-service-api-web")
     implementation project(":order-service-api-messaging")
 

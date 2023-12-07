@@ -10,15 +10,12 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRe
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.util.test.async.Eventually;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -28,13 +25,13 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CustomersAndOrdersEndToEndTestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class CustomersAndOrdersEndToEndTest {
+class CustomersAndOrdersEndToEndTest {
 
   @Value("${host.name}")
   private String hostName;
@@ -60,28 +57,28 @@ public class CustomersAndOrdersEndToEndTest {
   RestTemplate restTemplate;
 
   @Test
-  public void shouldApprove() {
+  void shouldApprove() {
     Long customerId = createCustomer("Fred", new Money("15.00"));
     Long orderId = createOrder(customerId, new Money("12.34"));
     assertOrderState(orderId, OrderState.APPROVED);
   }
 
   @Test
-  public void shouldReject() {
+  void shouldReject() {
     Long customerId = createCustomer("Fred", new Money("15.00"));
     Long orderId = createOrder(customerId, new Money("123.34"));
     assertOrderState(orderId, OrderState.REJECTED);
   }
 
   @Test
-  public void shouldRejectForNonExistentCustomerId() {
+  void shouldRejectForNonExistentCustomerId() {
     Long customerId = System.nanoTime();
     Long orderId = createOrder(customerId, new Money("123.34"));
     assertOrderState(orderId, OrderState.REJECTED);
   }
 
   @Test
-  public void shouldCancel() {
+  void shouldCancel() {
     Long customerId = createCustomer("Fred", new Money("15.00"));
     Long orderId = createOrder(customerId, new Money("12.34"));
     assertOrderState(orderId, OrderState.APPROVED);
@@ -97,7 +94,7 @@ public class CustomersAndOrdersEndToEndTest {
   }
 
   @Test
-  public void shouldRejectApproveAndKeepOrdersInHistory() {
+  void shouldRejectApproveAndKeepOrdersInHistory() {
     Long customerId = createCustomer("John", new Money("1000"));
 
     Long order1Id = createOrder(customerId, new Money("100"));
@@ -122,20 +119,20 @@ public class CustomersAndOrdersEndToEndTest {
   }
 
   @Test
-  public void testSwaggerUiUrls() throws IOException {
+  void swaggerUiUrls() throws IOException {
     testSwaggerUiUrl(8081);
     testSwaggerUiUrl(8082);
     testSwaggerUiUrl(8083);
   }
 
   private void testSwaggerUiUrl(int port) throws IOException {
-    assertUrlStatusIsOk(String.format("http://%s:%s/swagger-ui/index.html", hostName, port));
+    assertUrlStatusIsOk("http://%s:%s/swagger-ui/index.html".formatted(hostName, port));
   }
 
   private void assertUrlStatusIsOk(String url) throws IOException {
     HttpURLConnection connection = (HttpURLConnection)new URL(url).openConnection();
 
-    Assert.assertEquals(200, connection.getResponseCode());
+    assertEquals(200, connection.getResponseCode());
   }
 
   private CustomerView getCustomerView(Long customerId) {
@@ -144,7 +141,7 @@ public class CustomersAndOrdersEndToEndTest {
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
-    Assert.assertNotNull(response);
+    assertNotNull(response);
 
     return response.getBody();
   }

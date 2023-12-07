@@ -1,5 +1,5 @@
 dependencies {
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events"
-    implementation "io.eventuate.examples.common:eventuate-examples-common-money:$eventuateCommonExamplesVersion"
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
 }
 
