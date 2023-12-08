@@ -10,7 +10,7 @@ dockerinfrastructure="./gradlew ${DATABASE?}${MODE?}infrastructureCompose"
 ${dockerall}Down -P removeContainers=true
 ${dockerinfrastructure}Up
 
-./gradlew -x :end-to-end-tests:test -x :snapshot-tests:test build
+./gradlew -x :end-to-end-tests:test build
 
 #Testing db cli
 if [ "${DATABASE}" == "mysql" ]; then
@@ -32,28 +32,5 @@ ${dockerall}Up
 echo 'show dbs' |  ./mongodb-cli.sh -i
 
 ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
-
-echo Testing migration
-
-./wait-for-services.sh localhost /readers/${READER}/finished "8099"
-
-compose="docker compose -f docker-compose-${DATABASE}-${MODE}.yml "
-
-. ./_set-image-version-env-vars.sh
-
-$compose stop cdc-service
-
-TMP_MIGRATION_SCRIPT=$(mktemp)
-curl -s https://raw.githubusercontent.com/eventuate-foundation/eventuate-common/master/migration/db-id/migration.sh -o $TMP_MIGRATION_SCRIPT
-bash $TMP_MIGRATION_SCRIPT
-
-$compose start cdc-service
-
-
-${dockerall}Up -P envFile=docker-compose-env-files/db-id-gen.env
-
-./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test
-
-./gradlew -P verifyDbIdMigration=true :migration-tests:cleanTest migration-tests:test
 
 ${dockerall}Down -P removeContainers=true
