@@ -1,14 +1,12 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.web;
 
-import io.eventuate.common.json.mapper.JSonMapper;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderResponse;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
-import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
-import io.eventuate.tram.viewsupport.rebuild.DomainSnapshotExportService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +16,12 @@ public class OrderController {
 
   private OrderService orderService;
   private OrderRepository orderRepository;
-  private DomainSnapshotExportService<Order> domainSnapshotExportService;
 
   public OrderController(OrderService orderService,
-                         OrderRepository orderRepository,
-                         DomainSnapshotExportService<Order> domainSnapshotExportService) {
+                         OrderRepository orderRepository) {
 
     this.orderService = orderService;
     this.orderRepository = orderRepository;
-    this.domainSnapshotExportService = domainSnapshotExportService;
   }
 
   @PostMapping("/orders")
@@ -47,11 +42,6 @@ public class OrderController {
   public ResponseEntity<GetOrderResponse> cancelOrder(@PathVariable Long orderId) {
      Order order = orderService.cancelOrder(orderId);
      return makeSuccessfulResponse(order);
-  }
-
-  @PostMapping("/orders/make-snapshot")
-  public String makeSnapshot() {
-    return JSonMapper.toJson(domainSnapshotExportService.exportSnapshots());
   }
 
   private ResponseEntity<GetOrderResponse> makeSuccessfulResponse(Order order) {

@@ -10,9 +10,5 @@ include 'order-service'
 include 'order-history-service-api-web'
 include 'order-history-service'
 
-include 'order-history-text-search-service-api-web'
-include 'order-history-text-search-service'
 include 'end-to-end-tests'
-include 'snapshot-tests'
-include 'migration-tests'
 

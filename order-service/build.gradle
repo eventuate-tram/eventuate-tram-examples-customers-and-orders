@@ -12,7 +12,6 @@ dependencies {
     implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
 
-    implementation "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 

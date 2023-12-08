@@ -20,7 +20,6 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 
-    implementation "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:$eventuateTramViewSupportVersion"
 
     implementation "org.springframework.boot:spring-boot-starter"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
