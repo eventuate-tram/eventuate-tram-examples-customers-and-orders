@@ -145,3 +145,13 @@ endToEndTests.dependsOn(":end-to-end-tests:cleanTest")
 task stopServicesMySql(type: GradleBuild) {
     tasks = ["mysqlbinlogComposeDown"]
 }
+
+task preCommitCheck {
+
+}
+
+task circleciConfigValidate(type: Exec) {
+    commandLine 'circleci', 'config', 'validate'
+}
+
+preCommitCheck.finalizedBy(circleciConfigValidate)
