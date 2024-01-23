@@ -8,7 +8,6 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderR
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class OrderHistoryEventConsumer {

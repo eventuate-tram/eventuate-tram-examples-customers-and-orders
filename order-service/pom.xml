@@ -57,6 +57,12 @@
         <dependency>
             <groupId>io.eventuate.tram.core</groupId>
             <artifactId>eventuate-tram-spring-optimistic-locking</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

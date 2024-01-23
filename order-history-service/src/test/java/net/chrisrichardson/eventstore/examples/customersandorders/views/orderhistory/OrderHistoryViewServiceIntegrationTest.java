@@ -2,19 +2,16 @@ package net.chrisrichardson.eventstore.examples.customersandorders.views.orderhi
 
 import io.eventuate.examples.tram.ordersandcustomers.common.domain.Money;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
+import org.junit.jupiter.api.Test;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerViewRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryViewService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = OrderHistoryViewServiceIntegrationTestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class OrderHistoryViewServiceIntegrationTest {
 

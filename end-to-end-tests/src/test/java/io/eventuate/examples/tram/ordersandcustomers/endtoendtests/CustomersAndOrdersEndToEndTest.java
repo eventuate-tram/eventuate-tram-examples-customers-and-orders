@@ -10,15 +10,13 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRe
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.util.test.async.Eventually;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -28,11 +26,10 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CustomersAndOrdersEndToEndTestConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class CustomersAndOrdersEndToEndTest {
 
@@ -135,7 +132,7 @@ public class CustomersAndOrdersEndToEndTest {
   private void assertUrlStatusIsOk(String url) throws IOException {
     HttpURLConnection connection = (HttpURLConnection)new URL(url).openConnection();
 
-    Assert.assertEquals(200, connection.getResponseCode());
+    Assertions.assertEquals(200, connection.getResponseCode());
   }
 
   private CustomerView getCustomerView(Long customerId) {
@@ -144,7 +141,7 @@ public class CustomersAndOrdersEndToEndTest {
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
-    Assert.assertNotNull(response);
+    Assertions.assertNotNull(response);
 
     return response.getBody();
   }
