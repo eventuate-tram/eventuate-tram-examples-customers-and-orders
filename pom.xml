@@ -15,10 +15,10 @@
         <java.version>1.8</java.version>
         <eventuatePlatformVersion>2023.1.RELEASE</eventuatePlatformVersion>
         <eventuateUtilVersion>0.16.0.RELEASE</eventuateUtilVersion>
-        <springBootVersion>2.6.7</springBootVersion>
+        <springBootVersion>2.7.18</springBootVersion>
         <eventuateTramViewSupportVersion>0.10.0.RELEASE</eventuateTramViewSupportVersion>
         <eventuateMessagingKafkaVersion>0.18.0.RELEASE</eventuateMessagingKafkaVersion>
-        <springCloudVersion>2021.0.2</springCloudVersion>
+        <springCloudVersion>2021.0.9</springCloudVersion>
         <springDocOpenApiUiVersion>1.6.6</springDocOpenApiUiVersion>
     </properties>
 
