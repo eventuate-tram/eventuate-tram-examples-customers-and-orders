@@ -25,7 +25,7 @@
     },
     {
       "file": "order-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/service/CustomerEventConsumer.java",
-      "description": "Here's where the `Customer Service` the `CustomerCreditReservedEvent` handler is configured",
+      "description": "Here's where in the `Order Service` the `CustomerCreditReservedEvent` handler is configured.",
       "line": 20,
       "selection": {
         "start": {
