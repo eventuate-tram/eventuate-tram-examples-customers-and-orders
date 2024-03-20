@@ -23,6 +23,8 @@ The `Order Service` uses a choreography-based saga to enforce the customer's cre
 
 The `Order History Service` implements a CQRS view and subscribes to domain events published by the `Order Service` and `Customer Service`
 
+Scroll down to get a tour of a code within a Github Codespace or Visual Studio Code.
+
 == About Sagas
 
 http://microservices.io/patterns/data/saga.html[Sagas] are a mechanism for maintaining data consistency in a http://microservices.io/patterns/microservices.html[microservice architecture].
@@ -220,6 +222,23 @@ Content-Type: application/json;charset=UTF-8
   }
 }
 ```
+
+== Get a tour of the code
+
+I've configured a https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour[Code Tour] that will walk through the code in either Visual Studio Code or Github Codespaces.
+
+=== In Visual Studio Code
+
+1. If necessary, install the Code Tour extension from the Visual Studio Code Marketplace.
+2. Use the `CodeTour: Start Tour` command from the command palette to start the tour.
+
+=== In a Github Codespace
+
+1. In your browser, create a codespace for the repository by clicking the "Code" button, selecting "Codespaces", and creating a Codespace.
+This should open Visual Studio Code in the browser.
+2. If necessary, install the Code Tour extension from the Visual Studio Code Marketplace.
+3. Use the `CodeTour: Start Tour` command from the command palette to start the tour.
+
 
 == Got questions?
 
