@@ -25,7 +25,6 @@ public class OrderService {
 
   @Transactional
   public Order createOrder(OrderDetails orderDetails) {
-    new RuntimeException().printStackTrace();
     ResultWithEvents<Order> orderWithEvents = Order.createOrder(orderDetails);
     Order order = orderWithEvents.result;
     orderRepository.save(order);

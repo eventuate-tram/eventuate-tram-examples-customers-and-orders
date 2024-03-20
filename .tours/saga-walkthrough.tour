@@ -1,0 +1,47 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "saga walkthrough",
+  "steps": [
+    {
+      "title": "starting point",
+      "file": "order-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/service/OrderService.java",
+      "description": "In the `OrderService` the `createOrder()` method initiates the saga by publishing an event",
+      "line": 28
+    },
+    {
+      "file": "customer-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/service/OrderEventConsumer.java",
+      "description": "Here's where in the `Customer Service` the `OrderCreatedEvent` handler is configured.",
+      "line": 23
+    },
+    {
+      "file": "customer-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/service/OrderEventConsumer.java",
+      "description": "Here's the `OrderCreatedEvent` handler in the `Customer Service`",
+      "line": 28
+    },
+    {
+      "file": "customer-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/service/CustomerService.java",
+      "description": "On the happy path, the `Customer Service` publishes an `OrderCreatedEvent`",
+      "line": 58
+    },
+    {
+      "file": "order-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/service/CustomerEventConsumer.java",
+      "description": "Here's where the `Customer Service` the `CustomerCreditReservedEvent` handler is configured",
+      "line": 20,
+      "selection": {
+        "start": {
+          "line": 1,
+          "character": 42
+        },
+        "end": {
+          "line": 1,
+          "character": 69
+        }
+      }
+    },
+    {
+      "file": "order-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/service/CustomerEventConsumer.java",
+      "description": "Here's the `CustomerCreditReservedEvent` handler in the `Order Service`, which calls the `OrderService` to approve the event",
+      "line": 26
+    }
+  ]
+}
