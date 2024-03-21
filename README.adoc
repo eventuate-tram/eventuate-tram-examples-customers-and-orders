@@ -234,10 +234,13 @@ I've configured a https://marketplace.visualstudio.com/items?itemName=vsls-contr
 
 === In a Github Codespace
 
-1. link:https://codespaces.new/eventuate-tram/eventuate-tram-examples-customers-and-orders/tree/development[Create a codespace, window="_blank"].
-2. If necessary, install the Code Tour extension from the Visual Studio Code Marketplace.
-3. Use the `CodeTour: Start Tour` command from the command palette to start the tour.
-
+++++
+<ol>
+  <li><a href="https://codespaces.new/eventuate-tram/eventuate-tram-examples-customers-and-orders/tree/development" target="_blank">Create a codespace</a>.</li>
+  <li>If necessary, install the Code Tour extension from the Visual Studio Code Marketplace.</li>
+  <li>Use the <code>CodeTour: Start Tour</code> command from the command palette to start the tour.</li>
+</ol>
+++++
 
 == Got questions?
 
