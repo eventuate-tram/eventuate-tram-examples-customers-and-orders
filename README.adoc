@@ -234,8 +234,7 @@ I've configured a https://marketplace.visualstudio.com/items?itemName=vsls-contr
 
 === In a Github Codespace
 
-1. In your browser, create a codespace for the repository by clicking the "Code" button, selecting "Codespaces", and creating a Codespace.
-This should open Visual Studio Code in the browser.
+1. link:https://codespaces.new/eventuate-tram/eventuate-tram-examples-customers-and-orders/tree/development[Create a codespace, window="_blank"].
 2. If necessary, install the Code Tour extension from the Visual Studio Code Marketplace.
 3. Use the `CodeTour: Start Tour` command from the command palette to start the tour.
 
