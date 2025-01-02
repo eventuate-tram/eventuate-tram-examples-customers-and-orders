@@ -1,34 +1,29 @@
 version: 2.1
 orbs:
-  eventuate-gradle-build-and-test: "eventuate_io/eventuate-gradle-build-and-test@0.2.8"
+  eventuate-gradle-build-and-test: "eventuate_io/eventuate-gradle-build-and-test@0.2.9"
 workflows:
   version: 2.1
   build-test-and-deploy:
     jobs:
       - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-binlog-intel
-          machine_image: ubuntu-2204:2023.07.2
           script: ./build-and-test-all-mysql-binlog.sh
           java_version_to_install: '17'
       - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-binlog-arm
-          machine_image: ubuntu-2204:2023.07.2
           resource_class: arm.medium
           script: ./build-and-test-all-mysql-binlog.sh
           java_version_to_install: '17'
       - eventuate-gradle-build-and-test/build-and-test:
           name: mssql-polling
-          machine_image: ubuntu-2204:2023.07.2
           script: ./build-and-test-all-mssql-polling.sh
           java_version_to_install: '17'
       - eventuate-gradle-build-and-test/build-and-test:
           name: postgres-wal
-          machine_image: ubuntu-2204:2023.07.2
           script: ./build-and-test-all-postgres-wal.sh
           java_version_to_install: '17'
       - eventuate-gradle-build-and-test/build-and-test:
           name: deploy-artifacts
-          machine_image: ubuntu-2204:2023.07.2
           java_version_to_install: '17'
           requires:
             -  mysql-binlog-intel
