@@ -35,6 +35,15 @@ subprojects {
         constraints {
                 implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenApiUiVersion")
         }
+        testImplementation "org.springframework.boot:spring-boot-starter-test"
+    }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-parameters"
+    }
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
     }
 
 }
@@ -64,7 +73,7 @@ dockerCompose {
     mysqlbinloginfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        startedServices = ["cdc-service", "zipkin", "zookeeper", "mysql"]
+        startedServices = ["cdc-service", "zipkin", "zookeeper", "mysql", "mongodb"]
     }
 
     mysqlbinlogtextsearch {
@@ -104,7 +113,7 @@ dockerCompose {
     postgreswalinfrastructure {
         projectName = null
         useComposeFiles = ["docker-compose-postgres-wal.yml"]
-        startedServices = ["cdc-service"]
+        startedServices = ["cdc-service", "mongodb"]
     }
 
 }

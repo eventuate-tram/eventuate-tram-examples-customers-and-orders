@@ -1,0 +1,3 @@
+dependencies {
+    api "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
+}

@@ -1,9 +1,9 @@
 dependencies {
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
-    implementation project(":order-history-service-api-web")
-    implementation project(":customer-service-api-web")
-    implementation project(":order-service-api-web")
-    implementation project(":order-service-api-messaging")
+    implementation project(":order-history-service:order-history-service-api-web")
+    implementation project(":customer-service:customer-service-api-web")
+    implementation project(":order-service:order-service-api-web")
+    implementation project(":order-service:order-service-api-messaging")
 
     testImplementation "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test"

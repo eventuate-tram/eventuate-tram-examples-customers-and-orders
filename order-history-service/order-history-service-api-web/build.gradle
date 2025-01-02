@@ -1,0 +1,5 @@
+dependencies {
+    api "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
+    api "org.springframework.boot:spring-boot-starter-data-mongodb"
+    implementation project(":order-service:order-service-api-messaging")
+}

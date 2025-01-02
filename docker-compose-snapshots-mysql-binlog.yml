@@ -2,7 +2,7 @@ version: '3'
 services:
   order-service:
     build:
-      context: ./order-service/
+      context: ./order-service/order-service-main/
       args:
         serviceImageVersion: ${SERVICE_IMAGE_VERSION}
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
@@ -24,7 +24,7 @@ services:
 
   customer-service:
     build:
-      context: ./customer-service/
+      context: ./customer-service/customer-service-main/
       args:
         serviceImageVersion: ${SERVICE_IMAGE_VERSION}
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}

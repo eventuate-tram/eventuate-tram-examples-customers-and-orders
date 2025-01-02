@@ -1,0 +1,12 @@
+dependencies {
+    implementation project(":order-service:order-service-domain")
+
+    implementation project(":order-service:order-service-api-web")
+    implementation project(":order-service:order-service-api-messaging")
+
+    implementation project(":order-service:order-service-persistence")
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+}
+
+

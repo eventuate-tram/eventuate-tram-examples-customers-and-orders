@@ -1,0 +1,17 @@
+
+dependencies {
+    implementation project(":order-service:order-service-domain")
+    implementation project(":order-service:order-service-api-messaging")
+    implementation project(":customer-service:customer-service-api-messaging")
+
+    implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
+
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-events"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
+
+
+}
+
+

@@ -1,0 +1,14 @@
+
+dependencies {
+    implementation project(":customer-service:customer-service-api-messaging")
+
+    api "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
+    implementation "org.hamcrest:hamcrest:2.2"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-validation:3.0.13"
+
+    implementation "io.eventuate.tram.core:eventuate-tram-events"
+
+}
+
+

@@ -1,0 +1,9 @@
+dependencies {
+    implementation project(":order-history-service:order-history-service-domain")
+
+    implementation project(":order-history-service:order-history-service-api-web")
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+}
+
+

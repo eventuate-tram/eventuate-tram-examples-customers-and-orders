@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(":customer-service:customer-service-domain")
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+
+}
+
+

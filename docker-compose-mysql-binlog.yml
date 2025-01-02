@@ -4,7 +4,7 @@ services:
     env_file:
       - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
-      context: ./order-service/
+      context: ./order-service/order-service-main/
       args:
         jarDir: ${JAR_DIR:-build/libs}
         serviceImageVersion: ${SERVICE_IMAGE_VERSION}
@@ -32,7 +32,7 @@ services:
     env_file:
       - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
-      context: ./customer-service/
+      context: ./customer-service/customer-service-main/
       args:
         jarDir: ${JAR_DIR:-build/libs}
         serviceImageVersion: ${SERVICE_IMAGE_VERSION}
@@ -60,7 +60,7 @@ services:
     env_file:
       - ${ENV_FILE:-docker-compose-env-files/empty.env}
     build:
-      context: ./order-history-service/
+      context: ./order-history-service/order-history-service-main/
       args:
         jarDir: ${JAR_DIR:-build/libs}
         serviceImageVersion: ${SERVICE_IMAGE_VERSION}
