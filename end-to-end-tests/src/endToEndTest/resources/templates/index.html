@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customers and Orders</title>
+</head>
+<body>
+<h1>Welcome to Customers and Orders Application</h1>
+
+<h2 >Swagger UI</h2>
+
+<ul>
+<li>
+    <a th:href="${customerServiceUrl} + '/swagger-ui/index.html'">Customer Service Swagger UI</a>
+</li>
+<li>
+    <a th:href="${orderServiceUrl} + '/swagger-ui/index.html'">Order Service Swagger UI</a>
+</li>
+</ul>
+
+<h2>API endpoints</h2>
+<ul>
+    <li>
+        API Gateway:&nbsp;<a th:href="${apiGatewayUrl}"><span th:text="${apiGatewayUrl}"></span></a>
+    </li>
+    <li>
+        Customer Service:&nbsp;<a th:href="${customerServiceUrl}"><span th:text="${customerServiceUrl}"></span></a>
+    </li>
+    <li>
+        Order Service:&nbsp;<a th:href="${orderServiceUrl}"><span th:text="${orderServiceUrl}"></span></a>
+    </li>
+</ul>
+
+<h2>Using curl</h2>
+
+Use curl to:
+
+<ol>
+    <li>Create a customer</li>
+    <li>Create an order</li>
+    <li>Get an order</li>
+</ol>
+
+<h2>Step 1: Create a Customer</h2>
+
+<pre><code>
+curl -X POST --header "Content-Type: application/json" -d '{
+  "creditLimit": {
+    "amount": 5
+  },
+  "name": "Jane Doe"
+}' [[${apiGatewayUrl}]]/customers
+</code></pre>
+
+<h2>Step 2: Create an Order</h2>
+
+<pre><code>
+curl -X POST --header "Content-Type: application/json" -d '{
+  "customerId": 1,
+  "orderTotal": {
+    "amount": 4
+  }
+}' [[${apiGatewayUrl}]]/orders
+</code></pre>
+
+<h2>Step 3: Get Order (status)</h2>
+
+<pre><code>
+curl -X GET [[${apiGatewayUrl}]]/orders/1
+</code></pre>
+
+<h2>Accessing the service databases</h2>
+
+There are the following scripts:
+
+<ul>
+    <li>./mysql-customer-service-cli.sh</li>
+    <li>./mysql-order-service-cli.sh</li>
+    <li>./postgres-customer-service-cli.sh</li>
+    <li>./postgres-order-service-cli.sh</li>
+</ul>
+
+</body>
+</html>
+

@@ -4,6 +4,7 @@ package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCreatedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.RejectionReason;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import jakarta.persistence.*;
 
@@ -26,6 +27,7 @@ public class Order {
 
   @Version
   private Long version;
+  private RejectionReason rejectionReason;
 
   public Order() {
   }
@@ -49,7 +51,8 @@ public class Order {
     this.state = OrderState.APPROVED;
   }
 
-  public void noteCreditReservationFailed() {
+  public void noteCreditReservationFailed(RejectionReason rejectionReason) {
+    this.rejectionReason = rejectionReason;
     this.state = OrderState.REJECTED;
   }
 
@@ -71,5 +74,9 @@ public class Order {
       default:
         throw new UnsupportedOperationException("Can't cancel in this state: " + state);
     }
+  }
+
+  public RejectionReason getRejectionReason() {
+    return rejectionReason;
   }
 }

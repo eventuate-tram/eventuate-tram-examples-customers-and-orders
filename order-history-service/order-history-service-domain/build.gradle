@@ -8,6 +8,8 @@ dependencies {
     implementation "org.springframework.retry:spring-retry"
     implementation "org.springframework:spring-aspects"
 
+    testImplementation "org.testcontainers:mongodb:$testContainersVersion"
+
 }
 
 

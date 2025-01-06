@@ -1,0 +1,172 @@
+openapi: 3.0.1
+paths:
+  /customers:
+    post:
+      operationId: createCustomer
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomerResponse'
+  /customers/{customerId}:
+    get:
+      operationId: getCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomerResponse'
+  /customers/{customerId}/orderhistory:
+    get:
+      operationId: getOrderHistory
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomerHistoryResponse'
+  /orders:
+    post:
+      operationId: createOrder
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrderResponse'
+  /orders/{orderId}:
+    get:
+      operationId: getOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrderResponse'
+  /orders/customer/{customerId}:
+    get:
+      operationId: getOrdersByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetOrderResponse'
+components:
+  schemas:
+    CreateCustomerResponse:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+    CreateCustomerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        creditLimit:
+          $ref: '#/components/schemas/Money'
+    Money:
+      type: object
+      properties:
+        amount:
+          type: number
+    CreateOrderResponse:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int64
+    CreateOrderRequest:
+      type: object
+      properties:
+        orderTotal:
+          $ref: '#/components/schemas/Money'
+        customerId:
+          type: integer
+          format: int64
+    GetOrderResponse:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int64
+        orderState:
+          $ref: '#/components/schemas/OrderState'
+    GetCustomerResponse:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        creditLimit:
+          $ref: '#/components/schemas/Money'
+    GetCustomerHistoryResponse:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        creditLimit:
+          $ref: '#/components/schemas/Money'
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetOrderResponse'
+    OrderState:
+      type: string
+      enum:
+        - PENDING
+        - APPROVED
+        - REJECTED

@@ -2,6 +2,7 @@
 dependencies {
     implementation project(":order-service:order-service-domain")
     implementation project(":order-service:order-service-api-messaging")
+    implementation project(":order-service:order-service-api-web")
     implementation project(":customer-service:customer-service-api-messaging")
 
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
@@ -11,6 +12,9 @@ dependencies {
     implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
 
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-flyway"
+    runtimeOnly "org.flywaydb:flyway-database-postgresql"
+    runtimeOnly "org.flywaydb:flyway-sqlserver"
 
 }
 

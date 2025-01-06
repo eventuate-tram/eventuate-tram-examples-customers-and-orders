@@ -17,7 +17,7 @@ public class CustomerOrderHistoryController {
     this.customerViewRepository = customerViewRepository;
   }
 
-  @GetMapping("/customers/{customerId}")
+  @GetMapping("/customers/{customerId}/orderhistory")
   public ResponseEntity<CustomerView> getCustomer(@PathVariable Long customerId) {
     return customerViewRepository
             .findById(customerId)

@@ -74,4 +74,12 @@ public class CustomerService {
     Customer customer = customerRepository.findById(customerId).get();
     customer.unreserveCredit(orderId);
   }
+
+  public Iterable<Customer> findAll() {
+    return customerRepository.findAll();
+  }
+
+  public Optional<Customer> findById(long customerId) {
+    return customerRepository.findById(customerId);
+  }
 }

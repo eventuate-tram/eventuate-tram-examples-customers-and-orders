@@ -4,6 +4,7 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.Cus
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreditReservedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerValidationFailedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.RejectionReason;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
@@ -29,11 +30,11 @@ public class CustomerEventConsumer {
   }
 
   private void handleCustomerCreditReservationFailedEvent(DomainEventEnvelope<CustomerCreditReservationFailedEvent> domainEventEnvelope) {
-    orderService.rejectOrder(domainEventEnvelope.getEvent().getOrderId());
+    orderService.rejectOrder(domainEventEnvelope.getEvent().getOrderId(), RejectionReason.INSUFFICIENT_CREDIT);
   }
 
   private void handleCustomerValidationFailedEvent(DomainEventEnvelope<CustomerValidationFailedEvent> domainEventEnvelope) {
-    orderService.rejectOrder(domainEventEnvelope.getEvent().getOrderId());
+    orderService.rejectOrder(domainEventEnvelope.getEvent().getOrderId(), RejectionReason.UNKNOWN_CUSTOMER);
   }
 
 }

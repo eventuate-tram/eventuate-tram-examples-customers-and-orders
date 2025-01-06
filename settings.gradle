@@ -23,5 +23,8 @@ include 'order-history-service:order-history-service-web'
 include 'order-history-service:order-history-service-event-handling'
 include 'order-history-service:order-history-service-main'
 
+include 'api-gateway-service:api-gateway-service-api-web'
+include 'api-gateway-service:api-gateway-service-main'
+
 include 'end-to-end-tests'
 

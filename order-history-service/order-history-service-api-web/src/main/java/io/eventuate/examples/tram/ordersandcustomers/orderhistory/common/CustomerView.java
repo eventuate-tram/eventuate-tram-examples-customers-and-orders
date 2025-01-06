@@ -45,4 +45,6 @@ public class CustomerView {
   public Money getCreditLimit() {
     return creditLimit;
   }
+
+
 }

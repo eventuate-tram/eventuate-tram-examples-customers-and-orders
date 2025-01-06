@@ -7,9 +7,13 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderResponse;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrdersResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 public class OrderController {
@@ -45,6 +49,13 @@ public class OrderController {
   }
 
   private ResponseEntity<GetOrderResponse> makeSuccessfulResponse(Order order) {
-    return new ResponseEntity<>(new GetOrderResponse(order.getId(), order.getState()), HttpStatus.OK);
+    return new ResponseEntity<>(new GetOrderResponse(order.getId(), order.getState(), order.getRejectionReason()), HttpStatus.OK);
   }
+
+  @GetMapping("/orders")
+  public ResponseEntity<GetOrdersResponse> getAll() {
+    return ResponseEntity.ok(new GetOrdersResponse(StreamSupport.stream(orderRepository.findAll().spliterator(), false)
+        .map(o -> new GetOrderResponse(o.getId(), o.getState(), o.getRejectionReason())).collect(Collectors.toList())));
+  }
+
 }

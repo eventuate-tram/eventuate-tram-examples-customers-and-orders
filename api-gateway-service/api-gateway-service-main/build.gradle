@@ -1,0 +1,44 @@
+
+apply plugin: "java"
+apply plugin: 'org.springframework.boot'
+apply plugin: ComponentTestsPlugin
+
+configurations.all {
+    exclude  module: "spring-boot-starter-web"
+}
+
+dependencies {
+    implementation "org.apache.commons:commons-lang3:3.17.0"
+
+    implementation "org.hamcrest:hamcrest:2.2"
+    implementation project(":api-gateway-service:api-gateway-service-api-web")
+
+    implementation "io.eventuate.util:eventuate-util-swagger-ui"
+
+    implementation "io.projectreactor:reactor-tools"
+
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.cloud:spring-cloud-starter-gateway"
+
+    implementation "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j"
+
+    implementation "org.apache.commons:commons-lang3"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+
+    implementation "org.springframework.boot:spring-boot-starter-validation:3.0.13"
+    implementation "org.springframework.boot:spring-boot-starter-web:3.0.13"
+    implementation "io.micrometer:micrometer-tracing-bridge-brave"
+    implementation "io.zipkin.reporter2:zipkin-reporter-brave"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+    implementation group: 'io.netty', name: 'netty-resolver-dns-native-macos', version: '4.1.75.Final', classifier: 'osx-aarch_64'
+
+    componentTestImplementation "org.springframework.cloud:spring-cloud-contract-wiremock"
+
+}
+
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

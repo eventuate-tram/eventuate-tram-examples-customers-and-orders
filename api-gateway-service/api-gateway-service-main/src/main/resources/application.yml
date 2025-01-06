@@ -1,0 +1,83 @@
+spring.application.name: api-gateway
+
+logging.level.io.github.resilience4j: DEBUG
+logging.level.io.eventuate.examples: INFO
+logging.level.org.springframework.web: TRACE
+
+management.tracing.enabled: false
+management.tracing.sampling.probability: 1
+spring.zipkin.base.url: http://${DOCKER_HOST_IP:localhost}:9411/
+
+apigateway.timeout.millis: 1000
+
+customer:
+  destinations:
+    customerServiceUrl: http://${DOCKER_HOST_IP:localhost}:8082
+order:
+  destinations:
+    orderServiceUrl: http://${DOCKER_HOST_IP:localhost}:8081
+orderhistory:
+  destinations:
+    orderHistoryServiceUrl: http://${DOCKER_HOST_IP:localhost}:8083
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 1
+      waitDurationInOpenState: 10000
+      failureRateThreshold: 60
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: get_order_history
+          uri: ${orderhistory.destinations.orderHistoryServiceUrl}
+          predicates:
+            - Method=GET
+            - Path=/customers/{customerId}/orderhistory
+          filters:
+            - CircuitBreaker=orderServiceCB
+        - id: create_customer
+          uri: ${customer.destinations.customerServiceUrl}
+          predicates:
+            - Method=POST
+            - Path=/customers
+          filters:
+            - CircuitBreaker=customerServiceCB
+        - id: get_customers
+          uri: ${customer.destinations.customerServiceUrl}
+          predicates:
+            - Method=GET
+            - Path=/customers
+          filters:
+            - CircuitBreaker=customerServiceCB
+        - id: get_customer
+          uri: ${customer.destinations.customerServiceUrl}
+          predicates:
+            - Method=GET
+            - Path=/customers/{customerId}
+          filters:
+            - CircuitBreaker=customerServiceCB
+        - id: create_order
+          uri: ${order.destinations.orderServiceUrl}
+          predicates:
+            - Method=POST
+            - Path=/orders
+          filters:
+            - CircuitBreaker=orderServiceCB
+        - id: get_order
+          uri: ${order.destinations.orderServiceUrl}
+          predicates:
+            - Method=GET
+            - Path=/orders/{orderId}
+          filters:
+            - CircuitBreaker=orderServiceCB
+        - id: get_order
+          uri: ${order.destinations.orderServiceUrl}
+          predicates:
+            - Method=GET
+            - Path=/orders
+          filters:
+            - CircuitBreaker=orderServiceCB

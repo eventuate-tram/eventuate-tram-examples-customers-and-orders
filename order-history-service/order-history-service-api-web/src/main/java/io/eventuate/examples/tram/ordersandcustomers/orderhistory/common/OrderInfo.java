@@ -34,4 +34,8 @@ public class OrderInfo {
   public OrderState getState() {
     return state;
   }
+
+  public long getOrderId() {
+    return orderId;
+  }
 }

@@ -1,3 +1,3 @@
 #! /bin/bash
 
-docker run ${1:--it} --network=${PWD##*/}_default --rm  mongo:5.0.6 sh -c "exec /usr/bin/mongo --host mongodb customers_and_orders"
+docker run ${1:--it} --network=CustomersAndOrdersEndToEndTest --rm  mongo:8.0.4 sh -c "exec /usr/bin/mongosh --host order-history-service-db customers_and_orders"

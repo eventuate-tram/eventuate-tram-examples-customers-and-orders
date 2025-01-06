@@ -1,3 +1,19 @@
+apply plugin: EndToEndTestsPlugin
+
+def copyDockerfiles = tasks.register("copyDockerfiles", Copy) {
+    from(project.rootDir)
+    include("customer-service/customer-service-main/Dockerfile", "order-service/order-service-main/Dockerfile", "api-gateway-service/api-gateway-service-main/Dockerfile")
+    into(project.layout.buildDirectory.dir("generated/sources/dockerfiles"))
+}
+
+// Create a dependency on the Dockerfiles without using them
+
+sourceSets {
+    endToEndTest {
+        resources.srcDir copyDockerfiles
+    }
+}
+
 dependencies {
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
     implementation project(":order-history-service:order-history-service-api-web")
@@ -9,5 +25,54 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.boot:spring-boot-starter-json"
 
+    endToEndTestImplementation "org.springframework.boot:spring-boot-starter-web"
+
+    endToEndTestImplementation "org.testcontainers:testcontainers:$testContainersVersion"
+    endToEndTestImplementation "io.eventuate.platform.testcontainer.support:eventuate-platform-testcontainer-support-service:$eventuatePlatformTestContainerSupportVersion"
+    endToEndTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
+    endToEndTestImplementation "io.eventuate.common:eventuate-common-testcontainers"
+    endToEndTestImplementation "io.eventuate.messaging.kafka:eventuate-messaging-kafka-testcontainers"
+    endToEndTestImplementation "org.hamcrest:hamcrest:2.2"
+    endToEndTestImplementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+    endToEndTestImplementation "org.springframework.boot:spring-boot-starter-validation:3.0.13"
+    endToEndTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
+
 }
+
+endToEndTest.dependsOn(":customer-service:customer-service-main:assemble",
+        ":order-service:order-service-main:assemble",
+        ":order-history-service:order-history-service-main:assemble",
+        ":api-gateway-service:api-gateway-service-main:assemble")
+
+check.shouldRunAfter(":customer-service:customer-service-main:check")
+check.shouldRunAfter(":order-service:order-service-main:check")
+check.shouldRunAfter(":order-history-service:order-history-service-main:check")
+check.shouldRunAfter(":api-gateway-service:api-gateway-service-main:check")
+
+endToEndTest {
+    if (project.hasProperty('endToEndTestMode'))
+        systemProperty "endToEndTestMode", endToEndTestMode
+
+}
+
+tasks.withType(Copy).all { duplicatesStrategy 'WARN' }
+
+for (def dbType  in ["MySql", "Postgres", "MsSQL"]) {
+    def springProfilesActive = dbType.toLowerCase()
+    tasks.register("runApplication${dbType}", JavaExec) {
+        description = "Run the application services and the required infrastructure services"
+        classpath = sourceSets.endToEndTest.runtimeClasspath
+        mainClass = "io.eventuate.examples.tram.sagas.ordersandcustomers.application.CustomersAndOrdersMain"
+        systemProperty "logback.debug", "true"
+        systemProperty "eventuate.servicecontainer.serviceimage.version", version
+        systemProperty "eventuate.servicecontainer.baseimage.version", eventuateExamplesBaseImageVersion
+        systemProperty "server.port", "0"
+        systemProperty "spring.profiles.active", springProfilesActive
+        dependsOn(":customer-service:customer-service-main:assemble",
+                ":order-service:order-service-main:assemble",
+                ":order-history-service:order-history-service-main:assemble",
+                ":api-gateway-service:api-gateway-service-main:assemble")
+    }
+}
+
 

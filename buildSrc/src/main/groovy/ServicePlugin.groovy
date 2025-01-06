@@ -10,10 +10,8 @@ class ServicePlugin implements Plugin<Project> {
 
         project.dependencies {
 
-            implementation "org.springframework.cloud:spring-cloud-starter-sleuth"
-            implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin"
-            implementation "io.eventuate.tram.springcloudsleuth:eventuate-tram-spring-cloud-sleuth-tram-starter"
-            implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui"
+            implementation "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j"
+            implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
         }
 
     }

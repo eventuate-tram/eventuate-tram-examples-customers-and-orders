@@ -6,6 +6,7 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderA
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCancelledEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderDetails;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderRejectedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.RejectionReason;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,11 +42,11 @@ public class OrderService {
             orderId, singletonList(new OrderApprovedEvent(order.getOrderDetails())));
   }
 
-  public void rejectOrder(Long orderId) {
+  public void rejectOrder(Long orderId, RejectionReason rejectionReason) {
     Order order = orderRepository
             .findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException("order with id %s not found".formatted(orderId)));
-    order.noteCreditReservationFailed();
+    order.noteCreditReservationFailed(rejectionReason);
     domainEventPublisher.publish(Order.class,
             orderId, singletonList(new OrderRejectedEvent(order.getOrderDetails())));
   }

@@ -11,6 +11,9 @@ dependencies {
     implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
 
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-flyway"
+    runtimeOnly "org.flywaydb:flyway-database-postgresql"
+    runtimeOnly "org.flywaydb:flyway-sqlserver:$flywayVersion"
 
 }
 

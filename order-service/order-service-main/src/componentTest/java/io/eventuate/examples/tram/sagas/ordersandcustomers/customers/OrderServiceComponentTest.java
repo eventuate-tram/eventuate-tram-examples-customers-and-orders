@@ -24,7 +24,7 @@ public class OrderServiceComponentTest {
 
     protected static Logger logger = LoggerFactory.getLogger(OrderServiceComponentTest.class);
 
-    public static EventuateKafkaCluster eventuateKafkaCluster = new EventuateKafkaCluster();
+    public static EventuateKafkaCluster eventuateKafkaCluster = new EventuateKafkaCluster("order-service-tests");
 
     public static EventuateZookeeperContainer zookeeper = eventuateKafkaCluster.zookeeper;
 

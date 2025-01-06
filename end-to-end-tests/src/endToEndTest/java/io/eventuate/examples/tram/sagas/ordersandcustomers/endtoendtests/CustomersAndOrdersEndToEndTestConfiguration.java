@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.endtoendtests;
+package io.eventuate.examples.tram.sagas.ordersandcustomers.endtoendtests;
 
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +16,7 @@ public class CustomersAndOrdersEndToEndTestConfiguration {
   @Bean
   public RestTemplate restTemplate(HttpMessageConverters converters) {
     RestTemplate restTemplate = new RestTemplate();
+    HttpMessageConverter<?> httpMessageConverter = converters.getConverters().get(0);
     List<? extends HttpMessageConverter<?>> httpMessageConverters = Arrays.asList(new MappingJackson2HttpMessageConverter());
     restTemplate.setMessageConverters((List<HttpMessageConverter<?>>) httpMessageConverters);
     return restTemplate;
