@@ -44,6 +44,11 @@ subprojects {
         useJUnitPlatform()
     }
 
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'minutes'
+    }
+
+
 }
 
 
