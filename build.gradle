@@ -4,11 +4,8 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
-        classpath "com.avast.gradle:gradle-docker-compose-plugin:$dockerComposePluginVersion"
     }
 }
-
-apply plugin: 'docker-compose'
 
 subprojects {
 
@@ -49,99 +46,6 @@ subprojects {
 
 }
 
-dockerCompose {
-    environment.put "EVENTUATE_COMMON_VERSION", eventuateCommonImageVersion
-    environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
-    environment.put "EVENTUATE_CDC_KAFKA_ENABLE_BATCH_PROCESSING", eventuateCdcKafkaEnableBatchProcessing
-    environment.put "EVENTUATE_JAVA_BASE_IMAGE_VERSION", eventuateExamplesBaseImageVersion
-    environment.put "EVENTUATE_MESSAGING_KAFKA_IMAGE_VERSION", eventuateMessagingKafkaImageVersion
-    environment.put "SERVICE_IMAGE_VERSION", version
-
-    if (project.ext.has("envFile")) {
-        environment.put "ENV_FILE", project.ext.envFile
-    }
-
-    removeOrphans = true
-    retainContainersOnStartupFailure = true
-
-    dockerComposeStopTimeout = java.time.Duration.ofSeconds(1)
-
-    mysqlbinlog {
-        projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-    }
-
-    mysqlbinloginfrastructure {
-        projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml"]
-        startedServices = ["cdc-service", "zipkin", "zookeeper", "mysql", "mongodb"]
-    }
-
-    mysqlbinlogtextsearch {
-        projectName = null
-        useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-    }
-
-    mysqlbinlogtextsearchcustomersandorders {
-        projectName = null
-        useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        startedServices = ["order-service", "customer-service"]
-    }
-
-    mysqlbinloginfrastructuretextsearch {
-        projectName = null
-        useComposeFiles = ["docker-compose-snapshots-mysql-binlog.yml"]
-        startedServices = ["cdc-service", "elasticsearch"]
-    }
-
-    mssqlpolling {
-        projectName = null
-        useComposeFiles = ["docker-compose-mssql-polling.yml"]
-        removeOrphans = true
-    }
-
-    mssqlpollinginfrastructure {
-        projectName = null
-        useComposeFiles = ["docker-compose-mssql-polling.yml"]
-        startedServices = ["cdc-service", "mongodb"]
-    }
-
-    postgreswal {
-        projectName = null
-        useComposeFiles = ["docker-compose-postgres-wal.yml"]
-    }
-
-    postgreswalinfrastructure {
-        projectName = null
-        useComposeFiles = ["docker-compose-postgres-wal.yml"]
-        startedServices = ["cdc-service", "mongodb"]
-    }
-
-}
-
-subprojects.each {
-  if (it.name.endsWith("-service") || it.name.endsWith("-gateway")) {
-    mysqlbinlogComposeBuild.dependsOn(":" + it.name + ":assemble")
-    mysqlbinlogComposeUp.dependsOn(":" + it.name + ":assemble")
-  }
- }
-
-mysqlbinlogComposeUp.dependsOn(mysqlbinloginfrastructureComposeUp)
-
-task buildAndStartServicesMySql(type: GradleBuild) {
-    tasks = ["mysqlbinlogComposeUp"]
-}
-
-task endToEndTests(type: GradleBuild) {
-    tasks = [":end-to-end-tests:test"]
-}
-
-endToEndTests.dependsOn(mysqlbinlogComposeUp)
-endToEndTests.dependsOn(":end-to-end-tests:cleanTest")
-
-task stopServicesMySql(type: GradleBuild) {
-    tasks = ["mysqlbinlogComposeDown"]
-}
 
 task preCommitCheck {
 

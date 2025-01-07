@@ -22,14 +22,3 @@ workflows:
           name: postgres-wal
           script: ./build-and-test-all-postgres-wal.sh
           java_version_to_install: '17'
-      - eventuate-gradle-build-and-test/build-and-test:
-          name: deploy-artifacts
-          java_version_to_install: '17'
-          requires:
-            -  mysql-binlog-intel
-            -  mysql-binlog-arm
-            -  postgres-wal
-            -  mssql-polling
-          script: ./publish-docker-images.sh
-          context:
-            - publish
