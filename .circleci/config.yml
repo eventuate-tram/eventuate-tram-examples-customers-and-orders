@@ -7,18 +7,21 @@ workflows:
     jobs:
       - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-binlog-intel
+          resource_class: large
           script: ./build-and-test-all-mysql-binlog.sh
           java_version_to_install: '17'
       - eventuate-gradle-build-and-test/build-and-test:
           name: mysql-binlog-arm
-          resource_class: arm.medium
+          resource_class: arm.large
           script: ./build-and-test-all-mysql-binlog.sh
           java_version_to_install: '17'
       - eventuate-gradle-build-and-test/build-and-test:
           name: mssql-polling
+          resource_class: large
           script: ./build-and-test-all-mssql-polling.sh
           java_version_to_install: '17'
       - eventuate-gradle-build-and-test/build-and-test:
           name: postgres-wal
+          resource_class: large
           script: ./build-and-test-all-postgres-wal.sh
           java_version_to_install: '17'
