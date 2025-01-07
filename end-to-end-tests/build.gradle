@@ -37,6 +37,11 @@ dependencies {
     endToEndTestImplementation "org.springframework.boot:spring-boot-starter-validation:3.0.13"
     endToEndTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
 
+    // TODO - need this for MsSQLContainer initialization
+
+    endToEndTestImplementation 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
+
+
 }
 
 endToEndTest.dependsOn(":customer-service:customer-service-main:assemble",
