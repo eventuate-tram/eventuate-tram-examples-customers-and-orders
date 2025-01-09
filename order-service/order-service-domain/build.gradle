@@ -1,7 +1,7 @@
 
 dependencies {
-    implementation project(":order-service:order-service-api-messaging")
-    implementation project(":order-service:order-service-api-web")
+    implementation project(":order-service:order-service-domain-events")
+    implementation project(":order-service:order-service-domain-common")
 
     api "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
     implementation "org.hamcrest:hamcrest:2.2"

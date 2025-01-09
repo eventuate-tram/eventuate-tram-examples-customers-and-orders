@@ -6,7 +6,8 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCust
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.GetCustomerResponse;
 import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.GetCustomersResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.RejectionReason;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.*;
 import io.eventuate.util.test.async.Eventually;
 import org.jetbrains.annotations.Nullable;

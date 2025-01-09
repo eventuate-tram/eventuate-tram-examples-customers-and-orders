@@ -1,5 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.domain.events;
 
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderDetails;
+
 public class OrderCancelledEvent implements OrderEvent {
 
   private OrderDetails orderDetails;

@@ -4,7 +4,7 @@ import io.eventuate.examples.common.money.Money;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerViewRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryViewService;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

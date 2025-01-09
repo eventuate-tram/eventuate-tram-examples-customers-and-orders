@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.orders.domain.events;
+package io.eventuate.examples.tram.ordersandcustomers.orders.domain.common;
 
 import io.eventuate.examples.common.money.Money;
 

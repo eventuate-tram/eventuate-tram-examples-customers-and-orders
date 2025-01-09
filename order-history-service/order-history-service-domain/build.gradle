@@ -1,6 +1,6 @@
 
 dependencies {
-    implementation project(":order-service:order-service-api-messaging")
+    implementation project(":order-service:order-service-domain-events")
     implementation project(":order-history-service:order-history-service-api-web")
 
     api "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"

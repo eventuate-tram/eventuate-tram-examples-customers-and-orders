@@ -1,6 +1,4 @@
 dependencies {
-    implementation "io.eventuate.tram.core:eventuate-tram-spring-events"
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
     compileOnly "org.springframework.boot:spring-boot-starter-data-jpa"
 }
-

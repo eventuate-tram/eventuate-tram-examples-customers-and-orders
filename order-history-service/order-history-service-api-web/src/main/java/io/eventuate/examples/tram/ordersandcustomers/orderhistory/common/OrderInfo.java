@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.common;
 
 import io.eventuate.examples.common.money.Money;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
 
 public class OrderInfo {
 

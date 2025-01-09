@@ -1,6 +1,6 @@
 
 include 'customer-service:customer-service-api-web'
-include 'customer-service:customer-service-api-messaging'
+include 'customer-service:customer-service-domain-events'
 include 'customer-service:customer-service-domain'
 include 'customer-service:customer-service-persistence'
 include 'customer-service:customer-service-web'
@@ -9,7 +9,8 @@ include 'customer-service:customer-service-event-publishing'
 include 'customer-service:customer-service-main'
 
 include 'order-service:order-service-api-web'
-include 'order-service:order-service-api-messaging'
+include 'order-service:order-service-domain-common'
+include 'order-service:order-service-domain-events'
 include 'order-service:order-service-domain'
 include 'order-service:order-service-persistence'
 include 'order-service:order-service-web'

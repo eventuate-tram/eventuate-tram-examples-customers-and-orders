@@ -1,6 +1,5 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
-import io.eventuate.examples.tram.ordersandcustomers.orders.service.OrderService;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

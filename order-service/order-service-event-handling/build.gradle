@@ -1,9 +1,9 @@
 
 dependencies {
     implementation project(":order-service:order-service-domain")
-    implementation project(":order-service:order-service-api-messaging")
-    implementation project(":order-service:order-service-api-web")
-    implementation project(":customer-service:customer-service-api-messaging")
+
+    implementation project(":order-service:order-service-domain-events")
+    implementation project(":customer-service:customer-service-domain-events")
 
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
 

@@ -1,6 +1,6 @@
 
 dependencies {
-    implementation project(":customer-service:customer-service-api-messaging")
+    implementation project(":customer-service:customer-service-domain-events")
 
     api "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
     implementation "org.hamcrest:hamcrest:2.2"
