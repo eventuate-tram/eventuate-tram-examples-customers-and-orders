@@ -34,7 +34,7 @@ public class OrderHistoryServiceComponentTest {
 
     private static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:8.0.4")
             .withNetwork(eventuateKafkaCluster.network)
-            .withNetworkAliases("order-hisπtory-service-db")
+            .withNetworkAliases("order-history-service-db")
             .withReuse(ContainerReuseUtil.shouldReuse());
 
     public static ServiceContainer service =
