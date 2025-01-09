@@ -9,6 +9,7 @@ dependencies {
     implementation "org.springframework:spring-aspects"
 
     testImplementation "org.testcontainers:mongodb:$testContainersVersion"
+    testImplementation project(":util")
 
 }
 

@@ -36,6 +36,7 @@ dependencies {
     endToEndTestImplementation "org.springframework.boot:spring-boot-starter-thymeleaf"
     endToEndTestImplementation "org.springframework.boot:spring-boot-starter-validation:3.0.13"
     endToEndTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
+    endToEndTestImplementation project(":util")
 
     // TODO - need this for MsSQLContainer initialization
 

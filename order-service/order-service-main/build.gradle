@@ -22,6 +22,7 @@ dependencies {
     componentTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
     componentTestImplementation "io.rest-assured:rest-assured"
     componentTestImplementation project(":order-service:order-service-api-web")
+    componentTestImplementation project(":util")
 
 }
 

@@ -5,6 +5,7 @@ import io.eventuate.common.testcontainers.DatabaseContainerFactory;
 import io.eventuate.common.testcontainers.EventuateDatabaseContainer;
 import io.eventuate.common.testcontainers.EventuateGenericContainer;
 import io.eventuate.common.testcontainers.EventuateZookeeperContainer;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaCluster;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
@@ -29,8 +30,8 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
   public ApplicationUnderTestUsingTestContainers() {
     EventuateKafkaCluster eventuateKafkaCluster = new EventuateKafkaCluster("CustomersAndOrdersEndToEndTest");
 
-    EventuateZookeeperContainer zookeeper = eventuateKafkaCluster.zookeeper;
-    EventuateKafkaContainer kafka = eventuateKafkaCluster.kafka.dependsOn(zookeeper);
+    EventuateZookeeperContainer zookeeper = eventuateKafkaCluster.zookeeper.withReuse(ContainerReuseUtil.shouldReuse());
+    EventuateKafkaContainer kafka = eventuateKafkaCluster.kafka.dependsOn(zookeeper).withReuse(ContainerReuseUtil.shouldReuse());
 
     EventuateDatabaseContainer<?> customerServiceDatabase = DatabaseContainerFactory.makeVanillaDatabaseContainer()
         .withNetwork(eventuateKafkaCluster.network)
@@ -60,7 +61,7 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
     mongoDBContainer = new MongoDBContainer("mongo:8.0.4")
         .withNetwork(eventuateKafkaCluster.network)
         .withNetworkAliases("order-history-service-db")
-        .withReuse(true);
+        .withReuse(ContainerReuseUtil.shouldReuse());
     orderHistoryService = ServiceContainer.makeFromDockerfileInFileSystem("../order-history-service/order-history-service-main/Dockerfile")
             .withExposedPorts(8080)
             .withEnv("SPRING_DATA_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")

@@ -19,6 +19,7 @@ dependencies {
     componentTestImplementation "io.rest-assured:rest-assured"
     componentTestImplementation project(":order-history-service:order-history-service-api-web")
     componentTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
+    componentTestImplementation project(":util")
 
 }
 

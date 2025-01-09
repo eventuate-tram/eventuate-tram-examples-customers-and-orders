@@ -4,6 +4,7 @@ package io.eventuate.examples.tram.sagas.ordersandcustomers.customers;
 import io.eventuate.common.testcontainers.DatabaseContainerFactory;
 import io.eventuate.common.testcontainers.EventuateDatabaseContainer;
 import io.eventuate.common.testcontainers.EventuateZookeeperContainer;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaCluster;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
@@ -34,7 +35,7 @@ public class OrderServiceComponentTest {
             DatabaseContainerFactory.makeVanillaDatabaseContainer()
                     .withNetwork(eventuateKafkaCluster.network)
                     .withNetworkAliases("order-service-db")
-                    .withReuse(true);
+                    .withReuse(ContainerReuseUtil.shouldReuse());
 
 
     public static ServiceContainer service =

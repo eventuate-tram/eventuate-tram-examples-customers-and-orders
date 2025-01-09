@@ -5,6 +5,7 @@ import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.Custom
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryViewService;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class OrderHistoryViewServiceIntegrationTest {
 
   private static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:8.0.4")
-      .withReuse(true);
+      .withReuse(ContainerReuseUtil.shouldReuse());
 
   @DynamicPropertySource
   public static void startMongo(DynamicPropertyRegistry registry) {

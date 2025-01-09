@@ -2,6 +2,7 @@ package io.eventuate.examples.tram.sagas.ordersandcustomers.customers;
 
 
 import io.eventuate.common.testcontainers.EventuateZookeeperContainer;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaCluster;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
@@ -33,8 +34,8 @@ public class OrderHistoryServiceComponentTest {
 
     private static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:8.0.4")
             .withNetwork(eventuateKafkaCluster.network)
-            .withNetworkAliases("order-history-service-db")
-            .withReuse(true);
+            .withNetworkAliases("order-hisπtory-service-db")
+            .withReuse(ContainerReuseUtil.shouldReuse());
 
     public static ServiceContainer service =
             ServiceContainer.makeFromDockerfileOnClasspath()
