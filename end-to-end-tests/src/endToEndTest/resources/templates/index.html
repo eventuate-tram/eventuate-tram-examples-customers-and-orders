@@ -15,6 +15,9 @@
 <li>
     <a th:href="${orderServiceUrl} + '/swagger-ui/index.html'">Order Service Swagger UI</a>
 </li>
+<li>
+    <a th:href="${orderHistoryServiceUrl} + '/swagger-ui/index.html'">Order History Service Swagger UI</a>
+</li>
 </ul>
 
 <h2>API endpoints</h2>
@@ -28,6 +31,9 @@
     <li>
         Order Service:&nbsp;<a th:href="${orderServiceUrl}"><span th:text="${orderServiceUrl}"></span></a>
     </li>
+    <li>
+        Order History Service:&nbsp;<a th:href="${orderHistoryServiceUrl}"><span th:text="${orderHistoryServiceUrl}"></span></a>
+    </li>
 </ul>
 
 <h2>Using curl</h2>
@@ -38,6 +44,7 @@ Use curl to:
     <li>Create a customer</li>
     <li>Create an order</li>
     <li>Get an order</li>
+    <li>Get the order history</li>
 </ol>
 
 <h2>Step 1: Create a Customer</h2>
@@ -66,6 +73,12 @@ curl -X POST --header "Content-Type: application/json" -d '{
 
 <pre><code>
 curl -X GET [[${apiGatewayUrl}]]/orders/1
+</code></pre>
+
+<h2>Step 4: Get Order History</h2>
+
+<pre><code>
+curl -X GET [[${apiGatewayUrl}]]/customers/1/orderhistory
 </code></pre>
 
 <h2>Accessing the service databases</h2>

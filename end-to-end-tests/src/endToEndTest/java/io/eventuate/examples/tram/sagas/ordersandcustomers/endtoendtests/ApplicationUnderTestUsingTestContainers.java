@@ -124,6 +124,10 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
       return orderService.getFirstMappedPort();
   }
 
+  public int getOrderHistoryServicePort() {
+      return orderHistoryService.getFirstMappedPort();
+  }
+
   @Override
   boolean exposesSwaggerUiForBackendServices() {
     return true;

@@ -25,4 +25,9 @@ public class ApplicationUnderTestUsingStubbed extends ApplicationUnderTest {
     boolean exposesSwaggerUiForBackendServices() {
         return false;
     }
+
+    @Override
+    public int getOrderHistoryServicePort() {
+        return 8084;
+    }
 }

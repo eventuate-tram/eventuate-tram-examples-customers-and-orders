@@ -25,10 +25,12 @@ public class CustomersAndOrdersMain {
         int apigatewayPort = application.getApigatewayPort();
         int customerServicePort = application.getCustomerServicePort();
         int orderServicePort = application.getOrderServicePort();
+        int orderHistoryServicePort = application.getOrderHistoryServicePort();
 
         model.addAttribute("apiGatewayUrl", "http://localhost:" + apigatewayPort);
         model.addAttribute("customerServiceUrl", "http://localhost:" + customerServicePort);
         model.addAttribute("orderServiceUrl", "http://localhost:" + orderServicePort);
+        model.addAttribute("orderHistoryServiceUrl", "http://localhost:" + orderHistoryServicePort);
 
         return "index";
 

@@ -32,4 +32,5 @@ public abstract class ApplicationUnderTest {
   public abstract int getOrderServicePort();
   abstract boolean exposesSwaggerUiForBackendServices();
 
+  public abstract int getOrderHistoryServicePort();
 }
