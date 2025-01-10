@@ -4,10 +4,9 @@ import io.eventuate.cdc.testcontainers.EventuateCdcContainer;
 import io.eventuate.common.testcontainers.DatabaseContainerFactory;
 import io.eventuate.common.testcontainers.EventuateDatabaseContainer;
 import io.eventuate.common.testcontainers.EventuateGenericContainer;
-import io.eventuate.common.testcontainers.EventuateZookeeperContainer;
 import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
-import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaCluster;
-import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaContainer;
+import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeCluster;
+import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
@@ -28,10 +27,12 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
   private final ServiceContainer orderHistoryService;
 
   public ApplicationUnderTestUsingTestContainers() {
-    EventuateKafkaCluster eventuateKafkaCluster = new EventuateKafkaCluster("CustomersAndOrdersEndToEndTest");
+    EventuateKafkaNativeCluster eventuateKafkaCluster = new EventuateKafkaNativeCluster("CustomersAndOrdersEndToEndTest");
 
-    EventuateZookeeperContainer zookeeper = eventuateKafkaCluster.zookeeper.withReuse(ContainerReuseUtil.shouldReuse());
-    EventuateKafkaContainer kafka = eventuateKafkaCluster.kafka.dependsOn(zookeeper).withReuse(ContainerReuseUtil.shouldReuse());
+    EventuateKafkaNativeContainer kafka = eventuateKafkaCluster.kafka;
+    // TODO Typing is wrong
+    // TODO kafka.getBootstrapServersForContainer() requires a network alias to be set
+    kafka.withReuse(ContainerReuseUtil.shouldReuse()).withNetworkAliases("kafka");
 
     EventuateDatabaseContainer<?> customerServiceDatabase = DatabaseContainerFactory.makeVanillaDatabaseContainer()
         .withNetwork(eventuateKafkaCluster.network)
@@ -46,7 +47,9 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("customer-service")
             .withDatabase(customerServiceDatabase)
-            .withKafka(kafka)
+//                    .withKafka(kafka)
+            .withEnv("EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS", kafka.getBootstrapServersForContainer())
+            .dependsOn(kafka)
             .dependsOn(customerServiceDatabase, kafka)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC customer-service:"))
             .withReuse(false);
@@ -54,7 +57,9 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("order-service")
             .withDatabase(orderServiceDatabase)
-            .withKafka(kafka)
+//                    .withKafka(kafka)
+            .withEnv("EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS", kafka.getBootstrapServersForContainer())
+            .dependsOn(kafka)
             .dependsOn(orderServiceDatabase, kafka)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-service:"))
             .withReuse(false);
@@ -67,7 +72,9 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
             .withEnv("SPRING_DATA_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("order-history-service")
-            .withKafka(kafka)
+//                    .withKafka(kafka)
+            .withEnv("EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS", kafka.getBootstrapServersForContainer())
+            .dependsOn(kafka)
             .dependsOn(kafka, mongoDBContainer)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-history-service:"))
             .withReuse(false);
@@ -83,7 +90,8 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
             .withLabel("io.eventuate.name", "api-gateway-service")
             .withReuse(false);
     cdc = new EventuateCdcContainer()
-            .withKafkaCluster(eventuateKafkaCluster)
+            .withKafka(kafka)
+            .withKafkaLeadership()
             .withTramPipeline(customerServiceDatabase)
             .withTramPipeline(orderServiceDatabase)
             .dependsOn(customerService, orderService)
