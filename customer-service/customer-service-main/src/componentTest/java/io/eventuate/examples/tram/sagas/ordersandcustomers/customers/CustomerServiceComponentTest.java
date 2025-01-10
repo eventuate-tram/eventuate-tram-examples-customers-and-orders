@@ -3,10 +3,9 @@ package io.eventuate.examples.tram.sagas.ordersandcustomers.customers;
 
 import io.eventuate.common.testcontainers.DatabaseContainerFactory;
 import io.eventuate.common.testcontainers.EventuateDatabaseContainer;
-import io.eventuate.common.testcontainers.EventuateZookeeperContainer;
 import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
-import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaCluster;
-import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaContainer;
+import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeCluster;
+import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Assertions;
@@ -25,11 +24,11 @@ public class CustomerServiceComponentTest {
 
     protected static Logger logger = LoggerFactory.getLogger(CustomerServiceComponentTest.class);
 
-    public static EventuateKafkaCluster eventuateKafkaCluster = new EventuateKafkaCluster("customer-service-tests");
+    public static EventuateKafkaNativeCluster eventuateKafkaCluster = new EventuateKafkaNativeCluster("customer-service-tests");
 
-    public static EventuateZookeeperContainer zookeeper = eventuateKafkaCluster.zookeeper;
-
-    public static EventuateKafkaContainer kafka = eventuateKafkaCluster.kafka.dependsOn(zookeeper);
+    public static EventuateKafkaNativeContainer kafka = eventuateKafkaCluster.kafka
+        .withNetworkAliases("kafka")
+        .withReuse(ContainerReuseUtil.shouldReuse());
 
     public static EventuateDatabaseContainer<?> database =
             DatabaseContainerFactory.makeVanillaDatabaseContainer()
@@ -43,7 +42,6 @@ public class CustomerServiceComponentTest {
                     .withNetwork(eventuateKafkaCluster.network)
                     .withDatabase(database)
                     .withKafka(kafka)
-                    .dependsOn(kafka, database)
                     .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC customer-service:"))
                     .withReuse(false) // should rebuild
             ;

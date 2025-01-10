@@ -1,10 +1,9 @@
 package io.eventuate.examples.tram.sagas.ordersandcustomers.customers;
 
 
-import io.eventuate.common.testcontainers.EventuateZookeeperContainer;
 import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
-import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaCluster;
-import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaContainer;
+import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeCluster;
+import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Assertions;
@@ -24,11 +23,11 @@ public class OrderHistoryServiceComponentTest {
 
     protected static Logger logger = LoggerFactory.getLogger(OrderHistoryServiceComponentTest.class);
 
-    public static EventuateKafkaCluster eventuateKafkaCluster = new EventuateKafkaCluster();
+    public static EventuateKafkaNativeCluster eventuateKafkaCluster = new EventuateKafkaNativeCluster();
 
-    public static EventuateZookeeperContainer zookeeper = eventuateKafkaCluster.zookeeper;
-
-    public static EventuateKafkaContainer kafka = eventuateKafkaCluster.kafka.dependsOn(zookeeper);
+    public static EventuateKafkaNativeContainer kafka = eventuateKafkaCluster.kafka
+        .withNetworkAliases("kafka")
+        .withReuse(ContainerReuseUtil.shouldReuse());
 
     // Use testcontainers module to run MongoDB
 
@@ -41,7 +40,6 @@ public class OrderHistoryServiceComponentTest {
             ServiceContainer.makeFromDockerfileOnClasspath()
                     .withNetwork(eventuateKafkaCluster.network)
                     .withKafka(kafka)
-                    .dependsOn(kafka)
                     .withEnv("SPRING_DATA_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
                     .dependsOn(mongoDBContainer)
                     .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-history-service:"))

@@ -29,10 +29,9 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
   public ApplicationUnderTestUsingTestContainers() {
     EventuateKafkaNativeCluster eventuateKafkaCluster = new EventuateKafkaNativeCluster("CustomersAndOrdersEndToEndTest");
 
-    EventuateKafkaNativeContainer kafka = eventuateKafkaCluster.kafka;
-    // TODO Typing is wrong
-    // TODO kafka.getBootstrapServersForContainer() requires a network alias to be set
-    kafka.withReuse(ContainerReuseUtil.shouldReuse()).withNetworkAliases("kafka");
+    EventuateKafkaNativeContainer kafka = eventuateKafkaCluster.kafka
+        .withReuse(ContainerReuseUtil.shouldReuse())
+        .withNetworkAliases("kafka");
 
     EventuateDatabaseContainer<?> customerServiceDatabase = DatabaseContainerFactory.makeVanillaDatabaseContainer()
         .withNetwork(eventuateKafkaCluster.network)
@@ -47,20 +46,14 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("customer-service")
             .withDatabase(customerServiceDatabase)
-//                    .withKafka(kafka)
-            .withEnv("EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS", kafka.getBootstrapServersForContainer())
-            .dependsOn(kafka)
-            .dependsOn(customerServiceDatabase, kafka)
+            .withKafka(kafka)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC customer-service:"))
             .withReuse(false);
     orderService = ServiceContainer.makeFromDockerfileInFileSystem("../order-service/order-service-main/Dockerfile")
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("order-service")
             .withDatabase(orderServiceDatabase)
-//                    .withKafka(kafka)
-            .withEnv("EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS", kafka.getBootstrapServersForContainer())
-            .dependsOn(kafka)
-            .dependsOn(orderServiceDatabase, kafka)
+            .withKafka(kafka)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-service:"))
             .withReuse(false);
     mongoDBContainer = new MongoDBContainer("mongo:8.0.4")
@@ -69,13 +62,11 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
         .withReuse(ContainerReuseUtil.shouldReuse());
     orderHistoryService = ServiceContainer.makeFromDockerfileInFileSystem("../order-history-service/order-history-service-main/Dockerfile")
             .withExposedPorts(8080)
-            .withEnv("SPRING_DATA_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("order-history-service")
-//                    .withKafka(kafka)
-            .withEnv("EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS", kafka.getBootstrapServersForContainer())
-            .dependsOn(kafka)
-            .dependsOn(kafka, mongoDBContainer)
+            .withKafka(kafka)
+            .withEnv("SPRING_DATA_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
+            .dependsOn(mongoDBContainer)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-history-service:"))
             .withReuse(false);
     apiGatewayService = ServiceContainer.makeFromDockerfileInFileSystem("../api-gateway-service/api-gateway-service-main/Dockerfile")
