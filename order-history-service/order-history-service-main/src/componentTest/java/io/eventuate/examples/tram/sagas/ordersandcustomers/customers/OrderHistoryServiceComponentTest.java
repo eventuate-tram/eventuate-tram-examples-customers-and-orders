@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.sagas.ordersandcustomers.customers;
 
 
-import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.testutil.testcontainers.ContainerTestUtil;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeCluster;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
@@ -27,14 +27,14 @@ public class OrderHistoryServiceComponentTest {
 
     public static EventuateKafkaNativeContainer kafka = eventuateKafkaCluster.kafka
         .withNetworkAliases("kafka")
-        .withReuse(ContainerReuseUtil.shouldReuse());
+        .withReuse(ContainerTestUtil.shouldReuse());
 
     // Use testcontainers module to run MongoDB
 
     private static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:8.0.4")
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("order-history-service-db")
-            .withReuse(ContainerReuseUtil.shouldReuse());
+            .withReuse(ContainerTestUtil.shouldReuse());
 
     public static ServiceContainer service =
             ServiceContainer.makeFromDockerfileOnClasspath()

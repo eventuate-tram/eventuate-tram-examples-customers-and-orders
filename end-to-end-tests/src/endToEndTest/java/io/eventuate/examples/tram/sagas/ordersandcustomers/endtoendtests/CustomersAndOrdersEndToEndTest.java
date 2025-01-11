@@ -8,7 +8,10 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.GetCustome
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.RejectionReason;
-import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.*;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRequest;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderResponse;
+import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrdersResponse;
 import io.eventuate.util.test.async.Eventually;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;
@@ -43,10 +46,10 @@ public class CustomersAndOrdersEndToEndTest {
 
     private static Logger logger = LoggerFactory.getLogger(CustomersAndOrdersEndToEndTest.class);
 
-    private static ApplicationUnderTest applicationUnderTest = ApplicationUnderTest.make();
+    private static final ApplicationUnderTest applicationUnderTest = ApplicationUnderTest.make();
     private final Money orderTotalUnderCreditLimit = new Money("12.34");
     private final Money orderTotalOverCreditLimit = new Money("123.40");
-    private Money creditLimit = new Money("15.00");
+    private final Money creditLimit = new Money("15.00");
 
 
     @BeforeAll

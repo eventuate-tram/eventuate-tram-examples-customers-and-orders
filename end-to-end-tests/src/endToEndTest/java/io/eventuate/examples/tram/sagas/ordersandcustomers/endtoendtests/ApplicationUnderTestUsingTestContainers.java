@@ -4,7 +4,7 @@ import io.eventuate.cdc.testcontainers.EventuateCdcContainer;
 import io.eventuate.common.testcontainers.DatabaseContainerFactory;
 import io.eventuate.common.testcontainers.EventuateDatabaseContainer;
 import io.eventuate.common.testcontainers.EventuateGenericContainer;
-import io.eventuate.examples.tram.sagas.ordersandcustomers.ContainerReuseUtil;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.testutil.testcontainers.ContainerTestUtil;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeCluster;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
@@ -30,7 +30,7 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
     EventuateKafkaNativeCluster eventuateKafkaCluster = new EventuateKafkaNativeCluster("CustomersAndOrdersEndToEndTest");
 
     EventuateKafkaNativeContainer kafka = eventuateKafkaCluster.kafka
-        .withReuse(ContainerReuseUtil.shouldReuse())
+        .withReuse(ContainerTestUtil.shouldReuse())
         .withNetworkAliases("kafka");
 
     EventuateDatabaseContainer<?> customerServiceDatabase = DatabaseContainerFactory.makeVanillaDatabaseContainer()
@@ -48,18 +48,21 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
             .withDatabase(customerServiceDatabase)
             .withKafka(kafka)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC customer-service:"))
-            .withReuse(false);
+            .withReuse(false)
+            .withStartupTimeout(ContainerTestUtil.startupTimeout());
+            ;
     orderService = ServiceContainer.makeFromDockerfileInFileSystem("../order-service/order-service-main/Dockerfile")
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("order-service")
             .withDatabase(orderServiceDatabase)
             .withKafka(kafka)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-service:"))
-            .withReuse(false);
+            .withReuse(false)
+            .withStartupTimeout(ContainerTestUtil.startupTimeout());
     mongoDBContainer = new MongoDBContainer("mongo:8.0.4")
         .withNetwork(eventuateKafkaCluster.network)
         .withNetworkAliases("order-history-service-db")
-        .withReuse(ContainerReuseUtil.shouldReuse());
+        .withReuse(ContainerTestUtil.shouldReuse());
     orderHistoryService = ServiceContainer.makeFromDockerfileInFileSystem("../order-history-service/order-history-service-main/Dockerfile")
             .withExposedPorts(8080)
             .withNetwork(eventuateKafkaCluster.network)
@@ -68,7 +71,8 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
             .withEnv("SPRING_DATA_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
             .dependsOn(mongoDBContainer)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-history-service:"))
-            .withReuse(false);
+            .withReuse(false)
+            .withStartupTimeout(ContainerTestUtil.startupTimeout());
     apiGatewayService = ServiceContainer.makeFromDockerfileInFileSystem("../api-gateway-service/api-gateway-service-main/Dockerfile")
             .withNetwork(eventuateKafkaCluster.network)
             .withExposedPorts(8080)
