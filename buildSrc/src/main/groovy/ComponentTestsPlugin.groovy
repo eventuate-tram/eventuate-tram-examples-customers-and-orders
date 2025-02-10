@@ -42,7 +42,6 @@ class ComponentTestsPlugin implements Plugin<Project> {
                 shouldRunAfter("integrationTest")
             // Ensures that JAR is built prior to building images
             dependsOn("assemble")
-            systemProperty "eventuate.servicecontainer.baseimage.version", project.ext.eventuateExamplesBaseImageVersion
             systemProperty "eventuate.servicecontainer.serviceimage.version", project.version
         }
         project.tasks.findByName("check").dependsOn(project.tasks.componentTest)

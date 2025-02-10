@@ -30,7 +30,6 @@ class EndToEndTestsPlugin implements Plugin<Project> {
         project.task("endToEndTest", type: Test) {
             testClassesDirs = project.sourceSets.endToEndTest.output.classesDirs
             classpath = project.sourceSets.endToEndTest.runtimeClasspath
-            systemProperty "eventuate.servicecontainer.baseimage.version", project.ext.eventuateExamplesBaseImageVersion
             systemProperty "eventuate.servicecontainer.serviceimage.version", project.version
         }
 

@@ -71,7 +71,6 @@ for (def dbType  in ["MySql", "Postgres", "MsSQL"]) {
         mainClass = "io.eventuate.examples.tram.sagas.ordersandcustomers.application.CustomersAndOrdersMain"
         systemProperty "logback.debug", "true"
         systemProperty "eventuate.servicecontainer.serviceimage.version", version
-        systemProperty "eventuate.servicecontainer.baseimage.version", eventuateExamplesBaseImageVersion
         systemProperty "server.port", "0"
         systemProperty "spring.profiles.active", springProfilesActive
         dependsOn(":customer-service:customer-service-main:assemble",
