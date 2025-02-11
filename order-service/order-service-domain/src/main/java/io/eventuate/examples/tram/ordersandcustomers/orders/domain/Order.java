@@ -1,10 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
 
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCreatedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderDetails;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.RejectionReason;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import jakarta.persistence.*;
 

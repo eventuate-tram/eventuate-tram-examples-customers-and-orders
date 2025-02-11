@@ -1,8 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
 import io.eventuate.examples.common.money.Money;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.OrderView;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistory.orderservice.OrderState;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;

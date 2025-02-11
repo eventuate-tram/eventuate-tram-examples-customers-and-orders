@@ -1,7 +1,7 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.web.customers;
 
+import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerViewRepository;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

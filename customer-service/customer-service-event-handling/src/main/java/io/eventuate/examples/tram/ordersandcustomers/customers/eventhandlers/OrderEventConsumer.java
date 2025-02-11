@@ -1,8 +1,8 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.eventhandlers;
 
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerService;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCancelledEvent;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCreatedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderCancelledEvent;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderCreatedEvent;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;

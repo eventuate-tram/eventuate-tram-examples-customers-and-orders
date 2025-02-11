@@ -1,10 +1,10 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.views.orderhistory;
 
 import io.eventuate.examples.common.money.Money;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerViewRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryViewService;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistory.orderservice.OrderState;
 import io.eventuate.examples.tram.sagas.ordersandcustomers.testutil.testcontainers.ContainerTestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

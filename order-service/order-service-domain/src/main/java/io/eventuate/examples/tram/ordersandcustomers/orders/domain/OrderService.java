@@ -1,10 +1,5 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderDetails;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.RejectionReason;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderApprovedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCancelledEvent;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderRejectedEvent;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import org.springframework.transaction.annotation.Transactional;

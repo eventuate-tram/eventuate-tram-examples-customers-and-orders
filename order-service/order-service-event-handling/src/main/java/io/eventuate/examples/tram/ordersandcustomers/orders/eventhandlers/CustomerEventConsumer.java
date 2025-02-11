@@ -4,7 +4,7 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerCr
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerCreditReservedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerValidationFailedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderService;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.RejectionReason;
+import io.eventuate.examples.tram.ordersandcustomers.orders.domain.RejectionReason;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
