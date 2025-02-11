@@ -1,5 +1,4 @@
 
-include 'util'
 include 'customer-service:customer-service-domain'
 include 'customer-service:customer-service-persistence'
 include 'customer-service:customer-service-web'

@@ -18,7 +18,6 @@ dependencies {
     componentTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
     componentTestImplementation "io.rest-assured:rest-assured"
     componentTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
-    componentTestImplementation project(":util")
 
 }
 

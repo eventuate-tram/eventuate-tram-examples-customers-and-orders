@@ -6,9 +6,9 @@ dependencies {
 
     implementation "org.springframework.retry:spring-retry"
     implementation "org.springframework:spring-aspects"
+    implementation "io.eventuate.common:eventuate-common-testcontainers"
 
     testImplementation "org.testcontainers:mongodb:$testContainersVersion"
-    testImplementation project(":util")
 
 }
 
