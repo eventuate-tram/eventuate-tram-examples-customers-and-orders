@@ -1,9 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
 import io.eventuate.examples.common.money.Money;
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreditReservationFailedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreditReservedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerValidationFailedEvent;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import jakarta.transaction.Transactional;

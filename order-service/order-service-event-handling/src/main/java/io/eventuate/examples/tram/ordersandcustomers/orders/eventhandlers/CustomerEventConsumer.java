@@ -1,8 +1,8 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.eventhandlers;
 
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreditReservationFailedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreditReservedEvent;
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerValidationFailedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerCreditReservationFailedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerCreditReservedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerValidationFailedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderService;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.RejectionReason;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;

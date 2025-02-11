@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.customers.webapi;
+package io.eventuate.examples.tram.ordersandcustomers.customers.web;
 
 
 import io.eventuate.examples.common.money.Money;

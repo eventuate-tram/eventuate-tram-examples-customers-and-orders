@@ -1,10 +1,6 @@
 package io.eventuate.examples.tram.sagas.ordersandcustomers.endtoendtests;
 
 import io.eventuate.examples.common.money.Money;
-import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerRequest;
-import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerResponse;
-import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.GetCustomerResponse;
-import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.GetCustomersResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.common.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.OrderState;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.common.RejectionReason;
@@ -12,6 +8,10 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderRe
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.CreateOrderResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrderResponse;
 import io.eventuate.examples.tram.ordersandcustomers.orders.webapi.GetOrdersResponse;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.endtoendtests.proxies.customerservice.CreateCustomerRequest;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.endtoendtests.proxies.customerservice.CreateCustomerResponse;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.endtoendtests.proxies.customerservice.GetCustomerResponse;
+import io.eventuate.examples.tram.sagas.ordersandcustomers.endtoendtests.proxies.customerservice.GetCustomersResponse;
 import io.eventuate.util.test.async.Eventually;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;

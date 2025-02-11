@@ -1,7 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
 import io.eventuate.examples.common.money.Money;
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreatedEvent;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import jakarta.persistence.*;
 

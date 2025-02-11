@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.customers.domain.events;
+package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
 import io.eventuate.tram.events.common.DomainEvent;
 

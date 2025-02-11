@@ -1,6 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend;
 
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreatedEvent;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerCreatedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderApprovedEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCancelledEvent;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.events.OrderCreatedEvent;
@@ -12,7 +12,7 @@ import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
 
 public class OrderHistoryEventConsumer {
 
-  private OrderHistoryViewService orderHistoryViewService;
+  private final OrderHistoryViewService orderHistoryViewService;
 
   public OrderHistoryEventConsumer(OrderHistoryViewService orderHistoryViewService) {
     this.orderHistoryViewService = orderHistoryViewService;

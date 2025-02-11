@@ -2,10 +2,6 @@ package io.eventuate.examples.tram.ordersandcustomers.customers.web;
 
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerService;
-import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerRequest;
-import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.CreateCustomerResponse;
-import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.GetCustomerResponse;
-import io.eventuate.examples.tram.ordersandcustomers.customers.webapi.GetCustomersResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

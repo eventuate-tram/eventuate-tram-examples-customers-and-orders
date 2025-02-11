@@ -1,4 +1,4 @@
-package io.eventuate.examples.tram.ordersandcustomers.customers.webapi;
+package io.eventuate.examples.tram.sagas.ordersandcustomers.endtoendtests.proxies.customerservice;
 
 import java.util.List;
 
