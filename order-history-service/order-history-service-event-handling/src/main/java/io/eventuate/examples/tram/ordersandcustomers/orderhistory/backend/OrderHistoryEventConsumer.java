@@ -33,7 +33,7 @@ public class OrderHistoryEventConsumer {
   private void customerCreatedEventHandler(DomainEventEnvelope<CustomerCreatedEvent> domainEventEnvelope) {
     CustomerCreatedEvent customerCreatedEvent = domainEventEnvelope.getEvent();
     orderHistoryViewService.createCustomer(Long.parseLong(domainEventEnvelope.getAggregateId()),
-            customerCreatedEvent.getName(), customerCreatedEvent.getCreditLimit());
+        customerCreatedEvent.name(), customerCreatedEvent.creditLimit());
   }
 
   private void orderCreatedEventHandler(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope) {

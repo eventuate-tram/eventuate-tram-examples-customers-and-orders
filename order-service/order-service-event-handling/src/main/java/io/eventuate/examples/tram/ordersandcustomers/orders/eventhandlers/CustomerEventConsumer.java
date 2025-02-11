@@ -26,15 +26,15 @@ public class CustomerEventConsumer {
   }
 
   private void handleCustomerCreditReservedEvent(DomainEventEnvelope<CustomerCreditReservedEvent> domainEventEnvelope) {
-    orderService.approveOrder(domainEventEnvelope.getEvent().getOrderId());
+    orderService.approveOrder(domainEventEnvelope.getEvent().orderId());
   }
 
   private void handleCustomerCreditReservationFailedEvent(DomainEventEnvelope<CustomerCreditReservationFailedEvent> domainEventEnvelope) {
-    orderService.rejectOrder(domainEventEnvelope.getEvent().getOrderId(), RejectionReason.INSUFFICIENT_CREDIT);
+    orderService.rejectOrder(domainEventEnvelope.getEvent().orderId(), RejectionReason.INSUFFICIENT_CREDIT);
   }
 
   private void handleCustomerValidationFailedEvent(DomainEventEnvelope<CustomerValidationFailedEvent> domainEventEnvelope) {
-    orderService.rejectOrder(domainEventEnvelope.getEvent().getOrderId(), RejectionReason.UNKNOWN_CUSTOMER);
+    orderService.rejectOrder(domainEventEnvelope.getEvent().orderId(), RejectionReason.UNKNOWN_CUSTOMER);
   }
 
 }

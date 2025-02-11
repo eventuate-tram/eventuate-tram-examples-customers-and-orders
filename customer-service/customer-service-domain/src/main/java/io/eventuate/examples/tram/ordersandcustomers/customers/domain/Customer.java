@@ -1,10 +1,10 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
-import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreatedEvent;
 import io.eventuate.examples.common.money.Money;
+import io.eventuate.examples.tram.ordersandcustomers.customers.domain.events.CustomerCreatedEvent;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
-
 import jakarta.persistence.*;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public class Customer {
   public static ResultWithEvents<Customer> create(String name, Money creditLimit) {
     Customer customer = new Customer(name, creditLimit);
     return new ResultWithEvents<>(customer,
-            singletonList(new CustomerCreatedEvent(customer.getName(), customer.getCreditLimit())));
+            singletonList(new CustomerCreatedEvent(customer.getId(), customer.getName(), customer.getCreditLimit())));
   }
 
   public Long getId() {

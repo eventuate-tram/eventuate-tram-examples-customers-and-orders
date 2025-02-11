@@ -42,7 +42,7 @@ public class CustomerService {
       logger.info("Non-existent customer: {}", customerId);
       domainEventPublisher.publish(Customer.class,
               customerId,
-              Collections.singletonList(new CustomerValidationFailedEvent(orderId)));
+              Collections.singletonList(new CustomerValidationFailedEvent(customerId, orderId)));
       return;
     }
 
@@ -53,7 +53,7 @@ public class CustomerService {
       customer.reserveCredit(orderId, orderTotal);
 
       CustomerCreditReservedEvent customerCreditReservedEvent =
-              new CustomerCreditReservedEvent(orderId);
+              new CustomerCreditReservedEvent(customerId, orderId);
 
       domainEventPublisher.publish(Customer.class,
               customer.getId(),
@@ -62,7 +62,7 @@ public class CustomerService {
     } catch (CustomerCreditLimitExceededException e) {
 
       CustomerCreditReservationFailedEvent customerCreditReservationFailedEvent =
-              new CustomerCreditReservationFailedEvent(orderId);
+              new CustomerCreditReservationFailedEvent(customerId, orderId);
 
       domainEventPublisher.publish(Customer.class,
               customer.getId(),
