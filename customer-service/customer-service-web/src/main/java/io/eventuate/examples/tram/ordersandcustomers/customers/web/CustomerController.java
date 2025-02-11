@@ -26,7 +26,7 @@ public class CustomerController {
 
   @PostMapping("/customers")
   public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequest createCustomerRequest) {
-    Customer customer = customerService.createCustomer(createCustomerRequest.getName(), createCustomerRequest.getCreditLimit());
+    Customer customer = customerService.createCustomer(createCustomerRequest.name(), createCustomerRequest.creditLimit());
     return new CreateCustomerResponse(customer.getId());
   }
 

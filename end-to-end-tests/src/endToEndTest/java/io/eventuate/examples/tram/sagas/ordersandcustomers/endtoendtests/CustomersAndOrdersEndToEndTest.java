@@ -81,11 +81,11 @@ public class CustomersAndOrdersEndToEndTest {
     public void shouldApprove() {
         CreateCustomerResponse createCustomerResponse = createCustomer();
 
-        assertCustomerHasCreditLimit(createCustomerResponse.getCustomerId());
+      assertCustomerHasCreditLimit(createCustomerResponse.customerId());
 
-        CreateOrderResponse createOrderResponse = createOrder(createCustomerResponse.getCustomerId(), orderTotalUnderCreditLimit);
+      CreateOrderResponse createOrderResponse = createOrder(createCustomerResponse.customerId(), orderTotalUnderCreditLimit);
 
-        assertOrderState(createOrderResponse.getOrderId(), OrderState.APPROVED, null);
+        assertOrderState(createOrderResponse.orderId(), OrderState.APPROVED, null);
     }
 
     @Nullable
@@ -102,7 +102,7 @@ public class CustomersAndOrdersEndToEndTest {
 
     private void assertCustomerHasCreditLimit(long id) {
         GetCustomerResponse customer = restTemplate.getForObject(applicationUnderTest.apiGatewayBaseUrl(hostName, "customers/" + id), GetCustomerResponse.class);
-        assertEquals(creditLimit, customer.getCreditLimit());
+        assertEquals(creditLimit, customer.creditLimit());
 
     }
 
@@ -110,9 +110,9 @@ public class CustomersAndOrdersEndToEndTest {
     public void shouldRejectBecauseOfInsufficientCredit() {
         CreateCustomerResponse createCustomerResponse = createCustomer();
 
-        CreateOrderResponse createOrderResponse = createOrder(createCustomerResponse.getCustomerId(), orderTotalOverCreditLimit);
+      CreateOrderResponse createOrderResponse = createOrder(createCustomerResponse.customerId(), orderTotalOverCreditLimit);
 
-        assertOrderState(createOrderResponse.getOrderId(), OrderState.REJECTED, RejectionReason.INSUFFICIENT_CREDIT);
+        assertOrderState(createOrderResponse.orderId(), OrderState.REJECTED, RejectionReason.INSUFFICIENT_CREDIT);
     }
 
     @Test
@@ -120,7 +120,7 @@ public class CustomersAndOrdersEndToEndTest {
 
         CreateOrderResponse createOrderResponse = createOrder(Long.MAX_VALUE, new Money("123.40"));
 
-        assertOrderState(createOrderResponse.getOrderId(), OrderState.REJECTED, RejectionReason.UNKNOWN_CUSTOMER);
+        assertOrderState(createOrderResponse.orderId(), OrderState.REJECTED, RejectionReason.UNKNOWN_CUSTOMER);
     }
 
     @Test
@@ -128,17 +128,17 @@ public class CustomersAndOrdersEndToEndTest {
 
         CreateCustomerResponse createCustomerResponse = createCustomer();
 
-        CreateOrderResponse createOrderResponse = createOrder(createCustomerResponse.getCustomerId(), orderTotalUnderCreditLimit);
+      CreateOrderResponse createOrderResponse = createOrder(createCustomerResponse.customerId(), orderTotalUnderCreditLimit);
 
         Eventually.eventually(() -> {
-            CustomerView customerResponse = getOrderHistory(createCustomerResponse.getCustomerId());
+          CustomerView customerResponse = getOrderHistory(createCustomerResponse.customerId());
 
             assertEquals(creditLimit.getAmount().setScale(2), customerResponse.getCreditLimit().getAmount().setScale(2));
-            assertEquals(createCustomerResponse.getCustomerId(), customerResponse.getId());
+          assertEquals(createCustomerResponse.customerId(), customerResponse.getId());
             assertEquals(CUSTOMER_NAME, customerResponse.getName());
             assertEquals(1, customerResponse.getOrders().size());
 
-            assertEquals(OrderState.APPROVED, customerResponse.getOrders().get(createOrderResponse.getOrderId()).getState());
+            assertEquals(OrderState.APPROVED, customerResponse.getOrders().get(createOrderResponse.orderId()).getState());
         });
     }
 
@@ -157,8 +157,8 @@ public class CustomersAndOrdersEndToEndTest {
             ResponseEntity<GetOrderResponse> getOrderResponseEntity = restTemplate.getForEntity(applicationUnderTest.apiGatewayBaseUrl(hostName, "orders/" + id), GetOrderResponse.class);
             assertEquals(HttpStatus.OK, getOrderResponseEntity.getStatusCode());
             GetOrderResponse order = getOrderResponseEntity.getBody();
-            assertEquals(expectedState, order.getOrderState());
-            assertEquals(expectedRejectionReason, order.getRejectionReason());
+            assertEquals(expectedState, order.orderState());
+            assertEquals(expectedRejectionReason, order.rejectionReason());
         });
     }
 
