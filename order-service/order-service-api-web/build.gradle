@@ -1,5 +1,0 @@
-dependencies {
-    api project(":order-service:order-service-domain-common")
-    api "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
-
-}

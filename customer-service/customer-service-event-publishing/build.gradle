@@ -1,7 +1,6 @@
 dependencies {
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
 
-    implementation project(":order-service:order-service-domain-events")
 
     implementation "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events"

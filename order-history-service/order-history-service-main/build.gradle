@@ -17,7 +17,6 @@ dependencies {
     componentTestImplementation "io.eventuate.messaging.kafka:eventuate-messaging-kafka-testcontainers"
     componentTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
     componentTestImplementation "io.rest-assured:rest-assured"
-    componentTestImplementation project(":order-history-service:order-history-service-api-web")
     componentTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
     componentTestImplementation project(":util")
 

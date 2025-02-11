@@ -16,9 +16,6 @@ sourceSets {
 
 dependencies {
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
-    implementation project(":order-history-service:order-history-service-api-web")
-    implementation project(":order-service:order-service-api-web")
-    implementation project(":order-service:order-service-domain-events")
 
     testImplementation "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test"

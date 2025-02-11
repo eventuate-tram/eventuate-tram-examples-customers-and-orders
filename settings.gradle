@@ -7,9 +7,6 @@ include 'customer-service:customer-service-event-handling'
 include 'customer-service:customer-service-event-publishing'
 include 'customer-service:customer-service-main'
 
-include 'order-service:order-service-api-web'
-include 'order-service:order-service-domain-common'
-include 'order-service:order-service-domain-events'
 include 'order-service:order-service-domain'
 include 'order-service:order-service-persistence'
 include 'order-service:order-service-web'
@@ -17,13 +14,11 @@ include 'order-service:order-service-event-handling'
 include 'order-service:order-service-event-publishing'
 include 'order-service:order-service-main'
 
-include 'order-history-service:order-history-service-api-web'
 include 'order-history-service:order-history-service-domain'
 include 'order-history-service:order-history-service-web'
 include 'order-history-service:order-history-service-event-handling'
 include 'order-history-service:order-history-service-main'
 
-include 'api-gateway-service:api-gateway-service-api-web'
 include 'api-gateway-service:api-gateway-service-main'
 
 include 'end-to-end-tests'

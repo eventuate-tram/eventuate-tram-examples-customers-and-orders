@@ -1,16 +1,12 @@
 package io.eventuate.examples.tram.sagas.ordersandcustomers.endtoendtests.proxies.orderhistoryservice;
 
 import io.eventuate.examples.common.money.Money;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Document
 public class CustomerView {
 
-  @Id
   private Long id;
 
 

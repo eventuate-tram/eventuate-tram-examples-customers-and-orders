@@ -1,8 +1,7 @@
 
 dependencies {
-    implementation project(":order-service:order-service-domain-events")
-    implementation project(":order-history-service:order-history-service-api-web")
 
+    api "org.springframework.boot:spring-boot-starter-data-mongodb"
     api "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
 
     implementation "org.springframework.retry:spring-retry"
