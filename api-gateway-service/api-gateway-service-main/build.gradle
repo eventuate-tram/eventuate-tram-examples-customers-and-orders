@@ -8,9 +8,6 @@ configurations.all {
 }
 
 dependencies {
-    implementation "org.apache.commons:commons-lang3:3.17.0"
-
-    implementation "org.hamcrest:hamcrest:2.2"
 
     implementation "io.eventuate.util:eventuate-util-swagger-ui"
 
@@ -21,11 +18,9 @@ dependencies {
 
     implementation "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j"
 
-    implementation "org.apache.commons:commons-lang3"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
 
-    implementation "org.springframework.boot:spring-boot-starter-validation:3.0.13"
-    implementation "org.springframework.boot:spring-boot-starter-web:3.0.13"
+    implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "io.micrometer:micrometer-tracing-bridge-brave"
     implementation "io.zipkin.reporter2:zipkin-reporter-brave"
 

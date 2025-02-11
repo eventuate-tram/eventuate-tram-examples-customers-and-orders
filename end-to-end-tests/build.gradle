@@ -28,9 +28,7 @@ dependencies {
     endToEndTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
     endToEndTestImplementation "io.eventuate.common:eventuate-common-testcontainers"
     endToEndTestImplementation "io.eventuate.messaging.kafka:eventuate-messaging-kafka-testcontainers"
-    endToEndTestImplementation "org.hamcrest:hamcrest:2.2"
     endToEndTestImplementation "org.springframework.boot:spring-boot-starter-thymeleaf"
-    endToEndTestImplementation "org.springframework.boot:spring-boot-starter-validation:3.0.13"
     endToEndTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
 
     // TODO - need this for MsSQLContainer initialization
