@@ -1,5 +1,4 @@
 dependencies {
-    api project (":customer-service-domain-events")
     api project (":order-service-domain-events")
     implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
 }

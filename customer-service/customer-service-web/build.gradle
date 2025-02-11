@@ -1,7 +1,6 @@
 dependencies {
     implementation project(":customer-service:customer-service-domain")
 
-    implementation project(":customer-service:customer-service-api-web")
 
     implementation "org.springframework.boot:spring-boot-starter-web"
 }

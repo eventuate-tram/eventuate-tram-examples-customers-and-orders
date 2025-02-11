@@ -51,6 +51,9 @@ subprojects {
 
 }
 
+task compileAll(type: GradleBuild) {
+    tasks = ["endToEndTestClasses", "componentTestClasses", "testClasses", "assemble"]
+}
 
 task preCommitCheck {
 

@@ -1,7 +1,5 @@
 
 include 'util'
-include 'customer-service:customer-service-api-web'
-include 'customer-service:customer-service-domain-events'
 include 'customer-service:customer-service-domain'
 include 'customer-service:customer-service-persistence'
 include 'customer-service:customer-service-web'
