@@ -1,9 +1,6 @@
 dependencies {
     implementation project(":order-service:order-service-domain")
 
-
-    implementation project(":order-service:order-service-persistence")
-
     implementation "org.springframework.boot:spring-boot-starter-web"
 }
 

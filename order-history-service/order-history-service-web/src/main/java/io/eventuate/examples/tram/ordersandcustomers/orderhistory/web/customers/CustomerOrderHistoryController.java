@@ -2,7 +2,6 @@ package io.eventuate.examples.tram.ordersandcustomers.orderhistory.web.customers
 
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerView;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.CustomerViewRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +20,8 @@ public class CustomerOrderHistoryController {
   public ResponseEntity<CustomerView> getCustomer(@PathVariable Long customerId) {
     return customerViewRepository
             .findById(customerId)
-            .map(c -> new ResponseEntity<>(c, HttpStatus.OK))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @GetMapping("/customers/count")

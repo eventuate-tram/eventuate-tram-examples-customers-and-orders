@@ -4,6 +4,8 @@ import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.ResultWithEvents;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static java.util.Collections.singletonList;
 
 public class OrderService {
@@ -53,5 +55,13 @@ public class OrderService {
     domainEventPublisher.publish(Order.class,
             orderId, singletonList(new OrderCancelledEvent(order.getOrderDetails())));
     return order;
+  }
+
+  public Optional<Order> findById(long orderId) {
+    return orderRepository.findById(orderId);
+  }
+
+  public Iterable<Order> findAll() {
+    return orderRepository.findAll();
   }
 }

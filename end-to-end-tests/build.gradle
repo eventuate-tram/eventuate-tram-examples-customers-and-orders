@@ -23,7 +23,6 @@ dependencies {
 
     endToEndTestImplementation "org.springframework.boot:spring-boot-starter-web"
 
-    endToEndTestImplementation "org.testcontainers:testcontainers:$testContainersVersion"
     endToEndTestImplementation "io.eventuate.platform.testcontainer.support:eventuate-platform-testcontainer-support-service:$eventuatePlatformTestContainerSupportVersion"
     endToEndTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
     endToEndTestImplementation "io.eventuate.common:eventuate-common-testcontainers"

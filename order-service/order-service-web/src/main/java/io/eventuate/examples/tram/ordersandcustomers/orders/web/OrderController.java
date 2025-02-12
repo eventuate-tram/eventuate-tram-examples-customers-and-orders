@@ -2,9 +2,7 @@ package io.eventuate.examples.tram.ordersandcustomers.orders.web;
 
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.Order;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderDetails;
-import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderRepository;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +13,9 @@ import java.util.stream.StreamSupport;
 public class OrderController {
 
   private final OrderService orderService;
-  private final OrderRepository orderRepository;
 
-  public OrderController(OrderService orderService,
-                         OrderRepository orderRepository) {
-
+  public OrderController(OrderService orderService) {
     this.orderService = orderService;
-    this.orderRepository = orderRepository;
   }
 
   @PostMapping("/orders")
@@ -32,10 +26,9 @@ public class OrderController {
 
   @GetMapping("/orders/{orderId}")
   public ResponseEntity<GetOrderResponse> getOrder(@PathVariable Long orderId) {
-     return orderRepository
-            .findById(orderId)
+     return orderService.findById(orderId)
             .map(this::makeSuccessfulResponse)
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @PostMapping("/orders/{orderId}/cancel")
@@ -45,12 +38,12 @@ public class OrderController {
   }
 
   private ResponseEntity<GetOrderResponse> makeSuccessfulResponse(Order order) {
-    return new ResponseEntity<>(new GetOrderResponse(order.getId(), order.getState(), order.getRejectionReason()), HttpStatus.OK);
+    return ResponseEntity.ok(new GetOrderResponse(order.getId(), order.getState(), order.getRejectionReason()));
   }
 
   @GetMapping("/orders")
   public ResponseEntity<GetOrdersResponse> getAll() {
-    return ResponseEntity.ok(new GetOrdersResponse(StreamSupport.stream(orderRepository.findAll().spliterator(), false)
+    return ResponseEntity.ok(new GetOrdersResponse(StreamSupport.stream(orderService.findAll().spliterator(), false)
         .map(o -> new GetOrderResponse(o.getId(), o.getState(), o.getRejectionReason())).collect(Collectors.toList())));
   }
 
