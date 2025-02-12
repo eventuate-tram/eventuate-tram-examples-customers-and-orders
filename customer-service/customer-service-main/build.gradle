@@ -4,9 +4,15 @@ apply plugin: ComponentTestsPlugin
 dependencies {
 
     implementation project(":customer-service:customer-service-web")
+    implementation project(":customer-service:customer-service-domain")
     implementation project(":customer-service:customer-service-persistence")
     implementation project(":customer-service:customer-service-event-handling")
     implementation project(":customer-service:customer-service-event-publishing")
+
+
+    implementation 'io.github.springwolf:springwolf-core:1.10.0'
+    runtimeOnly 'io.github.springwolf:springwolf-ui:1.10.0'
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
 
     implementation "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
 
