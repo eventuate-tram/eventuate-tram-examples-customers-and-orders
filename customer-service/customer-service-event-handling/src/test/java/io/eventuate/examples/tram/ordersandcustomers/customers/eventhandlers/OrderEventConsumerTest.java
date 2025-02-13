@@ -19,7 +19,7 @@ import static io.eventuate.util.test.async.Eventually.eventually;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-@AutoConfigureStubRunner(ids = "eventuate-tram-examples-customers-and-orders.order-service:order-service-event-publishing",
+@AutoConfigureStubRunner(ids = "io.eventuate.examples.tram.ordersandcustomers:order-service-event-publishing",
     stubsMode = StubRunnerProperties.StubsMode.REMOTE )
 class OrderEventConsumerTest {
 
