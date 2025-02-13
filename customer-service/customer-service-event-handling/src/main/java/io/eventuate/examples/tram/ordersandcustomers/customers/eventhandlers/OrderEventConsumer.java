@@ -29,11 +29,11 @@ public class OrderEventConsumer {
   public void handleOrderCreatedEvent(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope) {
     OrderCreatedEvent event = domainEventEnvelope.getEvent();
     customerService.reserveCredit(Long.parseLong(domainEventEnvelope.getAggregateId()),
-            event.orderDetails().getCustomerId(), event.orderDetails().getOrderTotal());
+            event.orderDetails().customerId(), event.orderDetails().orderTotal());
   }
 
   public void handleOrderCancelledEvent(DomainEventEnvelope<OrderCancelledEvent> domainEventEnvelope) {
-    customerService.releaseCredit(Long.parseLong(domainEventEnvelope.getAggregateId()), domainEventEnvelope.getEvent().orderDetails().getCustomerId());
+    customerService.releaseCredit(Long.parseLong(domainEventEnvelope.getAggregateId()), domainEventEnvelope.getEvent().orderDetails().customerId());
   }
 
 }

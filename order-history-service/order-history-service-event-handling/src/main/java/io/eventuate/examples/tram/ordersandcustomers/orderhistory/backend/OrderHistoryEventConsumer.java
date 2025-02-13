@@ -38,26 +38,25 @@ public class OrderHistoryEventConsumer {
 
   private void orderCreatedEventHandler(DomainEventEnvelope<OrderCreatedEvent> domainEventEnvelope) {
     OrderCreatedEvent orderCreatedEvent = domainEventEnvelope.getEvent();
-    orderHistoryViewService.addOrder(orderCreatedEvent.orderDetails().getCustomerId(),
-            Long.parseLong(domainEventEnvelope.getAggregateId()), orderCreatedEvent.orderDetails().getOrderTotal());
+    orderHistoryViewService.addOrder(orderCreatedEvent.orderDetails().customerId(),
+            Long.parseLong(domainEventEnvelope.getAggregateId()), orderCreatedEvent.orderDetails().orderTotal());
   }
 
   private void orderApprovedEventHandler(DomainEventEnvelope<OrderApprovedEvent> domainEventEnvelope) {
     OrderApprovedEvent orderApprovedEvent = domainEventEnvelope.getEvent();
-    orderHistoryViewService.approveOrder(orderApprovedEvent.orderDetails().getCustomerId(),
+    orderHistoryViewService.approveOrder(orderApprovedEvent.orderDetails().customerId(),
             Long.parseLong(domainEventEnvelope.getAggregateId()));
   }
 
   private void orderRejectedEventHandler(DomainEventEnvelope<OrderRejectedEvent> domainEventEnvelope) {
     OrderRejectedEvent orderRejectedEvent = domainEventEnvelope.getEvent();
-    orderHistoryViewService.rejectOrder(orderRejectedEvent.orderDetails().getCustomerId(),
+    orderHistoryViewService.rejectOrder(orderRejectedEvent.orderDetails().customerId(),
             Long.parseLong(domainEventEnvelope.getAggregateId()));
   }
 
   private void handleOrderCancelledEvent(DomainEventEnvelope<OrderCancelledEvent> domainEventEnvelope) {
     OrderCancelledEvent orderRejectedEvent = domainEventEnvelope.getEvent();
-    orderHistoryViewService.cancelOrder(orderRejectedEvent.orderDetails().getCustomerId(),
+    orderHistoryViewService.cancelOrder(orderRejectedEvent.orderDetails().customerId(),
             Long.parseLong(domainEventEnvelope.getAggregateId()));
   }
 }
-

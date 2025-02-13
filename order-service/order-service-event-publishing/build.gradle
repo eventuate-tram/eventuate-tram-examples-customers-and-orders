@@ -1,21 +1,33 @@
+apply plugin: 'org.springframework.cloud.contract'
+apply plugin: io.eventuate.tram.spring.testing.cloudcontract.plugins.gradle.PublishStubsPlugin
+
 dependencies {
-    implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
+
+    implementation project(":order-service:order-service-domain")
+
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-events-publisher-starter"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-producer-jdbc"
 
 
-    implementation "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
-    implementation "io.eventuate.tram.core:eventuate-tram-spring-events"
-    implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
-    implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 
-    implementation "org.springframework.retry:spring-retry"
+    contractTestImplementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
+    contractTestImplementation "io.eventuate.tram.testingsupport.springcloudcontract:eventuate-tram-spring-testing-support-cloud-contract:$eventuateTramSpringTestingSupportCloudContractVersion"
 
-
-    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-
-
-    implementation "org.springframework.boot:spring-boot-starter"
-    implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation "org.springframework.boot:spring-boot-starter-web"
 }
+
+contracts {
+    testFramework = "JUNIT5"
+    packageWithBaseClasses = 'io.eventuate.examples.tram.ordersandcustomers.orders.eventpublishing.contracttests'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+contractTest {
+    useJUnitPlatform()
+}
+
 
 
