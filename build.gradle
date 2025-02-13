@@ -14,6 +14,10 @@ buildscript {
 
 apply plugin: "io.eventuate.tram.spring.testing.cloudcontract.plugins.gradle.ConfigureContractRepoDirPlugin"
 
+allprojects {
+    group = "io.eventuate.examples.tram.ordersandcustomers"
+}
+
 subprojects {
 
     apply plugin: "java-library"
@@ -57,6 +61,11 @@ subprojects {
 
 
 }
+
+task clean(type:Delete) {
+    delete 'build/repos'
+}
+
 
 task compileAll(type: GradleBuild) {
     tasks = ["endToEndTestClasses", "componentTestClasses", "testClasses", "assemble"]
