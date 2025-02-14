@@ -38,7 +38,7 @@ class OrderEventConsumerTest {
 
   @Test
   public void shouldHandleOrderCreatedEvent() {
-    stubFinder.trigger("orderCreatedEvent");
+    stubFinder.trigger("customer-service-orderCreatedEvent");
     eventually(() -> {
       verify(customerService).reserveCredit(99L, 101L, new Money("123"));
     });
