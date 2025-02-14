@@ -5,15 +5,25 @@ dependencies {
 
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
 
-    implementation "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
-    implementation "io.eventuate.tram.core:eventuate-tram-spring-events"
-    implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
+    implementation "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
 
     implementation "io.eventuate.tram.core:eventuate-tram-spring-flyway"
     runtimeOnly "org.flywaydb:flyway-database-postgresql"
     runtimeOnly "org.flywaydb:flyway-sqlserver"
 
+    testImplementation "io.eventuate.tram.testingsupport.springcloudcontract:eventuate-tram-spring-testing-support-cloud-contract:$eventuateTramSpringTestingSupportCloudContractVersion"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+    testImplementation "io.eventuate.util:eventuate-util-test:$eventuateUtilVersion"
+
 }
 
+
+test {
+    useJUnitPlatform()
+    systemProperty "stubrunner.repositoryRoot", contractRepoUrl
+}
+
+test.dependsOn(":customer-service:customer-service-event-publishing:publishStubsPublicationToStubsRepository")
 

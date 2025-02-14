@@ -1,10 +1,21 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://snapshots.repositories.eventuate.io/repository"
+        }
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:$springCloudContractDependenciesVersion"
+        classpath "io.eventuate.tram.testingsupport.springcloudcontract:eventuate-tram-spring-testing-support-cloud-contract-plugins-gradle:$eventuateTramSpringTestingSupportCloudContractVersion"
     }
+}
+
+apply plugin: "io.eventuate.tram.spring.testing.cloudcontract.plugins.gradle.ConfigureContractRepoDirPlugin"
+
+allprojects {
+    group = "io.eventuate.examples.tram.ordersandcustomers"
 }
 
 subprojects {
@@ -50,6 +61,11 @@ subprojects {
 
 
 }
+
+task clean(type:Delete) {
+    delete 'build/repos'
+}
+
 
 task compileAll(type: GradleBuild) {
     tasks = ["endToEndTestClasses", "componentTestClasses", "testClasses", "assemble"]
