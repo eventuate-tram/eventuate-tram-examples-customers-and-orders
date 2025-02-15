@@ -6,10 +6,11 @@ import io.eventuate.common.testcontainers.DatabaseContainerFactory;
 import io.eventuate.common.testcontainers.EventuateDatabaseContainer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerDomainConfiguration;
 import io.eventuate.examples.tram.ordersandcustomers.customers.eventhandlers.CustomerServiceEventHandlerConfiguration;
+import io.eventuate.examples.tram.ordersandcustomers.customers.eventpublishing.CustomerEventPublishingConfiguration;
 import io.eventuate.examples.tram.ordersandcustomers.customers.web.CustomerWebConfiguration;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeCluster;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeContainer;
-import io.github.springwolf.core.asyncapi.scanners.ChannelsScanner;
+import io.eventuate.tram.spring.springwolf.EventuateSpringWolfConfiguration;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -57,18 +57,11 @@ public class CustomerServiceInProcessComponentTest {
     @Configuration
     @EnableAutoConfiguration
     @Import({CustomerWebConfiguration.class, CustomerPersistenceConfiguration.class,
-        CustomerDomainConfiguration.class, CustomerServiceEventHandlerConfiguration.class, })
+        CustomerDomainConfiguration.class,
+        CustomerServiceEventHandlerConfiguration.class,
+        CustomerEventPublishingConfiguration.class,
+        EventuateSpringWolfConfiguration.class})
     static public class Config {
-
-        @Bean
-        public SomeListener someListener() {
-            return new SomeListener();
-        }
-
-        @Bean
-        public ChannelsScanner channelsScanner() {
-            return new MyChannelsScanner();
-        }
 
     }
 
@@ -107,8 +100,20 @@ public class CustomerServiceInProcessComponentTest {
                 .then()
                 .statusCode(200)
                     .extract().response().prettyPrint();
-        System.out.println(s);
-        RestAssured.get("/springwolf/docs.yaml").then().statusCode(200);
+        writeToFile("build/springwolf.json", s);
+    }
+
+    private void writeToFile(String fileName, String s) {
+        try {
+            java.nio.file.Files.writeString(java.nio.file.Paths.get(fileName), s);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void shouldExposeSpringWolfOther() {
         RestAssured.get("/springwolf/asyncapi-ui.html").then().statusCode(200);
     }
+
 }

@@ -2,32 +2,33 @@ package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
 import io.eventuate.examples.common.money.Money;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
-import io.eventuate.tram.events.publisher.ResultWithEvents;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
 import java.util.Optional;
 
 public class CustomerService {
 
-  private Logger logger = LoggerFactory.getLogger(getClass());
+  private final Logger logger = LoggerFactory.getLogger(getClass());
 
-  private CustomerRepository customerRepository;
+  private final CustomerRepository customerRepository;
 
-  private DomainEventPublisher domainEventPublisher;
+  private final DomainEventPublisher domainEventPublisher;
 
-  public CustomerService(CustomerRepository customerRepository, DomainEventPublisher domainEventPublisher) {
+  private final CustomerEventPublisher customerEventPublisher;
+
+  public CustomerService(CustomerRepository customerRepository, DomainEventPublisher domainEventPublisher, CustomerEventPublisher customerEventPublisher) {
     this.customerRepository = customerRepository;
     this.domainEventPublisher = domainEventPublisher;
+    this.customerEventPublisher = customerEventPublisher;
   }
 
   @Transactional
   public Customer createCustomer(String name, Money creditLimit) {
-    ResultWithEvents<Customer> customerWithEvents = Customer.create(name, creditLimit);
-    Customer customer = customerRepository.save(customerWithEvents.result);
-    domainEventPublisher.publish(Customer.class, customer.getId(), customerWithEvents.events);
+    ResultWithEvents<Customer, CustomerEvent> customerWithEvents = Customer.create(name, creditLimit);
+    Customer customer = customerRepository.save(customerWithEvents.result());
+    customerEventPublisher.publish(customer, customerWithEvents.events());
     return customer;
   }
 
@@ -37,14 +38,13 @@ public class CustomerService {
 
     if (possibleCustomer.isEmpty()) {
       logger.info("Non-existent customer: {}", customerId);
-      domainEventPublisher.publish(Customer.class,
+      customerEventPublisher.publishById(
               customerId,
-              Collections.singletonList(new CustomerValidationFailedEvent(customerId, orderId)));
+              new CustomerValidationFailedEvent(customerId, orderId));
       return;
     }
 
     Customer customer = possibleCustomer.get();
-
 
     try {
       customer.reserveCredit(orderId, orderTotal);
@@ -52,18 +52,15 @@ public class CustomerService {
       CustomerCreditReservedEvent customerCreditReservedEvent =
               new CustomerCreditReservedEvent(customerId, orderId);
 
-      domainEventPublisher.publish(Customer.class,
-              customer.getId(),
-              Collections.singletonList(customerCreditReservedEvent));
+      customerEventPublisher.publish(customer, customerCreditReservedEvent);
 
     } catch (CustomerCreditLimitExceededException e) {
 
       CustomerCreditReservationFailedEvent customerCreditReservationFailedEvent =
               new CustomerCreditReservationFailedEvent(customerId, orderId);
 
-      domainEventPublisher.publish(Customer.class,
-              customer.getId(),
-              Collections.singletonList(customerCreditReservationFailedEvent));
+      customerEventPublisher.publish(customer, customerCreditReservationFailedEvent);
+
     }
   }
 

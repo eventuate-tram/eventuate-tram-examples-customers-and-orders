@@ -1,13 +1,10 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
 import io.eventuate.examples.common.money.Money;
-import io.eventuate.tram.events.publisher.ResultWithEvents;
 import jakarta.persistence.*;
 
 import java.util.Collections;
 import java.util.Map;
-
-import static java.util.Collections.singletonList;
 
 @Entity
 @Table(name="Customer")
@@ -44,10 +41,10 @@ public class Customer {
     this.creationTime = System.currentTimeMillis();
   }
 
-  public static ResultWithEvents<Customer> create(String name, Money creditLimit) {
+  public static ResultWithEvents<Customer, CustomerEvent> create(String name, Money creditLimit) {
     Customer customer = new Customer(name, creditLimit);
     return new ResultWithEvents<>(customer,
-            singletonList(new CustomerCreatedEvent(customer.getId(), customer.getName(), customer.getCreditLimit())));
+        new CustomerCreatedEvent(customer.getId(), customer.getName(), customer.getCreditLimit()));
   }
 
   public Long getId() {
