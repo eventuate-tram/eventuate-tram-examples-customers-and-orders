@@ -5,10 +5,12 @@ dependencies {
 
     implementation project(":order-history-service:order-history-service-web")
     implementation project(":order-history-service:order-history-service-event-handling")
+    implementation project(":order-history-service:order-history-service-domain")
 
     implementation "org.springframework.boot:spring-boot-starter-actuator"
 
     componentTestImplementation "io.eventuate.platform.testcontainer.support:eventuate-platform-testcontainer-support-service:$eventuatePlatformTestContainerSupportVersion"
+    componentTestImplementation "io.eventuate.tram.core:eventuate-tram-spring-in-memory"
 
     componentTestImplementation "io.eventuate.common:eventuate-common-testcontainers"
     componentTestImplementation "io.eventuate.messaging.kafka:eventuate-messaging-kafka-testcontainers"

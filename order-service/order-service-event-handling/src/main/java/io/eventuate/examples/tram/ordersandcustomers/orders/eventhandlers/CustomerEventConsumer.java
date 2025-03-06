@@ -6,34 +6,29 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.domain.CustomerVa
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderService;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.RejectionReason;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
-import io.eventuate.tram.events.subscriber.DomainEventHandlers;
-import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.eventuate.tram.events.subscriber.annotations.EventuateDomainEventHandler;
 
 
 public class CustomerEventConsumer {
 
-  @Autowired
-  private OrderService orderService;
+  private final OrderService orderService;
 
-  public DomainEventHandlers domainEventHandlers() {
-    return DomainEventHandlersBuilder
-            .forAggregateType("io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer")
-            .onEvent(CustomerCreditReservedEvent.class, this::handleCustomerCreditReservedEvent)
-            .onEvent(CustomerCreditReservationFailedEvent.class, this::handleCustomerCreditReservationFailedEvent)
-            .onEvent(CustomerValidationFailedEvent.class, this::handleCustomerValidationFailedEvent)
-            .build();
+  public CustomerEventConsumer(OrderService orderService) {
+    this.orderService = orderService;
   }
 
-  private void handleCustomerCreditReservedEvent(DomainEventEnvelope<CustomerCreditReservedEvent> domainEventEnvelope) {
+  @EventuateDomainEventHandler(subscriberId = "customerServiceEvents", channel = "io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer")
+  public void handleCustomerCreditReservedEvent(DomainEventEnvelope<CustomerCreditReservedEvent> domainEventEnvelope) {
     orderService.approveOrder(domainEventEnvelope.getEvent().orderId());
   }
 
-  private void handleCustomerCreditReservationFailedEvent(DomainEventEnvelope<CustomerCreditReservationFailedEvent> domainEventEnvelope) {
+  @EventuateDomainEventHandler(subscriberId = "customerServiceEvents", channel = "io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer")
+  public void handleCustomerCreditReservationFailedEvent(DomainEventEnvelope<CustomerCreditReservationFailedEvent> domainEventEnvelope) {
     orderService.rejectOrder(domainEventEnvelope.getEvent().orderId(), RejectionReason.INSUFFICIENT_CREDIT);
   }
 
-  private void handleCustomerValidationFailedEvent(DomainEventEnvelope<CustomerValidationFailedEvent> domainEventEnvelope) {
+  @EventuateDomainEventHandler(subscriberId = "customerServiceEvents", channel = "io.eventuate.examples.tram.ordersandcustomers.customers.domain.Customer")
+  public void handleCustomerValidationFailedEvent(DomainEventEnvelope<CustomerValidationFailedEvent> domainEventEnvelope) {
     orderService.rejectOrder(domainEventEnvelope.getEvent().orderId(), RejectionReason.UNKNOWN_CUSTOMER);
   }
 

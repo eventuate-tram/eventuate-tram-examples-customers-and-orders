@@ -1,30 +1,27 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
-import io.eventuate.tram.events.publisher.DomainEventPublisher;
-import io.eventuate.tram.events.publisher.ResultWithEvents;
+import io.eventuate.tram.events.publisher.ResultWithTypedEvents;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static java.util.Collections.singletonList;
-
 public class OrderService {
 
-  private final DomainEventPublisher domainEventPublisher;
   private final OrderRepository orderRepository;
+  private final OrderEventPublisher orderEventPublisher;
 
 
-  public OrderService(DomainEventPublisher domainEventPublisher, OrderRepository orderRepository) {
-    this.domainEventPublisher = domainEventPublisher;
+  public OrderService(OrderRepository orderRepository, OrderEventPublisher orderEventPublisher) {
     this.orderRepository = orderRepository;
+    this.orderEventPublisher = orderEventPublisher;
   }
 
   @Transactional
   public Order createOrder(OrderDetails orderDetails) {
-    ResultWithEvents<Order> orderWithEvents = Order.createOrder(orderDetails);
-    Order order = orderWithEvents.result;
+    ResultWithTypedEvents<Order, OrderEvent> orderWithEvents = Order.createOrder(orderDetails);
+    Order order = orderWithEvents.getResult();
     orderRepository.save(order);
-    domainEventPublisher.publish(Order.class, order.getId(), orderWithEvents.events);
+    orderEventPublisher.publish(order, orderWithEvents.getEvents());
     return order;
   }
 
@@ -33,8 +30,7 @@ public class OrderService {
             .findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException("order with id %s not found".formatted(orderId)));
     order.noteCreditReserved();
-    domainEventPublisher.publish(Order.class,
-            orderId, singletonList(new OrderApprovedEvent(order.getOrderDetails())));
+    orderEventPublisher.publish(order, new OrderApprovedEvent(order.getOrderDetails()));
   }
 
   public void rejectOrder(Long orderId, RejectionReason rejectionReason) {
@@ -42,8 +38,7 @@ public class OrderService {
             .findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException("order with id %s not found".formatted(orderId)));
     order.noteCreditReservationFailed(rejectionReason);
-    domainEventPublisher.publish(Order.class,
-            orderId, singletonList(new OrderRejectedEvent(order.getOrderDetails())));
+    orderEventPublisher.publish(order, new OrderRejectedEvent(order.getOrderDetails()));
   }
 
   @Transactional
@@ -52,8 +47,7 @@ public class OrderService {
             .findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException("order with id %s not found".formatted(orderId)));
     order.cancel();
-    domainEventPublisher.publish(Order.class,
-            orderId, singletonList(new OrderCancelledEvent(order.getOrderDetails())));
+    orderEventPublisher.publish(order, new OrderCancelledEvent(order.getOrderDetails()));
     return order;
   }
 

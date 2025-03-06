@@ -1,10 +1,8 @@
 package io.eventuate.examples.tram.ordersandcustomers.orders.domain;
 
 
-import io.eventuate.tram.events.publisher.ResultWithEvents;
+import io.eventuate.tram.events.publisher.ResultWithTypedEvents;
 import jakarta.persistence.*;
-
-import static java.util.Collections.singletonList;
 
 @Entity
 @Table(name="orders")
@@ -33,10 +31,10 @@ public class Order {
     this.state = OrderState.PENDING;
   }
 
-  public static ResultWithEvents<Order> createOrder(OrderDetails orderDetails) {
+  public static ResultWithTypedEvents<Order, OrderEvent> createOrder(OrderDetails orderDetails) {
     Order order = new Order(orderDetails);
     OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent(orderDetails);
-    return new ResultWithEvents<>(order, singletonList(orderCreatedEvent));
+    return new ResultWithTypedEvents<>(order, orderCreatedEvent);
   }
 
   public Long getId() {

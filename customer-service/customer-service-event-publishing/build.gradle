@@ -8,7 +8,6 @@ dependencies {
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events-publisher-starter"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-producer-jdbc"
 
-
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 
     contractTestImplementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"

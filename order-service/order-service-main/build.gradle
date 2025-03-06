@@ -4,6 +4,7 @@ apply plugin: ComponentTestsPlugin
 dependencies {
 
     implementation project(":order-service:order-service-web")
+    implementation project(":order-service:order-service-domain")
     implementation project(":order-service:order-service-persistence")
     implementation project(":order-service:order-service-event-handling")
     implementation project(":order-service:order-service-event-publishing")
@@ -13,6 +14,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
 
     componentTestImplementation "io.eventuate.platform.testcontainer.support:eventuate-platform-testcontainer-support-service:$eventuatePlatformTestContainerSupportVersion"
+    componentTestImplementation "io.eventuate.tram.core:eventuate-tram-spring-in-memory"
 
     componentTestImplementation "io.eventuate.common:eventuate-common-testcontainers"
     componentTestImplementation "io.eventuate.messaging.kafka:eventuate-messaging-kafka-testcontainers"
