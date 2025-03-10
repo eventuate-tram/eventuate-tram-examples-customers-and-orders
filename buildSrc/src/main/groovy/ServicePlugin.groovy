@@ -15,6 +15,7 @@ class ServicePlugin implements Plugin<Project> {
             implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
 
             runtimeOnly "io.eventuate.tram.springwolf:eventuate-tram-springwolf-support-starter"
+            runtimeOnly "io.github.springwolf:springwolf-ui:${project.ext.springwolfVersion}"
 
             componentTestRuntimeOnly "io.eventuate.tram.springwolf:eventuate-tram-springwolf-support-starter"
             componentTestImplementation "io.eventuate.tram.springwolf:eventuate-tram-springwolf-support-testing"
