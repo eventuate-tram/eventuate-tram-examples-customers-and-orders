@@ -11,7 +11,7 @@ import io.eventuate.examples.tram.ordersandcustomers.orders.eventhandlers.OrderE
 import io.eventuate.examples.tram.ordersandcustomers.orders.eventpublishing.OrderEventPublisherImpl;
 import io.eventuate.examples.tram.ordersandcustomers.orders.eventpublishing.OrderEventPublishingConfiguration;
 import io.eventuate.examples.tram.ordersandcustomers.orders.persistence.OrderPersistenceConfiguration;
-import io.eventuate.examples.tram.ordersandcustomers.orders.web.OrderWebConfiguration;
+import io.eventuate.examples.tram.ordersandcustomers.orders.restapi.OrderRestApiConfiguration;
 import io.eventuate.tram.spring.inmemory.TramInMemoryConfiguration;
 import io.eventuate.tram.spring.springwolf.testing.AsyncApiDocument;
 import io.restassured.RestAssured;
@@ -35,7 +35,7 @@ public class OrderServiceInProcessComponentTest {
 
     @Configuration
     @EnableAutoConfiguration(exclude = FlywayAutoConfiguration.class)
-    @Import({OrderWebConfiguration.class, OrderPersistenceConfiguration.class,
+    @Import({OrderRestApiConfiguration.class, OrderPersistenceConfiguration.class,
         OrderDomainConfiguration.class,
         OrderEventHandlersConfiguration.class,
         OrderEventPublishingConfiguration.class,

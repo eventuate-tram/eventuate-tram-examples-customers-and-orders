@@ -4,7 +4,7 @@ package io.eventuate.examples.tram.customersandorders.customers;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryEventConsumer;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryViewBackendConfiguration;
 import io.eventuate.examples.tram.ordersandcustomers.orderhistory.backend.OrderHistoryViewMongoConfiguration;
-import io.eventuate.examples.tram.ordersandcustomers.orderhistory.web.OrderHistoryViewWebConfiguration;
+import io.eventuate.examples.tram.ordersandcustomers.orderhistory.restapi.OrderHistoryViewRestApiConfiguration;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderCreatedEvent;
 import io.eventuate.tram.spring.inmemory.TramInMemoryCommonConfiguration;
 import io.eventuate.tram.spring.springwolf.testing.AsyncApiDocument;
@@ -27,7 +27,7 @@ public class OrderHistoryServiceInProcessComponentTest {
 
     @Configuration
     @EnableAutoConfiguration(exclude = FlywayAutoConfiguration.class)
-    @Import({OrderHistoryViewWebConfiguration.class,
+    @Import({OrderHistoryViewRestApiConfiguration.class,
         OrderHistoryViewBackendConfiguration.class,
         OrderHistoryViewMongoConfiguration.class,
         TramInMemoryCommonConfiguration.class})

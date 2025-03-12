@@ -8,7 +8,7 @@ import io.eventuate.examples.tram.ordersandcustomers.customers.eventhandlers.Cus
 import io.eventuate.examples.tram.ordersandcustomers.customers.eventhandlers.OrderEventConsumer;
 import io.eventuate.examples.tram.ordersandcustomers.customers.eventpublishing.CustomerEventPublisherImpl;
 import io.eventuate.examples.tram.ordersandcustomers.customers.eventpublishing.CustomerEventPublishingConfiguration;
-import io.eventuate.examples.tram.ordersandcustomers.customers.web.CustomerWebConfiguration;
+import io.eventuate.examples.tram.ordersandcustomers.customers.restapi.CustomerRestApiConfiguration;
 import io.eventuate.examples.tram.ordersandcustomers.orders.domain.OrderCreatedEvent;
 import io.eventuate.tram.spring.inmemory.TramInMemoryConfiguration;
 import io.eventuate.tram.spring.springwolf.testing.AsyncApiDocument;
@@ -33,7 +33,7 @@ public class CustomerServiceInProcessComponentTest {
 
     @Configuration
     @EnableAutoConfiguration(exclude = FlywayAutoConfiguration.class)
-    @Import({CustomerWebConfiguration.class, CustomerPersistenceConfiguration.class,
+    @Import({CustomerRestApiConfiguration.class, CustomerPersistenceConfiguration.class,
         CustomerDomainConfiguration.class,
         CustomerServiceEventHandlerConfiguration.class,
         CustomerEventPublishingConfiguration.class,

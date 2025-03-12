@@ -3,7 +3,7 @@ apply plugin: "io.spring.dependency-management"
 
 dependencies {
     implementation "io.eventuate.examples.common:eventuate-examples-common-money-jakarta9:$eventuateCommonExamplesVersion"
-    implementation project (":order-history-text-search-service-api-web")
+    implementation project (":order-history-text-search-service-api-restapi")
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"

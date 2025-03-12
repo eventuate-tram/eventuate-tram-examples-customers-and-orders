@@ -3,7 +3,7 @@ apply plugin: ComponentTestsPlugin
 
 dependencies {
 
-    implementation project(":order-history-service:order-history-service-web")
+    implementation project(":order-history-service:order-history-service-restapi")
     implementation project(":order-history-service:order-history-service-event-handling")
     implementation project(":order-history-service:order-history-service-domain")
 

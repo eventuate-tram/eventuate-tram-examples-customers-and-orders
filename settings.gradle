@@ -1,20 +1,20 @@
 
 include 'customer-service:customer-service-domain'
 include 'customer-service:customer-service-persistence'
-include 'customer-service:customer-service-web'
+include 'customer-service:customer-service-restapi'
 include 'customer-service:customer-service-event-handling'
 include 'customer-service:customer-service-event-publishing'
 include 'customer-service:customer-service-main'
 
 include 'order-service:order-service-domain'
 include 'order-service:order-service-persistence'
-include 'order-service:order-service-web'
+include 'order-service:order-service-restapi'
 include 'order-service:order-service-event-handling'
 include 'order-service:order-service-event-publishing'
 include 'order-service:order-service-main'
 
 include 'order-history-service:order-history-service-domain'
-include 'order-history-service:order-history-service-web'
+include 'order-history-service:order-history-service-restapi'
 include 'order-history-service:order-history-service-event-handling'
 include 'order-history-service:order-history-service-main'
 

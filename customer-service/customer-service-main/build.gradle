@@ -2,7 +2,7 @@ apply plugin: ServicePlugin
 
 dependencies {
 
-    implementation project(":customer-service:customer-service-web")
+    implementation project(":customer-service:customer-service-restapi")
     implementation project(":customer-service:customer-service-domain")
     implementation project(":customer-service:customer-service-persistence")
     implementation project(":customer-service:customer-service-event-handling")
