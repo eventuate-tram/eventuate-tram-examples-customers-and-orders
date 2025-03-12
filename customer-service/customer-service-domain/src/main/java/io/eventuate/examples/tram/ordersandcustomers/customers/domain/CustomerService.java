@@ -1,7 +1,6 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
 import io.eventuate.examples.common.money.Money;
-import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.publisher.ResultWithTypedEvents;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -15,13 +14,10 @@ public class CustomerService {
 
   private final CustomerRepository customerRepository;
 
-  private final DomainEventPublisher domainEventPublisher;
-
   private final CustomerEventPublisher customerEventPublisher;
 
-  public CustomerService(CustomerRepository customerRepository, DomainEventPublisher domainEventPublisher, CustomerEventPublisher customerEventPublisher) {
+  public CustomerService(CustomerRepository customerRepository, CustomerEventPublisher customerEventPublisher) {
     this.customerRepository = customerRepository;
-    this.domainEventPublisher = domainEventPublisher;
     this.customerEventPublisher = customerEventPublisher;
   }
 

@@ -1,6 +1,5 @@
 package io.eventuate.examples.tram.ordersandcustomers.customers.domain;
 
-import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 public class CustomerDomainConfiguration {
 
   @Bean
-  public CustomerService customerService(CustomerRepository customerRepository, DomainEventPublisher domainEventPublisher, CustomerEventPublisher customerEventPublisher) {
-    return new CustomerService(customerRepository, domainEventPublisher, customerEventPublisher);
+  public CustomerService customerService(CustomerRepository customerRepository, CustomerEventPublisher customerEventPublisher) {
+    return new CustomerService(customerRepository, customerEventPublisher);
   }
 
 }

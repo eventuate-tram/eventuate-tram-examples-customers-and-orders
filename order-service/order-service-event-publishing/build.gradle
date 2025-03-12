@@ -22,12 +22,6 @@ contracts {
 
 }
 
-test {
-    useJUnitPlatform()
-}
-contractTest {
-    useJUnitPlatform()
-}
 
 
 

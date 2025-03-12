@@ -21,7 +21,6 @@ dependencies {
 
 
 test {
-    useJUnitPlatform()
     systemProperty "stubrunner.repositoryRoot", contractRepoUrl
 }
 

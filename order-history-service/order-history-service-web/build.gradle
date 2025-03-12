@@ -1,7 +1,6 @@
 dependencies {
     implementation project(":order-history-service:order-history-service-domain")
 
-
     implementation "org.springframework.boot:spring-boot-starter-web"
 }
 
