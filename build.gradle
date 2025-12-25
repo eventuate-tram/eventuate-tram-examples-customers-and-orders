@@ -43,6 +43,9 @@ subprojects {
                 implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenApiUiVersion")
         }
         testImplementation "org.springframework.boot:spring-boot-starter-test"
+        testImplementation "org.junit.jupiter:junit-jupiter:$junitVersion"
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
     }
 
 
