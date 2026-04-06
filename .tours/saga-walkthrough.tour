@@ -20,7 +20,7 @@
     },
     {
       "file": "customer-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/service/CustomerService.java",
-      "description": "On the happy path, the `Customer Service` publishes an `OrderCreatedEvent`",
+      "description": "On the happy path, the `Customer Service` publishes an `CustomerCreditReservedEvent`",
       "line": 58
     },
     {
