@@ -3,45 +3,35 @@
   "title": "saga walkthrough",
   "steps": [
     {
-      "title": "starting point",
-      "file": "order-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/service/OrderService.java",
-      "description": "In the `OrderService` the `createOrder()` method initiates the saga by publishing an event",
-      "line": 28
-    },
-    {
-      "file": "customer-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/service/OrderEventConsumer.java",
+      "file": "customer-service/customer-service-event-handling/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/eventhandlers/OrderEventConsumer.java",
       "description": "Here's where in the `Customer Service` the `OrderCreatedEvent` handler is configured.",
-      "line": 23
+      "line": 20
     },
     {
-      "file": "customer-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/service/OrderEventConsumer.java",
+      "title": "starting point",
+      "file": "order-service/order-service-domain/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/domain/OrderService.java",
+      "description": "In the `OrderService` the `createOrder()` method initiates the saga by publishing an event",
+      "line": 24
+    },
+    {
+      "file": "customer-service/customer-service-event-handling/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/eventhandlers/OrderEventConsumer.java",
       "description": "Here's the `OrderCreatedEvent` handler in the `Customer Service`",
-      "line": 28
+      "line": 21
     },
     {
-      "file": "customer-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/service/CustomerService.java",
-      "description": "On the happy path, the `Customer Service` publishes an `OrderCreatedEvent`",
-      "line": 58
+      "file": "customer-service/customer-service-domain/src/main/java/io/eventuate/examples/tram/ordersandcustomers/customers/domain/CustomerService.java",
+      "description": "On the happy path, the `Customer Service` publishes a `CustomerCreditReservedEvent`",
+      "line": 52
     },
     {
-      "file": "order-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/service/CustomerEventConsumer.java",
+      "file": "order-service/order-service-event-handling/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/eventhandlers/CustomerEventConsumer.java",
       "description": "Here's where in the `Order Service` the `CustomerCreditReservedEvent` handler is configured.",
-      "line": 20,
-      "selection": {
-        "start": {
-          "line": 1,
-          "character": 42
-        },
-        "end": {
-          "line": 1,
-          "character": 69
-        }
-      }
+      "line": 20
     },
     {
-      "file": "order-service/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/service/CustomerEventConsumer.java",
+      "file": "order-service/order-service-event-handling/src/main/java/io/eventuate/examples/tram/ordersandcustomers/orders/eventhandlers/CustomerEventConsumer.java",
       "description": "Here's the `CustomerCreditReservedEvent` handler in the `Order Service`, which calls the `OrderService` to approve the event",
-      "line": 26
+      "line": 22
     }
   ]
 }
