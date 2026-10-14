@@ -21,18 +21,19 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.boot:spring-boot-starter-json"
 
-    endToEndTestImplementation "org.springframework.boot:spring-boot-starter-web"
+    endToEndTestImplementation "org.springframework.boot:spring-boot-starter-webmvc"
 
     endToEndTestImplementation "io.eventuate.platform.testcontainer.support:eventuate-platform-testcontainer-support-service:$eventuatePlatformTestContainerSupportVersion"
     endToEndTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
     endToEndTestImplementation "io.eventuate.common:eventuate-common-testcontainers"
     endToEndTestImplementation "io.eventuate.messaging.kafka:eventuate-messaging-kafka-testcontainers"
+    endToEndTestImplementation "org.springframework.boot:spring-boot-starter-restclient"
     endToEndTestImplementation "org.springframework.boot:spring-boot-starter-thymeleaf"
-    endToEndTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
+    endToEndTestImplementation "org.testcontainers:testcontainers-mongodb:$testContainersVersion"
 
     // TODO - need this for MsSQLContainer initialization
 
-    endToEndTestImplementation 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
+    endToEndTestImplementation "com.microsoft.sqlserver:mssql-jdbc:$mssqlJdbcVersion"
 
 
 }
@@ -70,6 +71,9 @@ for (def dbType  in ["MySql", "Postgres", "MsSQL"]) {
                 ":order-history-service:order-history-service-main:assemble",
                 ":api-gateway-service:api-gateway-service-main:assemble")
     }
+}
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
 }
 
 

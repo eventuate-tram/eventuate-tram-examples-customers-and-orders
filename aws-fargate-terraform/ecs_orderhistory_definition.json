@@ -16,7 +16,7 @@
   ],
   "environment": [
     {
-      "name": "SPRING_DATA_MONGODB_URI",
+      "name": "SPRING_MONGODB_URI",
       "value": "${mongo_uri}"
     },
     {

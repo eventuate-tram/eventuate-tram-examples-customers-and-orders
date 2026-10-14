@@ -11,9 +11,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.lifecycle.Startables;
+import org.testcontainers.mongodb.MongoDBContainer;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -40,7 +40,7 @@ public class OrderHistoryServiceComponentTest {
             ServiceContainer.makeFromDockerfileOnClasspath()
                     .withNetwork(eventuateKafkaCluster.network)
                     .withKafka(kafka)
-                    .withEnv("SPRING_DATA_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
+                    .withEnv("SPRING_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
                     .dependsOn(mongoDBContainer)
                     .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-history-service:"))
                     .withReuse(false) // should rebuild

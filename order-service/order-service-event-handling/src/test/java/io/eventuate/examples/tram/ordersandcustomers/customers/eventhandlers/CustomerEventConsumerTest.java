@@ -7,7 +7,7 @@ import io.eventuate.tram.spring.testing.cloudcontract.EnableEventuateTramContrac
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
+import org.springframework.boot.flyway.autoconfigure.FlywayAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.stubrunner.StubFinder;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
@@ -21,7 +21,8 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @AutoConfigureStubRunner(ids = "io.eventuate.examples.tram.ordersandcustomers:customer-service-event-publishing",
-    stubsMode = StubRunnerProperties.StubsMode.REMOTE )
+    stubsMode = StubRunnerProperties.StubsMode.REMOTE,
+    repositoryRoot = "${contractRepoUrl}")
 class CustomerEventConsumerTest {
 
   @Configuration

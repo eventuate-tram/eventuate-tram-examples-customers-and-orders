@@ -37,6 +37,7 @@ subprojects {
         implementation(platform("io.eventuate.platform:eventuate-platform-dependencies:$eventuatePlatformVersion"))
 
         implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"))
+        implementation(platform("org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudContractDependenciesVersion}"))
         implementation(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
 
         constraints {

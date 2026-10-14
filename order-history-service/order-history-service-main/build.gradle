@@ -15,9 +15,13 @@ dependencies {
     componentTestImplementation "io.eventuate.common:eventuate-common-testcontainers"
     componentTestImplementation "io.eventuate.messaging.kafka:eventuate-messaging-kafka-testcontainers"
     componentTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
-    componentTestImplementation "io.rest-assured:rest-assured"
-    componentTestImplementation "org.testcontainers:mongodb:$testContainersVersion"
+    componentTestImplementation "io.rest-assured:rest-assured:$restAssuredVersion"
+    componentTestImplementation "org.springframework.boot:spring-boot-starter-flyway-test"
+    componentTestImplementation "org.testcontainers:testcontainers-mongodb:$testContainersVersion"
 
+}
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
 }
 
 

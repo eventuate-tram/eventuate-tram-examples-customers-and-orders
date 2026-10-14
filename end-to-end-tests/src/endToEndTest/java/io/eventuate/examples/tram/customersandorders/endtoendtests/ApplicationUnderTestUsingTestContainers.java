@@ -8,9 +8,9 @@ import io.eventuate.common.testcontainers.EventuateGenericContainer;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeCluster;
 import io.eventuate.messaging.kafka.testcontainers.EventuateKafkaNativeContainer;
 import io.eventuate.testcontainers.service.ServiceContainer;
-import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.lifecycle.Startables;
+import org.testcontainers.mongodb.MongoDBContainer;
 
 public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTest {
   private final ServiceContainer customerService
@@ -68,7 +68,7 @@ public class ApplicationUnderTestUsingTestContainers extends ApplicationUnderTes
             .withNetwork(eventuateKafkaCluster.network)
             .withNetworkAliases("order-history-service")
             .withKafka(kafka)
-            .withEnv("SPRING_DATA_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
+            .withEnv("SPRING_MONGODB_URI", "mongodb://order-history-service-db/customers_and_orders")
             .dependsOn(mongoDBContainer)
             .withLogConsumer(new Slf4jLogConsumer(logger).withPrefix("SVC order-history-service:"))
             .withReuse(false)

@@ -8,8 +8,11 @@ dependencies {
     implementation "org.springframework:spring-aspects"
     implementation "io.eventuate.common:eventuate-common-testcontainers"
 
-    testImplementation "org.testcontainers:mongodb:$testContainersVersion"
+    testImplementation "org.testcontainers:testcontainers-mongodb:$testContainersVersion"
 
+}
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
 }
 
 

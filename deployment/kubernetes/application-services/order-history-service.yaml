@@ -36,7 +36,7 @@ spec:
         ports:
         - containerPort: 8080
         env:
-          - name: SPRING_DATA_MONGODB_URI
+          - name: SPRING_MONGODB_URI
             valueFrom:
               configMapKeyRef:
                 name: mongodb-config

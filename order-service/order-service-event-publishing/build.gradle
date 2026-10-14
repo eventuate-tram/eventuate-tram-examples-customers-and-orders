@@ -21,6 +21,9 @@ contracts {
     packageWithBaseClasses = 'io.eventuate.examples.tram.ordersandcustomers.orders.eventpublishing.contracttests'
 
 }
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
 
 
 

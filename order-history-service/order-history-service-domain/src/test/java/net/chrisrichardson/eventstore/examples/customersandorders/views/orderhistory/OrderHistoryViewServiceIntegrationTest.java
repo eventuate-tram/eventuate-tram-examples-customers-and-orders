@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.mongodb.MongoDBContainer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -25,7 +25,7 @@ class OrderHistoryViewServiceIntegrationTest {
   @DynamicPropertySource
   public static void startMongo(DynamicPropertyRegistry registry) {
     mongoDBContainer.start();
-    registry.add("spring.data.mongodb.uri", () -> "mongodb://localhost:%s/customers.orders".formatted(mongoDBContainer.getFirstMappedPort()));
+    registry.add("spring.mongodb.uri", () -> "mongodb://localhost:%s/customers.orders".formatted(mongoDBContainer.getFirstMappedPort()));
   }
 
   @Autowired

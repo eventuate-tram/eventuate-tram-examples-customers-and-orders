@@ -6,6 +6,7 @@ dependencies {
 
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events-starter"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking"
+    implementation "org.springframework.boot:spring-boot-starter-flyway"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka"
 
     implementation "io.eventuate.tram.core:eventuate-tram-spring-flyway"
@@ -20,7 +21,8 @@ dependencies {
 }
 
 test {
-    systemProperty "stubrunner.repositoryRoot", contractRepoUrl
+    systemProperty "contractRepoUrl", contractRepoUrl
+    useJUnitPlatform()
 }
 
 test.dependsOn(":order-service:order-service-event-publishing:publishStubsPublicationToStubsRepository")

@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
+import org.springframework.boot.flyway.autoconfigure.FlywayAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
@@ -78,8 +78,8 @@ public class OrderServiceInProcessComponentTest {
         AsyncApiDocument doc = AsyncApiDocument.getSpringWolfDoc();
 
         assertThat(doc.getVersion())
-            .as("AsyncAPI version should be 3.0.0")
-            .isEqualTo("3.0.0");
+            .as("AsyncAPI version should be 3.1.0")
+            .isEqualTo("3.1.0");
 
         doc.assertReceivesMessage(CUSTOMER_EVENT_SUBSCRIBER, CUSTOMER_CHANNEL, CUSTOMER_CREDIT_RESERVED_EVENT);
         doc.assertSendsMessage(ORDER_EVENT_PUBLISHER, ORDER_CHANNEL, ORDER_CREATED_EVENT);

@@ -5,6 +5,7 @@ apply plugin: ComponentTestsPlugin
 
 configurations.all {
     exclude  module: "spring-boot-starter-web"
+    exclude  module: "spring-boot-starter-webmvc"
 }
 
 dependencies {
@@ -14,13 +15,12 @@ dependencies {
     implementation "io.projectreactor:reactor-tools"
 
     implementation "org.springframework.boot:spring-boot-starter-webflux"
-    implementation "org.springframework.cloud:spring-cloud-starter-gateway"
+    implementation "org.springframework.cloud:spring-cloud-starter-gateway-server-webflux"
 
     implementation "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j"
 
     implementation "org.springframework.boot:spring-boot-starter-actuator"
 
-    implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "io.micrometer:micrometer-tracing-bridge-brave"
     implementation "io.zipkin.reporter2:zipkin-reporter-brave"
 
@@ -30,6 +30,9 @@ dependencies {
 
     componentTestImplementation "org.springframework.cloud:spring-cloud-contract-wiremock"
 
+}
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
 }
 
 

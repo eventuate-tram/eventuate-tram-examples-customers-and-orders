@@ -8,5 +8,5 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka"
     implementation "io.eventuate.tram.core:eventuate-tram-spring-events-subscriber-starter"
-    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-webmvc"
 }
