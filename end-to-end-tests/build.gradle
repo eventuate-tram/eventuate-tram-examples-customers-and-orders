@@ -25,7 +25,7 @@ dependencies {
 
     endToEndTestImplementation "io.eventuate.platform.testcontainer.support:eventuate-platform-testcontainer-support-service:$eventuatePlatformTestContainerSupportVersion"
     endToEndTestImplementation "io.eventuate.cdc:eventuate-cdc-testcontainers"
-    endToEndTestImplementation "io.eventuate.common:eventuate-common-testcontainers"
+    endToEndTestImplementation "io.eventuate.common.testcontainers:eventuate-common-testcontainers"
     endToEndTestImplementation "io.eventuate.messaging.kafka:eventuate-messaging-kafka-testcontainers"
     endToEndTestImplementation "org.springframework.boot:spring-boot-starter-restclient"
     endToEndTestImplementation "org.springframework.boot:spring-boot-starter-thymeleaf"
